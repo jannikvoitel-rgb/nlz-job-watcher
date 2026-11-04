@@ -119,6 +119,18 @@ GLB-Stellen direkt in der Actions-Oberfläche.
 Ein einzelner Verein, der klemmt, färbt den Lauf **nicht** rot – dafür gibt
 es die Warn-Push. Lokal erzwingt `--fail-on-error` das andere Verhalten.
 
+### Von Hand starten
+
+Unter **Actions → Stellen prüfen → Run workflow** gibt es drei Schalter:
+
+| Schalter | Wirkung |
+| --- | --- |
+| `test_push` | Schickt nur eine Testnachricht aufs Handy und ruft nichts ab. Damit prüfst du die Kette Secret → ntfy → Handy in unter einer Minute. |
+| `dry_run` | Ruft alles ab, schickt aber keine Pushes und schreibt nichts zurück. |
+| `verbose` | Ausführliche Logausgaben zur Fehlersuche. |
+
+Der Testpush läuft als eigener, kurzer Job: ohne Chromium und ohne Tests.
+
 ## Lokal ausführen
 
 Für GitHub ist nichts davon nötig – das hier ist zum Ausprobieren und
