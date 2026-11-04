@@ -255,10 +255,10 @@ Dann <http://localhost:8787> öffnen.
 
 **Was die App kann**
 
-- Reiter **GLB**, **Sport**, **Sonstige**, **Geschlossen** und **Vereine**,
-  mit Anzahl je Bereich
-- Karten mit Verein, Prioritäts-Badge, „NEU" für die letzten 7 Tage,
-  Fundtag, Veröffentlichungsdatum, Ort, Vertragsart und Bewerbungsfrist
+- Reiter **Neu**, **GLB**, **Sport**, **Sonstige**, **Geschlossen** und
+  **Vereine**, mit Anzahl je Bereich. **Neu** ist der Einstieg
+- Karten mit Verein, Prioritäts-Badge, „NEU"-Abzeichen, Fundtag,
+  Veröffentlichungsdatum, Ort, Vertragsart und Bewerbungsfrist
 - Antippen klappt die vollständige Beschreibung auf, darunter die Buttons
   „Zur Originalanzeige" und, wo vorhanden, „Direkt bewerben"
 - Unten an jeder Karte steht, **warum** die Stelle so eingestuft wurde
@@ -266,6 +266,32 @@ Dann <http://localhost:8787> öffnen.
 - Reiter **Vereine**: letzter erfolgreicher Abruf, Zahl der offenen Stellen
   je Quelle, Initiativbewerbungs-Hinweis und -Link, Fehler und manuell
   beobachtete Quellen
+
+### Wann eine Stelle „neu" ist
+
+Zwei Bedingungen, beide müssen gelten:
+
+1. Der Watcher hat sie **nach dem Erstlauf** zum ersten Mal gesehen. Die beim
+   Erstlauf vorgefundenen Stellen sind Bestand (`initial` in `jobs.json`) und
+   gelten nie als neu – sonst wäre nach dem ersten Lauf eine Woche lang alles
+   neu. Dieselbe Unterscheidung verhindert auch die Push-Flut beim Erstlauf.
+2. Das erste Sehen (`first_seen`) liegt höchstens `new_badge_days` zurück,
+   eingestellt in `filters.yaml`, derzeit **7 Tage**. Maßgeblich ist der Tag
+   des Fundes, nicht das Veröffentlichungsdatum des Vereins – das geben viele
+   Portale gar nicht an.
+
+Wird eine Stelle geschlossen, verliert sie das Abzeichen sofort.
+
+Der Reiter **Neu** zeigt davon **nur Stellen mit Sportbezug** (A und B). Neue
+Stellen ohne Sportbezug stehen allein unter „Sonstige"; dort tragen sie das
+Abzeichen weiterhin, tauchen aber nie unter „Neu" auf.
+
+### Service Worker
+
+Das Gerüst der App (`index.html`, `app.js`, `styles.css`) kommt aus dem Cache,
+die Stellenliste zuerst aus dem Netz. Nach jeder Änderung am Gerüst die Zahl in
+`var CACHE = "nlz-stellen-vN"` in `docs/sw.js` **hochsetzen**. Sonst behalten
+schon installierte Apps – etwa die auf dem Homescreen – die alte Fassung.
 - Hell und dunkel automatisch nach Systemeinstellung
 - Installierbar auf dem Homescreen (Manifest + Service Worker); die zuletzt
   geladene Liste bleibt offline verfügbar

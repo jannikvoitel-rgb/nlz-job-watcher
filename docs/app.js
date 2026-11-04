@@ -14,7 +14,7 @@
     clubs: {},
     settings: { new_badge_days: 7 },
     generated: null,
-    view: "A",
+    view: "new",
     search: "",
     club: "",
     open: {}
@@ -66,8 +66,18 @@
   }
 
   function isNew(job) {
-    return job.status === "offen" &&
+    // "Neu" heisst: nach dem Erstlauf dazugekommen. Die beim Erstlauf
+    // vorgefundenen Stellen sind Bestand (initial), kein Fund - sonst waere
+    // nach dem ersten Lauf eine Woche lang alles neu. Der Scraper setzt das
+    // Kennzeichen; dieselbe Unterscheidung steuert auch die Pushes.
+    return job.status === "offen" && !job.initial &&
       daysSince(job.first_seen) <= (state.settings.new_badge_days || 7);
+  }
+
+  function isNewSport(job) {
+    // Der Reiter "Neu" zeigt ausschliesslich Stellen mit Sportbezug.
+    // Neue Stellen ohne Sportbezug stehen nur unter "Sonstige".
+    return isNew(job) && (job.priority === "A" || job.priority === "B");
   }
 
   /* ---------- Beschreibung aufbauen ----------
@@ -205,6 +215,8 @@
     return state.jobs.filter(function (job) {
       if (state.view === "closed") {
         if (job.status !== "geschlossen") { return false; }
+      } else if (state.view === "new") {
+        if (!isNewSport(job)) { return false; }
       } else {
         if (job.status === "geschlossen") { return false; }
         if (job.priority !== state.view) { return false; }
@@ -217,6 +229,7 @@
   function countFor(view) {
     return state.jobs.filter(function (job) {
       if (view === "closed") { return job.status === "geschlossen"; }
+      if (view === "new") { return isNewSport(job); }
       return job.status === "offen" && job.priority === view;
     }).length;
   }
@@ -319,6 +332,11 @@
       el.status.hidden = false;
       if (state.search || state.club) {
         el.status.textContent = "Keine Stelle passt zu dieser Suche.";
+      } else if (state.view === "new") {
+        el.status.textContent = "Gerade keine neue Sportstelle. Hier " +
+          "stehen Stellen mit Sportbezug, die nach dem Erstlauf " +
+          "dazugekommen sind – " + (state.settings.new_badge_days || 7) +
+          " Tage lang. Stellen ohne Sportbezug erscheinen hier nie.";
       } else if (state.view === "A") {
         // Der Grundlagenbereich ist eng gefasst. Ist hier nichts, liegt das
         // in der Regel nicht an einem Fehler, sondern daran, dass solche

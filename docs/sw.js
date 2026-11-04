@@ -4,7 +4,11 @@
  * sonst zeigt die App nach einem Lauf noch alte Stellen. Ohne Netz wird
  * die letzte gespeicherte Liste genommen.
  */
-var CACHE = "nlz-stellen-v1";
+// Bei jeder Änderung am Gerüst (index.html, app.js, styles.css) die
+// Zahl hochsetzen. Sonst behalten schon installierte Apps - etwa die
+// auf dem Homescreen - die alte Fassung aus ihrem Cache. Beim Aktivieren
+// werden alle Caches mit anderem Namen gelöscht.
+var CACHE = "nlz-stellen-v2";
 var SHELL = [
   ".",
   "index.html",
