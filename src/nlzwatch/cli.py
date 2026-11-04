@@ -22,6 +22,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--reclassify", action="store_true",
                    help="alle gespeicherten Stellen neu einstufen "
                         "(nach Änderungen an filters.yaml)")
+    p.add_argument("--reclassify-only", action="store_true",
+                   help="nur die gespeicherten Stellen neu einstufen, ohne "
+                        "eine einzige Vereinsseite abzurufen. Zeigt an, was "
+                        "sich durch Änderungen an filters.yaml verschiebt")
     p.add_argument("--skip-details", action="store_true",
                    help="keine Detailseiten abrufen (schneller Test der Listen)")
     p.add_argument("--test-push", action="store_true",
@@ -106,6 +110,47 @@ def main(argv: Optional[List[str]] = None) -> int:
         # Logzeilen auf der Standardausgabe.
         logging.getLogger().setLevel(logging.WARNING)
         print(build_report())
+        return 0
+
+    if args.reclassify_only:
+        # Nach einer Aenderung an filters.yaml den Bestand neu bewerten,
+        # ohne die Vereinsseiten noch einmal zu belasten.
+        from .classify import Classifier
+        from .config import load_clubs
+
+        clubs, _ = load_clubs()
+        classifier = Classifier(load_filters())
+        root = project_root()
+        store = Store(root / "data" / "jobs.json",
+                      root / "docs" / "data" / "jobs.json")
+        store.load()
+        by_short = {c.short: c for c in clubs}
+
+        changes = []
+        for job in store.jobs.values():
+            club = by_short.get(job.club_short)
+            words = (classifier.compile_club(club.short, club.keywords)
+                     if club is not None else {})
+            before, before_reason = job.priority, job.priority_reason
+            classifier.apply(job, words)
+            if job.priority != before:
+                changes.append((before, before_reason, job))
+
+        store.refresh_counts()
+        store.save(dry_run=args.dry_run)
+
+        print("Neu eingestuft: {} von {} Stellen geändert.".format(
+            len(changes), len(store.jobs)))
+        for before, before_reason, job in sorted(
+                changes, key=lambda c: (c[0], c[2].priority, c[2].club_short)):
+            print("  {} -> {}  {} | {}".format(
+                before, job.priority, job.club_short.upper(), job.title[:58]))
+            print("      vorher: {}".format(before_reason))
+            print("      jetzt:  {}".format(job.priority_reason))
+        offen = [j for j in store.jobs.values() if j.status == "offen"]
+        print("\nOffen: {} im Sport, davon {} im GLB.".format(
+            sum(1 for j in offen if j.priority in ("A", "B")),
+            sum(1 for j in offen if j.priority == "A")))
         return 0
 
     if args.test_push:

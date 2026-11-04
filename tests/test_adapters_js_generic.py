@@ -102,15 +102,22 @@ def test_tsg_links_gegen_die_seitenwurzel():
         assert "/karriere/tsg/" not in job.url
 
 
-def test_tsg_drei_glb_stellen(classifier):
+def test_tsg_fussballschule_ist_kein_glb(classifier):
+    """Die drei Fussballschul-Stellen sind Sport, aber kein GLB.
+
+    Sie waren der Anlass fuer die engere Definition: GLB sind nur
+    NLZ-Mannschaften der Altersklassen U9 bis U11. In dieser Liste
+    steht keine solche Stelle.
+    """
     adapter, _, _ = build("tsg-stellenangebote", TSG_URL,
                           "TSG Hoffenheim", "tsg", "js_tsg_list.html")
     jobs = adapter.list_jobs()
     for job in jobs:
         classifier.apply(job)
-    glb = [j for j in jobs if j.priority == "A"]
-    assert len(glb) == 3
-    assert all("Fußballschule" in j.title for j in glb)
+    schule = [j for j in jobs if "Fußballschule" in j.title]
+    assert len(schule) == 3
+    assert all(j.priority == "B" for j in schule)
+    assert [j for j in jobs if j.priority == "A"] == []
 
 
 def test_tsg_detailseite_ohne_browser():

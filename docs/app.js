@@ -317,9 +317,21 @@
     el.list.textContent = "";
     if (!jobs.length) {
       el.status.hidden = false;
-      el.status.textContent = state.search || state.club
-        ? "Keine Stelle passt zu dieser Suche."
-        : "In diesem Bereich ist gerade nichts offen.";
+      if (state.search || state.club) {
+        el.status.textContent = "Keine Stelle passt zu dieser Suche.";
+      } else if (state.view === "A") {
+        // Der Grundlagenbereich ist eng gefasst. Ist hier nichts, liegt das
+        // in der Regel nicht an einem Fehler, sondern daran, dass solche
+        // Stellen selten offen ausgeschrieben werden. Dann hilft der Reiter
+        // "Vereine" mit den Initiativbewerbungen weiter.
+        el.status.textContent = "Gerade ist keine GLB-Stelle offen. GLB " +
+          "heißt hier: NLZ-Mannschaften der Altersklassen U9 bis U11. " +
+          "Fußballschulen, Feriencamps und Partnervereine stehen unter " +
+          "„Sport“. Für den Grundlagenbereich lohnt der Reiter „Vereine“ " +
+          "mit den Initiativbewerbungen.";
+      } else {
+        el.status.textContent = "In diesem Bereich ist gerade nichts offen.";
+      }
       return;
     }
     el.status.hidden = true;

@@ -135,14 +135,17 @@ def test_unplausible_frist_wird_verworfen():
 
 
 def test_einstufung_der_echten_anzeige(classifier):
-    """Die gespeicherte Anzeige muss als GLB-Stelle erkannt werden."""
+    """Leverkusens "Future Kids" ist Sport, aber kein GLB.
+
+    Ein Breitenfussball-Programm, auch wenn es U8-U10 im Titel nennt.
+    """
     adapter, _ = build()
     jobs = {j.title: j for j in adapter.list_jobs()}
     job = jobs["Trainer Future Kids U8-U10 (m/w/d) - geringfügige Beschäftigung"]
     adapter.enrich(job)
     classifier.apply(job)
-    assert job.priority == "A"
-    assert "U8" in job.priority_reason
+    assert job.priority == "B"
+    assert "future kids" in job.priority_reason.lower()
 
 
 def test_detailabruf_nur_bei_bedarf():

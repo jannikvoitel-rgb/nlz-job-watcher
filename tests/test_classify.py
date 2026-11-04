@@ -8,25 +8,37 @@ from __future__ import annotations
 import pytest
 
 # --- Prioritaet A: Grundlagenbereich ------------------------------------
+# GLB ist eng gefasst: NLZ-Mannschaften der Altersklassen U9 bis U11.
+# Breitenfussball mit Kindern desselben Alters gehoert nicht dazu.
 TITLES_A = [
+    "Übungsleiter Grundlagenbereich (m/w/d)",
+    "Nachwuchstrainer im Grundlagentraining (m/w/d)",
+    "Grundlagenbereichstrainer (m/w/d)",
+    "Trainer U9 / U10 (m/w/d) im Nachwuchsleistungszentrum",
+    "Co-Trainer (m/w/d) U11 im NLZ",
+    "Trainer:in (m/w/d) E-Jugend im Nachwuchsleistungszentrum",
+    "TORWARTTRAINER (M/W/D) U10 IM LEISTUNGSZENTRUM",
+    "Honorartrainer*in (m/w/d) U9 Nachwuchsleistungszentrum",
+    "Individualtrainer (m/w/d) Grundlagenbereich U9-U11",
+    "Trainer F-Junioren (m/w/d) im NLZ",
+    "Co-Trainer:in (m/w/d) U11 Nachwuchsakademie",
+    "Übungsleiter:in (m/w/d) U10/U11 im Nachwuchszentrum",
+]
+
+# --- Prioritaet B: Sport allgemein --------------------------------------
+TITLES_B = [
+    # Breitenfussball: Sport, aber keine NLZ-Mannschaft im GLB
     "Trainer Future Kids U8-U10 (m/w/d) - geringfügige Beschäftigung",
     "MINI JOB: Kinderfußball-Trainer (U7-U11) im Partnerverein (m/w/d)",
     "Honorartrainer*in (m/w/d) Werder Fußballschule",
     "Trainer*in (m/w/d) Fußballschule",
     "TRAINER/IN FÜR DIE SCP07 FUSSBALLSCHULE (M/W/D)",
     "Trainer (m|w|d) - FC Bayern Campus Training",
-    "Übungsleiter Grundlagenbereich (m/w/d)",
-    "Nachwuchstrainer im Grundlagentraining (m/w/d)",
-    "Trainer U9 / U10 (m/w/d) im Nachwuchsleistungszentrum",
     "Bambini-Trainer (m/w/d) gesucht",
-    "Co-Trainer (m/w/d) F-Jugend",
     "Pflichtpraktikant*in (m/w/d) in der WERDER Fußballschule",
     "Trainer:in Talentförderung (m/w/d)",
     "Camptrainer (m/w/d) für unsere Fußballcamps",
-]
-
-# --- Prioritaet B: Sport allgemein --------------------------------------
-TITLES_B = [
+    # Sport ausserhalb des Grundlagenbereichs
     "Torwarttrainer in China (m/w/d)",
     "Torwarttrainer U12/U13 (all genders)",
     "Physiotherapeut (m/w/d) Fußball der Frauen",
@@ -114,9 +126,11 @@ def test_a_aus_beschreibung_nur_mit_sportbezug_im_titel(classifier):
 
 
 def test_umlaute_und_schreibweisen_egal(classifier):
-    """Fussballschule ohne Umlaut und in Grossschreibung trifft genauso."""
-    for variant in ("Trainer Fußballschule", "TRAINER FUSSBALLSCHULE",
-                    "trainer fussballschule", "Trainer Fussballschule (m/w/d)"):
+    """Schreibweise und Umlaute duerfen die Einstufung nicht aendern."""
+    for variant in ("Übungsleiter Grundlagenbereich",
+                    "ÜBUNGSLEITER GRUNDLAGENBEREICH",
+                    "ubungsleiter grundlagenbereich",
+                    "Übungsleiter Grundlagenbereich (m/w/d)"):
         assert classifier.classify(variant)[0] == "A", variant
 
 
@@ -225,11 +239,78 @@ def test_nicht_sport_titel_blockt_a_aus_der_beschreibung(classifier):
     assert "leistungszentrum" in reason.lower()
 
 
-def test_a_aus_der_beschreibung_bleibt_bei_echter_trainerstelle(classifier):
-    """Die Sperre darf echte GLB-Stellen nicht verhindern."""
+def test_athletik_praktikum_im_nlz_ist_keine_glb_stelle(classifier):
+    """Kein Trainerposten einer U9-U11-Mannschaft, also B.
+
+    Die Stelle betreut die Athletik im gesamten Nachwuchs. Dass im Text
+    eine U11 vorkommt, macht daraus keine GLB-Trainerstelle.
+    """
     priority, _ = classifier.classify(
         "Pflichtpraktikant Athletik und Rehabilitation im Leistungszentrum (m/w/d)",
         description="Unterstützung des Athletiktrainings im Grundlagen- "
                     "und Aufbaubereich (U11-U15).",
     )
+    assert priority == "B"
+
+
+def test_trainerstelle_mit_altersklasse_erst_im_text_bleibt_a(classifier):
+    """Die Sperre darf echte GLB-Trainerstellen nicht verhindern."""
+    priority, reason = classifier.classify(
+        "Honorartrainer (m/w/d) im Nachwuchsleistungszentrum",
+        description="Du übernimmst eine Mannschaft im Grundlagenbereich "
+                    "und trainierst unsere U10.",
+    )
     assert priority == "A"
+    assert reason
+
+
+# --- Die enge GLB-Definition: NLZ-Mannschaften U9-U11 -------------------
+def test_fussballschule_ist_sport_aber_kein_glb(classifier):
+    """Eine Fussballschule ist Breitenfussball, keine NLZ-Mannschaft."""
+    priority, reason = classifier.classify("Trainer*in (m/w/d) Fußballschule")
+    assert priority == "B"
+    assert "fussballschule" in reason.lower()
+
+
+def test_ausschluss_sticht_passende_altersklasse(classifier):
+    """Auch mit U10 im Titel bleibt die Fussballschule bei B."""
+    assert classifier.classify(
+        "Trainer (m/w/d) U10 unserer Fußballschule")[0] == "B"
+    assert classifier.classify(
+        "Kinderfußball-Trainer (U9-U11) im Partnerverein (m/w/d)")[0] == "B"
+
+
+def test_altersklasse_ohne_nlz_bezug_ist_kein_glb(classifier):
+    """U10 allein belegt keine NLZ-Mannschaft."""
+    priority, _ = classifier.classify("Trainer (m/w/d) für unsere U10")
+    assert priority == "B"
+
+
+def test_altersklasse_mit_nlz_bezug_ist_glb(classifier):
+    """Dieselbe Stelle mit NLZ-Beleg ist GLB."""
+    priority, reason = classifier.classify(
+        "Trainer (m/w/d) für unsere U10 im Nachwuchsleistungszentrum")
+    assert priority == "A"
+    assert "U10" in reason and "NLZ-Beleg" in reason
+
+
+def test_u8_liegt_nicht_mehr_im_grundlagenbereich(classifier):
+    """GLB ist U9 bis U11. U8 und Bambini sind Sport, aber kein GLB."""
+    assert classifier.classify(
+        "Trainer (m/w/d) U8 im Nachwuchsleistungszentrum")[0] == "B"
+    assert classifier.classify("Bambini-Trainer (m/w/d)")[0] == "B"
+
+
+def test_e_jugend_ist_glb_d_jugend_nicht(classifier):
+    """E-Jugend ist U10/U11, D-Jugend beginnt bei U12."""
+    assert classifier.classify(
+        "Trainer (m/w/d) E-Jugend im NLZ")[0] == "A"
+    assert classifier.classify(
+        "Trainer (m/w/d) D-Jugend im NLZ")[0] == "B"
+
+
+def test_grundlagenbereich_braucht_keine_altersangabe(classifier):
+    """Das Wort benennt den Bereich, der NLZ-Bezug steckt darin."""
+    priority, reason = classifier.classify("Übungsleiter Grundlagenbereich (m/w/d)")
+    assert priority == "A"
+    assert "grundlagenbereich" in reason.lower()

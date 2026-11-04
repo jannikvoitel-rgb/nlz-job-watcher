@@ -2,7 +2,7 @@
 
 Überwacht die Karriereseiten von 17 Fußball-Nachwuchsleistungszentren und meldet
 neue Stellen im Sportbereich per Push aufs Handy. Stellen im Grundlagenbereich
-(U8–U11) haben Vorrang. Alle gefundenen Stellen stehen mit vollständiger
+haben Vorrang – gemeint sind NLZ-Mannschaften der Altersklassen U9 bis U11. Alle gefundenen Stellen stehen mit vollständiger
 Beschreibung in einer kleinen Web-App.
 
 Privates Werkzeug für die eigene Stellensuche.
@@ -24,8 +24,10 @@ Privates Werkzeug für die eigene Stellensuche.
 
 Noch nicht gebaute Quellen stehen in `clubs.yaml` auf `enabled: false` und werden
 übersprungen, ohne den Lauf zu stören. Stand jetzt: **16 von 17 Vereinen live**,
-25 von 26 Quellen aktiv, 217 Stellen erfasst, davon 70 im Sport und 13 im
-Grundlagenbereich. Nur der FC Bayern lässt sich nicht abrufen.
+25 von 26 Quellen aktiv, 217 Stellen erfasst, davon 70 im Sport und derzeit
+keine im Grundlagenbereich – eine U9-U11-Mannschaftsstelle ist gerade nirgends
+ausgeschrieben. Der FC Bayern lässt sich nicht abrufen, Hoffenheim sperrt die
+GitHub-Rechner aus (beides unten erklärt).
 
 ### FC Bayern: warum manuell
 
@@ -264,11 +266,35 @@ Zum Home-Bildschirm", auf Android über das Browser-Menü „App installieren".
 
 Alles steckt in `filters.yaml`, nicht im Code:
 
-- **Priorität A (GLB):** Schlagwörter und Altersklassen `u8`–`u11`.
-- **Priorität B (Sport):** alle übrigen Sportstellen.
+- **Priorität A (GLB):** NLZ-Mannschaften der Altersklassen U9 bis U11 –
+  siehe die eigene Tabelle unten.
+- **Priorität B (Sport):** alle übrigen Sportstellen, auch Fußballschulen
+  und Feriencamps.
 - **Priorität C:** ohne Sportbezug, wird gespeichert aber nicht gepusht.
 - `ignore_titles`: Dauer-Einträge der Portale wie „Initiativbewerbung", die
   keine Stelle sind.
+
+### Was als GLB zählt
+
+Der Grundlagenbereich ist eng gefasst: **NLZ-Mannschaften U9 bis U11.** Fünf
+Listen unter `priority_a` in `filters.yaml` steuern das zusammen:
+
+| Liste | Rolle |
+| --- | --- |
+| `keywords` | Wörter, die den Bereich selbst benennen (`grundlagenbereich`, `grundlagentraining`). Lösen A allein aus, der NLZ-Bezug steckt im Wort. |
+| `age_groups` | `u9`, `u10`, `u11`. Als eigenständige Tokens geprüft, `U16` löst kein `U1` aus. |
+| `age_names` | Jahrgangsnamen statt U-Angabe. `e-jugend` ist U10/U11, `f-jugend` ist U8/U9 und zählt mit, weil unklare Fälle höher eingestuft werden. |
+| `nlz_signals` | Belege für das Leistungszentrum. Eine Altersangabe **allein** genügt nicht – irgendwo im Text muss das NLZ vorkommen. |
+| `excludes` | Breitenfußball: `fussballschule`, `feriencamp`, `kinderfussball`, `bambini`, `partnerverein` und weitere. Schließt A aus, **auch mit passender Altersangabe**. |
+
+Warum so streng: ein U10-Training in der Fußballschule ist keine
+NLZ-Mannschaft. Vor dieser Fassung waren 9 von 13 A-Stellen Fußballschule,
+die GLB-Push war damit wertlos. Solche Stellen verschwinden nicht, sie
+stehen unter „Sport" und werden weiterhin gemeldet.
+
+Steht eine Altersklasse nur in der Beschreibung, muss der **Titel eine
+Trainerrolle** nennen (`description_requires_title_signal`). Sonst würde
+jedes NLZ-Praktikum A, in dessen Fließtext einmal eine U11 vorkommt.
 
 Für Eigennamen, die nur ein Verein benutzt, gibt es zusätzlich
 vereinsspezifische Schlagwörter direkt in `clubs.yaml`:
@@ -284,8 +310,19 @@ vereinsspezifische Schlagwörter direkt in `clubs.yaml`:
 Sie werden vor den globalen Listen geprüft. Ohne sie wäre Gladbachs
 Betreuungsstelle im NLZ-Internat nur über das Sicherheitsnetz in B gelandet.
 
-Umlaute bitte normal schreiben (`förderkader`, `übungsleiter`). Groß- und
+Umlaute bitte normal schreiben (`übungsleiter`, `förderkader`). Groß- und
 Kleinschreibung ist egal, `Fussballschule` und `Fußballschule` treffen beide.
+
+Nach einer Änderung an `filters.yaml` stuft dieser Befehl den gespeicherten
+Bestand neu ein, **ohne eine einzige Vereinsseite abzurufen**, und zeigt jede
+Verschiebung mit Begründung vorher und nachher:
+
+```bash
+PYTHONPATH=src ./.venv/bin/python -m nlzwatch --reclassify-only --dry-run
+```
+
+Ohne `--dry-run` wird das Ergebnis geschrieben. Das ist der schonende Weg:
+die Vereinsseiten bleiben unbelastet.
 
 Die Prüfung läuft von oben nach unten: Vereinsschlagwörter, dann A, dann B,
 dann C. Greift nichts, wird

@@ -13,59 +13,80 @@
 # --- Prioritaet A: Grundlagenbereich (GLB) --------------------------------
 priority_a:
   label: "GLB"
-  description: "Grundlagenbereich U8-U11"
+  description: "Grundlagenbereich: NLZ-Mannschaften U9-U11"
 
-  # Schlagwoerter, die allein schon A ausloesen
+  # Woerter, die den Grundlagenbereich selbst benennen. Sie loesen A auch
+  # ohne Altersangabe aus, weil der NLZ-Bezug schon im Wort steckt.
   keywords:
     - grundlagenbereich
     - grundlagentraining
     - grundlagenbereichstrainer
-    - bambini
-    - f-jugend
-    - e-jugend
-    - f-/e-jugend
-    - e-/f-jugend
-    - f- und e-jugend
-    - f-junioren
-    - e-junioren
-    - fussballschule
-    - fussballcamp
-    - fussballcamps
-    - kinderfussball
-    - kinderfussballtrainer
-    - minikicker
-    - talentförderung
-    - talentförderprogramm
-    - förderkader
-    - future kids
-    - camptrainer
-    - campustraining
-    - campus training
 
-  # Altersklassen, die A ausloesen. Werden als eigenstaendige Tokens geprueft,
-  # "U16" loest also kein "U1" aus.
+  # Altersklassen des Grundlagenbereichs. Werden als eigenstaendige Tokens
+  # geprueft, "U16" loest also kein "U1" aus.
   age_groups:
-    - u8
     - u9
     - u10
     - u11
 
-  # A-Treffer nur in der Beschreibung (nicht im Titel) zaehlen ausschliesslich,
-  # wenn der Titel wenigstens einen dieser Sportbezuege hat. Verhindert, dass
-  # eine Marketingstelle A wird, weil im Text ein U10-Turnier erwaehnt wird.
+  # Jahrgangsnamen statt U-Angabe. E-Jugend ist U10/U11 und liegt ganz im
+  # Bereich; F-Jugend ist U8/U9 und damit nur zur Haelfte. Unklare Faelle
+  # werden hoeher eingestuft, deshalb zaehlt sie mit.
+  age_names:
+    - e-jugend
+    - e-junioren
+    - f-jugend
+    - f-junioren
+    - f-/e-jugend
+    - e-/f-jugend
+    - f- und e-jugend
+
+  # Eine Altersangabe allein genuegt nicht: GLB heisst NLZ-Mannschaft. Also
+  # muss irgendwo im Text ein Beleg fuer das Leistungszentrum stehen.
+  nlz_signals:
+    - nlz
+    - nachwuchsleistungszentrum
+    - leistungszentrum
+    - nachwuchszentrum
+    - nachwuchsakademie
+    - fussballakademie
+    - juniorenleistungszentrum
+    - nachwuchsbereich
+    - grundlagenbereich
+
+  # Breitenfussball ist nie A, auch nicht mit passender Altersangabe. Eine
+  # Fussballschule, ein Feriencamp oder ein Partnerverein ist keine
+  # NLZ-Mannschaft. Diese Stellen bleiben als Sport (B) sichtbar und werden
+  # weiterhin gemeldet, nur nicht als GLB-Fund mit hoher Priorität.
+  excludes:
+    - fussballschule
+    - fussballcamp
+    - fussballcamps
+    - feriencamp
+    - ferienprogramm
+    - camptrainer
+    - kinderfussball
+    - kinderfussballtrainer
+    - minikicker
+    - bambini
+    - future kids
+    - partnerverein
+    - kooperationsverein
+    - schul-ag
+    - freizeitfussball
+    - campus training
+    - campustraining
+
+  # A-Treffer, die nur in der Beschreibung stehen, zaehlen ausschliesslich
+  # wenn der Titel eine Trainerrolle nennt. Sonst wuerde jede NLZ-Stelle A,
+  # in deren Fliesstext einmal eine U11 vorkommt - etwa ein Praktikum in
+  # der Athletik, das den gesamten Nachwuchs betreut.
   description_requires_title_signal:
     - trainer
     - trainerin
     - coach
     - übungsleiter
     - übungsleiterin
-    - nachwuchs
-    - nlz
-    - leistungszentrum
-    - akademie
-    - fussball
-    - talent
-    - sport
 
 # --- Prioritaet B: Sport allgemein ---------------------------------------
 priority_b:
@@ -73,6 +94,23 @@ priority_b:
   description: "Sonstige Stellen im Sportbereich"
 
   keywords:
+    # Breitenfussball und Talentprogramme: Sport, aber kein GLB. Stehen
+    # bewusst vor den Trainerwoertern, damit der Grund genauer ausfaellt.
+    - fussballschule
+    - fussballcamp
+    - fussballcamps
+    - feriencamp
+    - camptrainer
+    - kinderfussball
+    - kinderfussballtrainer
+    - minikicker
+    - bambini
+    - future kids
+    - campus training
+    - campustraining
+    - talentförderung
+    - talentförderprogramm
+    - förderkader
     # Trainer- und Spielbetrieb
     - trainer
     - trainerin
@@ -341,10 +379,10 @@ priority_c:
 # Trifft eines dieser Muster, zaehlt es wie ein Schlagwort im Titel.
 department_signals:
   priority_a:
-    - kinderfussball
-    - fussballschule
     - grundlagenbereich
   priority_b:
+    - kinderfussball
+    - fussballschule
     - sport
     - sport nlz
     - administration nlz

@@ -13,6 +13,7 @@ Stand: 4. November 2026. Alle Angaben selbst geprüft (robots.txt, HTTP-Status, 
   - **generic_html** → VfB, Bayer 04, Paderborn, Wolfsburg, HSV e.V., Eintracht AG, Gladbach-Minijobs
   - **SuccessFactors** → FC Bayern, TSG Hoffenheim
 - **Aktuell 6 Stellen im Grundlagenbereich (Prio A)** über alle Vereine — siehe Abschnitt 4.
+  *Nachtrag 04.11.2026: Diese Zahl galt unter der ersten, weiten Auslegung des Grundlagenbereichs. Seit der Verengung auf NLZ-Mannschaften U9-U11 ist keine dieser Stellen mehr Prio A — siehe Abschnitt 4.*
 - Aktuell insgesamt rund **190 offene Stellen**, davon ca. **40 im Sportbereich**.
 
 ## 2. Haupttabelle
@@ -51,7 +52,16 @@ Damit ist das Ziel erfüllt, dass ein neuer Verein in der Regel nur einen Eintra
 
 ## 4. Prio-A-Treffer (Grundlagenbereich), Stand heute
 
-| Verein | Stelle | Einordnung |
+> **Nachtrag 04.11.2026.** Die Tabelle zeigt den Stand der ersten Auslegung,
+> die den Grundlagenbereich zu weit fasste. Maßgeblich ist jetzt: GLB sind
+> **NLZ-Mannschaften der Altersklassen U9 bis U11**. Fußballschulen,
+> Feriencamps, Kinderfußball und Partnervereine sind Breitenfußball und
+> zählen als Sport (B) — sie werden weiter gemeldet, nur nicht als GLB-Fund.
+> Damit ist **keine** der sechs Stellen unten Prio A, und aktuell ist in
+> keinem der 17 NLZ eine U9-U11-Mannschaftsstelle ausgeschrieben. Die Regel
+> steht in `filters.yaml` unter `priority_a` und ist im README erklärt.
+
+| Verein | Stelle | Einordnung (erste, zu weite Auslegung) |
 |--------|--------|------------|
 | Bayer 04 Leverkusen | **Trainer Future Kids U8-U10 (m/w/d)** – geringfügige Beschäftigung | A, Altersklasse explizit |
 | 1. FC Köln | **MINI JOB: Kinderfußball-Trainer (U7-U11) im Partnerverein des 1. FC Köln (m/w/d)** | A, Altersklasse explizit |

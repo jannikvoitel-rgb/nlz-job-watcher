@@ -69,6 +69,9 @@ class Classifier:
         self.a_keywords = self._compile(a.get("keywords", []))
         self.a_title_signals = self._compile(a.get("description_requires_title_signal", []))
         self.age_regex = self._build_age_regex(a.get("age_groups", []))
+        self.a_age_names = self._compile(a.get("age_names", []))
+        self.a_nlz_signals = self._compile(a.get("nlz_signals", []))
+        self.a_excludes = self._compile(a.get("excludes", []))
 
         entry = [normalize(x) for x in (b.get("entry_level_terms", []) or [])]
         self.conditional = self._compile(
@@ -144,6 +147,65 @@ class Classifier:
         m = self.age_regex.search(text)
         return ("U" + m.group(1)) if m else None
 
+    def _age_signal(self, text: str) -> Optional[str]:
+        """Altersangabe des Grundlagenbereichs, als U-Zahl oder Jahrgang."""
+        hit = self._age_match(text)
+        if hit:
+            return "Altersklasse {}".format(hit)
+        name = self._first_match(text, self.a_age_names)
+        if name:
+            return "Jahrgang {}".format(name)
+        return None
+
+    # -- Grundlagenbereich -------------------------------------------------
+    def _classify_glb(self, head: str, title_n: str, dept_n: str, desc_n: str,
+                      club: Dict[str, Any]) -> Optional[Tuple[str, str]]:
+        """Ist das eine NLZ-Mannschaft im Grundlagenbereich (U9-U11)?
+
+        Der Grundlagenbereich ist eng gefasst: NLZ-Mannschaften der
+        Altersklassen U9 bis U11. Eine Fussballschule, ein Feriencamp oder
+        ein Partnerverein ist das nicht, auch wenn dort Kinder desselben
+        Alters trainieren. Solche Stellen bleiben Sport (B).
+        """
+        # Breitenfussball schliesst A aus, auch mit passender Altersangabe.
+        if self._first_match(head, self.a_excludes):
+            return None
+
+        # a) Das Wort benennt den Bereich selbst - der NLZ-Beleg steckt drin.
+        hit = self._first_match(head, self.a_keywords)
+        if hit:
+            return "A", 'Schlagwort "{}" im Titel'.format(hit)
+        hit = self._first_match(dept_n, self.dept_a)
+        if hit:
+            return "A", 'Bereich "{}"'.format(hit)
+
+        # b) Altersangabe im Titel, NLZ-Beleg irgendwo im Text.
+        whole = " | ".join(x for x in (head, desc_n) if x)
+        age = self._age_signal(head)
+        if age:
+            nlz = self._first_match(whole, self.a_nlz_signals)
+            if nlz:
+                return "A", '{} im Titel, NLZ-Beleg "{}"'.format(age, nlz)
+            # Altersangabe ohne NLZ-Bezug: Kinderfussball irgendeiner Art,
+            # aber kein Grundlagenbereich.
+            return None
+
+        # c) Altersangabe erst in der Beschreibung. Dann muss der Titel eine
+        #    Trainerrolle nennen und darf kein Nicht-Sport-Wort enthalten -
+        #    sonst wird Werders "Aushilfe Fahrdienst im Leistungszentrum"
+        #    zur GLB-Meldung, nur weil im Fliesstext eine U10 vorkommt.
+        title_signal = self._first_match(title_n, self.a_title_signals)
+        title_blocker = (self._first_match(title_n, club.get("priority_c", []))
+                         or self._first_match(title_n, self.c_keywords))
+        if title_signal and not title_blocker:
+            age = self._age_signal(desc_n)
+            if age:
+                nlz = self._first_match(whole, self.a_nlz_signals)
+                if nlz:
+                    return "A", '{} in der Beschreibung, NLZ-Beleg "{}"'.format(
+                        age, nlz)
+        return None
+
     # -- Einstufung --------------------------------------------------------
     def classify(self, title: str, description: str = "", department: str = "",
                  club_keywords: Optional[Dict[str, Any]] = None) -> Tuple[str, str]:
@@ -163,32 +225,10 @@ class Classifier:
         if hit:
             return "A", 'Vereinsschlagwort "{}"'.format(hit)
 
-        # 1) Prioritaet A aus Titel oder Abteilung
-        hit = self._age_match(head)
-        if hit:
-            return "A", "Altersklasse {} im Titel".format(hit)
-        hit = self._first_match(head, self.a_keywords)
-        if hit:
-            return "A", 'Schlagwort "{}" im Titel'.format(hit)
-        hit = self._first_match(dept_n, self.dept_a)
-        if hit:
-            return "A", 'Bereich "{}"'.format(hit)
-
-        # 2) Prioritaet A aus der Beschreibung. Zwei Bedingungen:
-        #    - der Titel hat einen Sportbezug
-        #    - und kein eindeutiges Nicht-Sport-Wort. Sonst wuerde Werders
-        #      "Aushilfe Fahrdienst im Leistungszentrum" zur GLB-Meldung,
-        #      nur weil im Fliesstext "Talentförderung" steht.
-        title_signal = self._first_match(title_n, self.a_title_signals)
-        title_blocker = (self._first_match(title_n, club.get("priority_c", []))
-                         or self._first_match(title_n, self.c_keywords))
-        if title_signal and not title_blocker:
-            hit = self._age_match(desc_n)
-            if hit:
-                return "A", "Altersklasse {} in der Beschreibung".format(hit)
-            hit = self._first_match(desc_n, self.a_keywords)
-            if hit:
-                return "A", 'Schlagwort "{}" in der Beschreibung'.format(hit)
+        # 1) Prioritaet A: Grundlagenbereich, eng gefasst
+        verdict = self._classify_glb(head, title_n, dept_n, desc_n, club)
+        if verdict:
+            return verdict
 
         # 3) Prioritaet B: klarer Sportbezug
         hit = self._first_match(head, club.get("priority_b", []))

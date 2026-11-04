@@ -1,9 +1,7 @@
 {
  "version": 1,
- "generated_at": "2026-11-04T21:01:08+00:00",
- "settings": {
-  "new_badge_days": 7
- },
+ "generated_at": "2026-11-04T21:09:52+00:00",
+ "settings": {},
  "clubs": {
   "bvb": {
    "name": "Borussia Dortmund",
@@ -29,7 +27,7 @@
    "warned_on": null,
    "open_total": 23,
    "open_sport": 4,
-   "open_glb": 1
+   "open_glb": 0
   },
   "mainz05": {
    "name": "FSV Mainz 05",
@@ -116,7 +114,7 @@
    "warned_on": "2026-11-04",
    "open_total": 16,
    "open_sport": 9,
-   "open_glb": 3
+   "open_glb": 0
   },
   "vfb": {
    "name": "VfB Stuttgart",
@@ -162,7 +160,7 @@
    "warned_on": null,
    "open_total": 37,
    "open_sport": 11,
-   "open_glb": 2
+   "open_glb": 0
   },
   "scf": {
    "name": "SC Freiburg",
@@ -219,7 +217,7 @@
    },
    "open_total": 10,
    "open_sport": 4,
-   "open_glb": 2
+   "open_glb": 0
   },
   "bmg": {
    "name": "Borussia Mönchengladbach",
@@ -281,7 +279,7 @@
    "warned_on": null,
    "open_total": 8,
    "open_sport": 3,
-   "open_glb": 1
+   "open_glb": 0
   },
   "s04": {
    "name": "FC Schalke 04",
@@ -389,7 +387,7 @@
    "warned_on": null,
    "open_total": 18,
    "open_sport": 8,
-   "open_glb": 2
+   "open_glb": 0
   },
   "hsv": {
    "name": "Hamburger SV",
@@ -461,7 +459,7 @@
    "warned_on": null,
    "open_total": 3,
    "open_sport": 1,
-   "open_glb": 1
+   "open_glb": 0
   },
   "rbl": {
    "name": "RB Leipzig",
@@ -549,7 +547,7 @@
    "warned_on": null,
    "open_total": 8,
    "open_sport": 3,
-   "open_glb": 1
+   "open_glb": 0
   }
  },
  "jobs": [
@@ -598,8 +596,8 @@
    "contact": null,
    "description": "Der SC Paderborn 07 e.V. sucht zum nächstmöglichen Zeitpunkt eine/n TRAINER/IN (m/w/d) für die SCP07 Fußballschule.\n\n## DEINE AUFGABEN\n\n- Eigenverantwortliche Vorbereitung und Durchführung von Trainingseinheiten bei Ferien-/Wochenendcamps\n- Verantwortungsbewusste Betreuung Deiner Trainingsgruppe während der gesamten Veranstaltung\n- Vermittlung von Fachwissen mit Spaß und Engagement\n\n## DAS ZEICHNET DICH AUS\n\n- Freude am Umgang mit Kindern und Jugendlichen\n- Zeitliche Flexibilität (in den Ferienzeiten und am Wochenende)\n- Verantwortungsbewusstsein, Kreativität, Eigeninitiative und Teamfähigkeit\n\n## DEINE QUALIFIKATION\n\n- DFB - Trainerlizenz\n- Erfahrung als Kinder- und Jugendtrainer\n- Sehr gute Deutschkenntnisse\n- Führerschein Klasse B\n- Identifikation mit den Werten unseres Vereins\n\nWenn wir Dein Interesse geweckt haben, dann sende uns bitte Deine vollständigen Unterlagen (schulisch/beruflich & sportlicher Lebenslauf) per Mail:\nSC Paderborn 07 e.V.\nFußballschule",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:38:15+00:00",
    "last_seen": "2026-11-04T21:01:08+00:00",
    "status": "offen",
@@ -1165,8 +1163,8 @@
    "contact": null,
    "description": "## Bewirb Dich jetzt!\n\nDu liebst es, Kinder für Fußball zu begeistern? Du möchtest in den Schulferien ein Umfeld schaffen, in dem sich junge Spieler*innen ausprobieren, entwickeln und mit Freude bewegen können? Du arbeitest gerne mit 6- bis 13-Jährigen und bringst Energie, Geduld und Struktur mit auf den Platz? Dann werde Teil unseres Ferienschulteams bei Hertha BSC.\n\nIn unseren Feriencamps trainierst du Kinder, die nicht im Leistungsbereich von Hertha BSC spielen – mit dem Ziel, Spaß am Fußball zu vermitteln, Gemeinschaft zu stärken und positive Erlebnisse zu schaffen.\n\n## Deine Aufgaben\n\n- Du leitest Trainingseinheiten für Kinder im Alter von 6 bis 13 Jahren – altersgerecht, motivierend und strukturiert,\n- Du vermittelst technische und koordinative Grundlagen mit Freude und pädagogischem Feingefühl,\n- Du sorgst für eine sichere, wertschätzende Trainingsatmosphäre und stärkst Teamgeist und Fairplay,\n- Du betreust die Kinder über den Trainingstag hinweg und bist verlässliche Ansprechperson für Eltern und Organisationsteam,\n- Du unterstützt bei der organisatorischen Durchführung der Feriencamps und bringst dich aktiv ins Trainerteam ein.\n\n## Das bringst Du mit:\n\n- Du hast Erfahrung im Training von Kindern oder Jugendlichen – im Verein, in der Schule oder in vergleichbaren Kontexten und eine bist bereits im Besitz einer Trainerlizenz,\n- Du bist idealerweise Student*in im Bereich Sportwissenschaft, Lehramt oder Vergleichbarem,\n- Du arbeitest verantwortungsbewusst, zuverlässig und mit einem hohen Maß an Einfühlungsvermögen,\n- Du vermittelst Inhalte klar, motivierend und geduldig – und hast Freude daran, Entwicklung zu begleite,\n- Du bringst sehr gute Deutschkenntnisse mit, um mit Kindern altersgerecht, klar und verständlich kommunizieren zu können,\n- Du trittst offen und wertschätzend auf und schaffst eine positive Atmosphäre auf und neben dem Platz,\n- Du identifizierst dich mit unseren Werten – Gemeinschaft, Vielfalt, Mut, Demut, Ambition und Verantwortung – und möchtest sie aktiv leben.\n\n## Warum Hertha BSC?\n\n- Du kannst eine Trainertätigkeit auf Basis einer kurzfristigen Beschäftigung ausüben,\n- Du wirst Teil eines engagierten Trainerteams mit klarer Struktur und gemeinsamer Haltung,\n- Du arbeitest in einem Umfeld, in dem Spaß, Entwicklung und Miteinander im Mittelpunkt stehen,\n- Du gestaltest Ferienerlebnisse, die Kinder nachhaltig prägen können,\n- Du bekommst Einblicke in die Trainingsphilosophie eines Profiklubs – praxisnah und unterstützend,\n- Du erhältst Unterstützung beim Erwerb deiner BFV-Lizenz.\n\nDu möchtest Begeisterung wecken, Bewegung fördern und Kindern unvergessliche Fußballferien ermöglichen? Dann lass uns Deine Bewerbungsunterlagen gerne auch dann zukommen, wenn du noch nicht alle Anforderungen zu 100% erfüllst und Du Dich gleichzeitig für das Stellenprofil begeistern kannst.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:37:49+00:00",
    "last_seen": "2026-11-04T21:01:01+00:00",
    "status": "offen",
@@ -1786,8 +1784,8 @@
    "contact": null,
    "description": "Über Werder\nLebenslang Grün-Weiß - Werder Bremen ist ein Lebensgefühl und weitaus mehr als Fußball, mehr als Sieg oder Niederlage. Über den Sport wollen wir Menschen zusammenbringen, begeistern und in unserer Wertegemeinschaft gesellschaftliche Verantwortung übernehmen. Das Weserstadion mit seinen markanten Flutlichtmasten ist für unsere Mitglieder, Fans und Partner ein besonderer Ort - TV-Bühne, Eventlocation und Arbeitsplatz. Wir geben hier unser Bestes und wir freuen uns über alle, die hier mit anpacken wollen.\n\nDie WERDER Fußballschule bietet für alle fußballbegeisterten Kinder und Jugendlichen ein vielfältiges CAMP- und Trainingsangebot rund um den Fußball. In unseren verschiedenen Veranstaltungen trainieren die Teilnehmerinnen und Teilnehmer mit unseren lizenzierten Trainern mit ganz viel Energie, Freude und Spaß!\n\nUnterstütze das Team der WERDER Fußballschule als Honorartrainer*in (m/w/d) bei der Durchführung der CAMPs und Trainingseinheiten.\nDeine Aufgaben\n\n- Verantwortung für die Planung und Durchführung der Trainingseinheiten für Kinder im Alter von sechs bis 13 Jahren in enger Zusammenarbeit mit den Kolleg*innen\n- Unterstützung bei administrativen und organisatorischen Aufgaben während der CAMPs\nDein Profil\n\n- Erfahrung in der Trainingsarbeit mit Kindern und Jugendlichen\n- Hohe pädagogische Kompetenz\n- Im Besitz einer gültigen DFB-Trainerlizenz\n- Zeitliche Flexibilität (v.a. in Ferienzeiten sowie am Wochenende) und hohe Reisebereitschaft\n- Hoher Qualitätsanspruch\n- Freude am Umgang mit Kindern und Jugendlichen\n- Begeisterung für den Trainerjob\n- Teamplayer und Identifikation mit Werder Bremen\n\nDer Schutz von Kindern und Jugendlichen ist ein zentraler Bestandteil unserer Arbeit. Daher bitten wir dich im Falle einer Einstellung um das Vorlegen eines erweiterten Führungszeugnisses.\nWir bieten\n\n- Einen Platz in einem begeisterten Arbeitsumfeld, in dem der Teamgedanke großgeschrieben wird\n- Tolle Erfahrungen im professionellen Umfeld und vielseitige Einblicke in die Arbeit eines traditionsreichen Bundesligisten\n- Abwechslungsreiche Aufgaben auf Honorarbasis\n\nDein Ansprechpartner ist David Schmieg (WERDER Fußballschule).\n\nWir mögen es, wenn viele verschiedene Menschen bei uns arbeiten. Wir freuen uns über jede Bewerbung. Es ist egal, welches Geschlecht du hast. Es ist egal, woher du kommst. Es ist egal, an was du glaubst oder nicht glaubst. Es ist egal, ob du eine Behinderung hast. Es ist egal, wie alt du bist. Es ist egal, wen du liebst oder wie du dich fühlst. Bei uns sind alle herzlich willkommen.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:37:25+00:00",
    "last_seen": "2026-11-04T21:00:58+00:00",
    "status": "offen",
@@ -2191,8 +2189,8 @@
    "contact": null,
    "description": "Über Werder\nLebenslang Grün-Weiß - Werder Bremen ist ein Lebensgefühl und weitaus mehr als Fußball, mehr als Sieg oder Niederlage. Über den Sport wollen wir Menschen zusammenbringen, begeistern und in unserer Wertegemeinschaft gesellschaftliche Verantwortung übernehmen. Das Weserstadion mit seinen markanten Flutlichtmasten ist für unsere Mitglieder, Fans und Partner ein besonderer Ort - TV-Bühne, Eventlocation und Arbeitsplatz. Wir geben hier unser Bestes und wir freuen uns über alle, die hier mit anpacken wollen.\nDein Spielfeld\nDie WERDER Fußballschule bietet für alle fußballbegeisterten Kinder und Jugendlichen ein vielfältiges CAMP- und Trainingsangebot rund um den Fußball. In unseren verschiedenen Veranstaltungen trainieren die Teilnehmerinnen und Teilnehmer mit unseren lizenzierten Trainer*innen mit ganz viel Energie, Freude und Spaß!\n\nWir suchenab März/April 2027 eine*n Pflichtpraktikant*in (m/w/d) fürmind. 3 Monate, vorzugsweise 6 Monate. Erhalte einen Einblick in die Berufswelt und setze dein theoretisches Wissen aus dem Studium in die Praxis um!\nDeine Aufgaben\n\n- Verantwortung für die Planung und Durchführung der Trainingseinheiten für Kinder im Alter von sechs bis 13 Jahren in enger Zusammenarbeit mit den Kolleg*innen\n- Vor- und Nachbereitung vollständiger Camps\n- Unterstützung bei administrativen und organisatorischen Aufgaben rund um die Fußballschule\n\nWeitere Schwerpunkte neben der Trainingsleitung können sein:\n\n- Trainerausbildung: Entwicklung eines fußballspezifischen Handouts für Übungsleiter*innen\n- Marketing: Bildbearbeitung, Newsletter-Versand & Projektarbeit etc.\n- Lager & Logistik: Bedarfsanalyse, Inventur etc.\nDein Profil\n\n- Du bist aktuell in einem Studiengang mit pädagogisch-sportwissenschaftlichem Schwerpunkt o Ä. immatrikuliert.\n- Du hast Erfahrungen in der Trainingsarbeit mit Kindern und Jugendlichen sowie h ohe pädagogische Kompetenz.\n- Du bist zeitlich flexibel und reisebereit.\n- Du bringst Begeisterung für den Job als Trainer*in mit und verfügst idealerweise schon über eine Trainerlizenz.\n\n- Du bist sicher im Umgang mit gängigen MS-Office Anwendungen (Word, Excel, PPT).\n- Du identifizierst dich mit Werder Bremen, bringst Teamgeist mit und hast einen hohen Qualitätsanspruch.\n\nDer Schutz von Kindern und Jugendlichen ist ein zentraler Bestandteil unserer Arbeit. Daher bitten wir dich im Falle einer Einstellung um das Vorlegen eines erweiterten Führungszeugnisses.\nWir bieten\n\n- Ein einzigartiges und abwechslungsreiches Arbeitsumfeld in einem motivierten und ehrgeizigen Team, in dem der Teamgedanke großgeschrieben wird\n- Spannende Erfahrungen im professionellen Umfeld und vielseitige Einblicke in die Arbeit in einem traditionsreichen Verein\n- Eine herausfordernde und abwechslungsreiche Aufgabe sowie die Möglichkeit, an der Weiterentwicklung der WERDER Fußballschule mitzuarbeiten\n- Regelmäßige Mitarbeitenden-Events\n- Hospitationsmöglichkeiten in anderen Bereichen\n\nDein Ansprechpartner ist Mathis Elias (Mitarbeiter WERDER Fußballschule).\n\nWir mögen es, wenn viele verschiedene Menschen bei uns arbeiten. Wir freuen uns über jede Bewerbung. Es ist egal, welches Geschlecht du hast. Es ist egal, woher du kommst. Es ist egal, an was du glaubst oder nicht glaubst. Es ist egal, ob du eine Behinderung hast. Es ist egal, wie alt du bist. Es ist egal, wen du liebst oder wie du dich fühlst. Bei uns sind alle herzlich willkommen.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:37:25+00:00",
    "last_seen": "2026-11-04T21:00:58+00:00",
    "status": "offen",
@@ -2893,8 +2891,8 @@
    "contact": null,
    "description": "## ZUR STELLE\n\nWir suchen Unterstützung in unserem Trainerteam mit Fokus auf unsere Partnervereine, wie zum Beispiel dem SC West Köln, dem FC Hennef 05 oder dem SV Bergisch Gladbach 09.\n\n## MIT DIESEN AUFGABEN TRÄGST DU ZU UNSEREM ERFOLG BEI\n\n- Du planst und führst die Trainingseinheiten der Mannschaft eines Partnervereins nach den Vorgaben der Trainingskonzeption des 1. FC Köln im Kinderfußball durch.\n- Du betreust die Mannschaft eines Partnervereins im Spielbetrieb entsprechend der Spielphilosophie des 1. FC Köln im Kinderfußball.\n- Du übernimmst die Aufsichtspflicht für die Spieler der Mannschaft eines Partnervereins während der Trainingseinheiten bzw. des Spielbetriebs.\n- Du nimmst an Trainersitzungen und Fortbildungen des 1. FC Köln im Bereich Kinderfußball teil.\n- Du arbeitest bei Scouting und Kaderplanung im Rahmen von Kaderplanungssitzungen im Bereich Kinderfußball mit.\n- Du nimmst an Trainersitzungen in einem Partnerverein teil.\n\n## DAS SOLLTEST DU MITBRINGEN\n\n- Du hast mindestens eine DFB C- oder B-Lizenz, ein (nicht zwingend abgeschlossenes) Sportstudium oder eine vergleichbare Qualifikation.\n- Du bringst Einfühlungsvermögen, Offenheit und pädagogisches Geschick im Umgang mit Kindern, Jugendlichen und Eltern mit.\n- Du kannst Dich in Deutsch gut in Wort und Schrift ausdrücken.\n- Du verfügst über Organisationstalent und arbeitest gerne im Team.\n- Du hast bereits Erfahrung als Trainer gesammelt.\n- Du arbeitest selbstständig, eigenverantwortlich und strukturiert.\n- Du zeigst ein hohes Maß an Engagement, bist flexibel und bereit, auch an Wochenenden zu arbeiten.\n- Du besitzt einen Führerschein der Klasse B.\n\n## DARAUF KANNST DU DICH FREUEN\n\n- Ein spannendes Arbeitsumfeld bei einem Partnerverein des 1.FC Köln und Mitarbeit in der FC-Akademie.\n- Ein großartiges Team von Kolleginnen und Kollegen sowie Sportlern.\n- Einen großzügigen Zuschuss zum Lunch im Geißbockheim.\n- Einen Minijob mit einer monatlichen Arbeitszeit von 43 Stunden.\n\n## EIN PAAR TIPPS ZUR BEWERBUNG\n\nBewirb Dich bitte online über den Bewerbungs-Button und ergänze in Deiner Bewerbung noch die Info, wann Du anfangen könntest. Dann können wir uns ein richtig rundes Bild davon machen, wie gut wir zueinander passen. Deine Bewerbung kannst Du an unseren Kollegen Sebastian (Heuel) adressieren, den Du gerne mit \"Du\" anreden kannst.\n\nVielen Dank an dieser Stelle schon mal für Deine Zeit und Dein Interesse! Wir wissen das sehr zu schätzen.\n\nWir nutzen im Textverlauf männliche Bezeichnungen - einzig, um an der Stelle den Lesefluss zu erleichtern. Wir möchten ausdrücklich betonen, dass der FC alle Menschen - unabhängig von Geschlecht, Nationalität, ethnischer und sozialer Herkunft, Religion/Weltanschauung, Behinderung, Alter oder sexueller Orientierung - gleichermaßen willkommen heißt.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Altersklasse U11 im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"kinderfussball\"",
    "first_seen": "2026-11-04T17:36:16+00:00",
    "last_seen": "2026-11-04T21:00:51+00:00",
    "status": "offen",
@@ -3514,8 +3512,8 @@
    "contact": null,
    "description": "Bayer 04 steht für attraktiven Spitzenfußball – und das nicht erst seit dem spektakulären nationalen Double 2024 aus Meisterschaft und DFB-Pokal sowie dem Sieg im Super Cup. In über 45 Jahren Erstklassigkeit sorgt die Werkself auf nationaler und internationaler Fußballbühne regelmäßig für Furore. Mittlerweile arbeiten rund 500 Menschen gemeinsam an der goldenen Zukunft der Bayer 04 Leverkusen Fußball GmbH – als leidenschaftliche Mitarbeitende und Fans. Willst du ein Teil davon sein?\n\nWir suchen dich ab dem 01.01.2027 für 6 Monate als\n\n## Pflichtpraktikant Athletik und Rehabilitation im Leistungszentrum (m/w/d)\nDeine Aufgaben\n\n- Unterstützung des Athletik- und Rehatraining im Grundlagen- und Aufbaubereich (U11-U15)\n- Planung, Durchführung und Dokumentation des Athletiktrainings\n- Erheben und Auswerten von leistungsdiagnostischen Daten, sowie weiteren Testverfahren\n- Individualfördermaßnahmen und Rehabilitation\nDein Profil\n\n- Eingeschriebene/r Studentin/Student im Bereich Sport oder einem vergleichbaren Studiengang\n- Erste Erfahrung im Umgang mit Trainingsgruppen\n- Bezug zum Leistungssport, zur Trainingswissenschaft und zur Rehabilitation\n- Spaß an der Arbeit mit Kindern und Jugendlichen.\n- Ausgeprägte Reflexionsfähigkeit und Bereitschaft zur Weiterentwicklung der eigenen Athletiktrainerpersönlichkeit.\n- Positive Ausstrahlung und Begeisterungsfähigkeit.\n- Ausgeprägte Kommunikationsfähigkeit, Zeitliche Flexibilität, hohe Affinität zum Fußball.\n- Hohes Maß an Selbstständigkeit, Zuverlässigkeit und Einsatzbereitschaft\nWir bieten dir\n\n- Faire Vergütung\n- Mitarbeitersport\n- Mitarbeiterevents\n- Getränke (Kaffee, weitere Heißgetränke, Wasserspender)\n- Mitarbeiter-Lunch\n- Mittagessenszuschuss\n\nWir freuen uns auf deine Online-Bewerbung!\n\nIm Verlauf des Bewerbungsprozesses ist die Einsicht in dein erweitertes Führungszeugnis (nicht älter als 3 Monate) erforderlich.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Altersklasse U11 in der Beschreibung",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"leistungszentrum\"",
    "first_seen": "2026-11-04T17:35:50+00:00",
    "last_seen": "2026-11-04T21:00:46+00:00",
    "status": "offen",
@@ -3568,8 +3566,8 @@
    "contact": null,
    "description": "Bayer 04 steht für attraktiven Spitzenfußball – und das nicht erst seit dem spektakulären nationalen Double 2024 aus Meisterschaft und DFB-Pokal sowie dem Sieg im Super Cup. In über 45 Jahren Erstklassigkeit sorgt die Werkself auf nationaler und internationaler Fußballbühne regelmäßig für Furore. Mittlerweile arbeiten rund 500 Menschen gemeinsam an der goldenen Zukunft der Bayer 04 Leverkusen Fußball GmbH – als leidenschaftliche Mitarbeitende und Fans. Willst du ein Teil davon sein?\n\nWir suchen dich ab dem nächstmöglichen Zeitpunkt als\n\nTrainer Future Kids U8-U10 (m/w/d) für die Standorte Büderich, Eschweiler, Leverkusen, Wuppertal und Zündorf.\nDeine Aufgaben:\n\n- Vorbereitung, Durchführung und Nachbereitung von Trainingsmaßnahmen\n- Organisation, Begleitung und Coaching von Spielen, Turnieren und sonstigen Veranstaltungen im Rahmen der Ausbildung unserer Future Kids\n- Vorbereitung und Durchführung von Entwicklungsgesprächen\n- Teilnahme an regelmäßigen internen Trainerfortbildungen zur inhaltlichen und organisatorischen Gestaltung der Tätigkeit\nDein Profil:\n\n- Begeisterung für die Arbeit mit Kindern\n- Erfahrung als Trainer im Kinderfußball\n- Pädagogisches Geschick, Empathie & Offenheit\n- Hohes Maß an Selbstorganisation, Engagement und Zuverlässigkeit\n- Identifikation mit der Ausbildungsphilosophie von Bayer 04 Leverkusen\n- Wünschenswert Kindertrainer-Zertifikat oder DFB C-Lizenz\nWir bieten Dir:\nDich erwarten ein spannendes, zukunftsfähiges und abwechslungsreiches Arbeitsumfeld sowie anspruchsvolle Aufgaben in einem hochmotivierten Team. Die Anstellung wird auf Basis einer geringfügigen Beschäftigung geführt und mit einer angemessenen Vergütung entlohnt.\n\nWir freuen uns auf Deine Online-Bewerbung.\n\nIm Verlauf des Bewerbungsprozesses ist die Einsicht in dein erweitertes Führungszeugnis (nicht älter als 3 Monate) erforderlich.",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Altersklasse U8 im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"future kids\"",
    "first_seen": "2026-11-04T17:35:50+00:00",
    "last_seen": "2026-11-04T21:00:46+00:00",
    "status": "offen",
@@ -4054,8 +4052,8 @@
    "contact": null,
    "description": "Diese Ausschreibung liegt nur als Bild-PDF vor und lässt sich nicht als Text auslesen. Bitte über den Button „Zur Originalanzeige“ öffnen.",
    "description_fetched": false,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:35:15+00:00",
    "last_seen": "2026-11-04T21:00:44+00:00",
    "status": "offen",
@@ -4135,8 +4133,8 @@
    "contact": null,
    "description": "Diese Ausschreibung liegt nur als Bild-PDF vor und lässt sich nicht als Text auslesen. Bitte über den Button „Zur Originalanzeige“ öffnen.",
    "description_fetched": false,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:35:12+00:00",
    "last_seen": "2026-11-04T21:00:42+00:00",
    "status": "offen",
@@ -5053,8 +5051,8 @@
    "contact": null,
    "description": "Die Profi-Mannschaft der TSG Hoffenheim spielt in der höchsten deutschen Fußball-Spielklasse, der Bundesliga. Die clubeigene Fußballschule ermöglicht mit vielfältigen Angeboten allen fußballbegeisterten Kindern und Jugendlichen einen persönlichen und direkten Zugang zum Verein. Mit den zahlreichen Veranstaltungsformaten ist die TSG-Fußballschule überregional nicht nur am Standort Hoffenheim unterwegs. Zur Verstärkung unseres Teams suchen wir ab 18.01.2027 in Vollzeit einen Praktikant TSG-Fußballschule (m/w/d).\n\n## DIESE AUFGABEN ERWARTEN DICH\n\n- Trainer- und Betreuertätigkeit bei Veranstaltungen der TSG-Fußballschule\n- Mitarbeit in der Administration der TSG-Fußballschule\n- Mitarbeit in der Veranstaltungsorganisation, -durchführung und -nachbereitung\n\n## DU HAST FOLGENDES PROFIL\n\n- Bevorzugt 6-monatiges Pflichtpraktikum im Rahmen eines Hochschulstudiums der Betriebswirtschaftslehre, Wirtschaftswissenschaften, Sportökonomie oder Sportwissenschaften mit entsprechendem Schwerpunkt\n- Sicherer Umgang mit MS-Office Programmen\n- Grundlegende Kenntnisse im Bereich Fußballtraining, wünschenswerterweise im Kinderfußball\n- Kommunikations- und Teamfähigkeit\n- Selbständige, sorgfältige und dienstleistungsorientierte Arbeitsweise\n- Einsatzbereitschaft, Belastbarkeit und zeitliche Flexibilität\n- Hohe Sport-Affinität",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:34:14+00:00",
    "last_seen": "2026-11-04T20:58:53+00:00",
    "status": "offen",
@@ -5377,8 +5375,8 @@
    "contact": null,
    "description": "Die Profi-Mannschaft der TSG Hoffenheim spielt in der höchsten deutschen Fußball-Spielklasse, der Bundesliga. Die clubeigene Fußballschule ermöglicht mit vielfältigen Angeboten allen fußballbegeisterten Kindern und Jugendlichen einen persönlichen und direkten Zugang zum Verein. Mit den zahlreichen Veranstaltungsformaten ist die TSG-Fußballschule überregional nicht nur am Standort Hoffenheim unterwegs. Zur Verstärkung unseres Teams suchen wir ab sofort in Teilzeit einen Minijob - Trainer (Torwart) TSG-Fußballschule (m/w/d).\n\n## DIESE AUFGABEN ERWARTEN DICH\n\n- Trainer- und Betreuertätigkeit bei Veranstaltungen der TSG-Fußballschule\n- Mitarbeit in der Veranstaltungsdurchführung und -nachbereitung\n\n## DU HAST FOLGENDES PROFIL\n\n- Professionelles Auftreten\n- Pädagogisches Geschick im Umgang mit Kindern und Jugendlichen\n- Grundlegende Kenntnisse im Bereich Fußballtraining, wünschenswerterweise im Kinderfußball\n- Kommunikations- und Teamfähigkeit\n- Selbständige, sorgfältige und dienstleistungsorientierte Arbeitsweise\n- Einsatzbereitschaft, Belastbarkeit und zeitliche Flexibilität in Schulferien und/oder unter der Woche\n- Zuverlässigkeit und Planbarkeit\n- Idealerweise Trainererfahrung & -lizenz, aber keine Voraussetzung\n- Hohe Sport-Affinität",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:34:14+00:00",
    "last_seen": "2026-11-04T20:58:53+00:00",
    "status": "offen",
@@ -5404,8 +5402,8 @@
    "contact": null,
    "description": "Die Profi-Mannschaft der TSG Hoffenheim spielt in der höchsten deutschen Fußball-Spielklasse, der Bundesliga. Die clubeigene Fußballschule ermöglicht mit vielfältigen Angeboten allen fußballbegeisterten Kindern und Jugendlichen einen persönlichen und direkten Zugang zum Verein. Mit den zahlreichen Veranstaltungsformaten ist die TSG-Fußballschule überregional nicht nur am Standort Hoffenheim unterwegs. Zur Verstärkung unseres Teams suchen wir ab sofort in Teilzeit einen Minijob - Trainer (Feldspieler) TSG-Fußballschule (m/w/d).\n\n## DIESE AUFGABEN ERWARTEN DICH\n\n- Trainer- und Betreuertätigkeit bei Veranstaltungen der TSG-Fußballschule\n- Mitarbeit in der Veranstaltungsdurchführung und -nachbereitung\n\n## DU HAST FOLGENDES PROFIL\n\n- Professionelles Auftreten\n- Pädagogisches Geschick im Umgang mit Kindern und Jugendlichen\n- Grundlegende Kenntnisse im Bereich Fußballtraining, wünschenswerterweise im Kinderfußball\n- Kommunikations- und Teamfähigkeit\n- Selbständige, sorgfältige und dienstleistungsorientierte Arbeitsweise\n- Einsatzbereitschaft, Belastbarkeit und zeitliche Flexibilität in Schulferien und/oder unter der Woche\n- Zuverlässigkeit und Planbarkeit\n- Idealerweise Trainererfahrung & -lizenz, aber keine Voraussetzung\n- Hohe Sport-Affinität",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" im Titel",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballschule\"",
    "first_seen": "2026-11-04T17:34:14+00:00",
    "last_seen": "2026-11-04T20:58:53+00:00",
    "status": "offen",
@@ -6106,8 +6104,8 @@
    "contact": null,
    "description": "Wir sind Borussia Dortmund. Nicht nur ein weltweit bekannter Fußballverein, sondern auch ein börsennotiertes Unternehmen mit über 900 Mitarbeiter*innen. Neben unserem Kerngeschäft des Fußballs sind wir in zahlreichen weiteren Geschäftsfeldern tätig. Die Borussia Dortmund GmbH & Co. KGaA fungiert als Dachgesellschaft für neun Tochterunternehmen.\n\nDie BVB Fußballakademie GmbH fördert Kinder im Alter von 4 bis 13 Jahren durch ein umfassendes Fußball- und Breitensportangebot. In unserem Trainingszentrum am SIGNAL IDUNA PARK bieten wir vielfältige Kurse an, von Ferien-, Spieltags- und Förderkursen bis hin zu leistungsorientierten Programmen. Zudem unterstützen wir Grundschulen in Dortmund und der Region bei der Durchführung des Sportunterrichts im Bereich Ballsportarten. Internationale Angebote und Kooperationen mit Vereinen weltweit runden unser Fußballprogramm ab.\n\nFür das Team Organisation suchen wir einen Praktikanten (m/w/d) BVB Fußballakademie im Rahmen eines Pflichtpraktikums ab dem 01. April 2027 für sechs Monate in Vollzeit (40 Stunden/Woche).\nDeine Aufgaben\n\n- Unterstützung im operativen Tagesgeschäft sowie bei der organisatorischen Vorbereitung, Durchführung und Nachbereitung von Veranstaltungen und Kursen\n- Mitarbeit bei der Termin- und Ressourcenplanung, der Trainerverwaltung sowie der Datenpflege in unserem Programm „Fußballschule Connect“\n- Unterstützung bei der Organisation und Bereitstellung von Kursmaterial und Merchandising, einschließlich Bedarfsermittlung, Bestandsprüfung und Vorbereitung von Bestellungen sowie bei der Fuhrparkkoordination\n- Abstimmung mit internen und externen Ansprechpersonen sowie Erstellung organisatorischer Planungsunterlagen und Übersichten\n- Durchführung von Recherchen und Marktanalysen zur Optimierung interner Prozesse\nDein Profil\n\n- Studium im Bereich Sportmanagement, Sportökonomie, Event- oder Veranstaltungsmanagement, Betriebswirtschaftslehre, Sportwissenschaften oder eine vergleichbare Qualifikation\n- Selbstständige und strukturierte Arbeitsweise sowie ein sorgfältiger Umgang mit Daten, Terminen und Dokumenten\n- Organisationstalent und die Fähigkeit, bei mehreren parallelen Aufgaben den Überblick zu behalten und Prioritäten zu setzen\n- Gute Kommunikationsfähigkeit in Wort und Schrift\n- Sicherer Umgang mit digitalen Arbeitsmitteln zur Datenpflege sowie Bereitschaft, sich in interne Systeme einzuarbeiten\n- Flexibilität, Zuverlässigkeit und Freude an der praktischen Mitarbeit bei Veranstaltungen und Kursen\nDas erwartet Dich\n\n- Die Möglichkeit, Bundesliga-Luft zu schnuppern\n- Einen Platz in einem dynamischen Team, das sich stark mit seinen Aufgaben identifiziert\n- Spannende und vielseitige Tätigkeiten in einem einzigartigen Arbeitsumfeld\n- Tiefe Einblicke hinter die Kulissen von Borussia Dortmund\n- Kurze Entscheidungswege und viel eigenverantwortlicher Gestaltungsspielraum\nJetzt bewerben\nWir freuen uns auf Deine aussagekräftige Bewerbung mit Motivationsschreiben, Lebenslauf, Zeugnissen und einer gültigen Immatrikulationsbescheinigung. Bitte bewirb Dich online über den „Jetzt-bewerben-Button“.\n\n## BVB Fußballakademie GmbH",
    "description_fetched": true,
-   "priority": "A",
-   "priority_reason": "Schlagwort \"fussballschule\" in der Beschreibung",
+   "priority": "B",
+   "priority_reason": "Schlagwort \"fussballakademie\"",
    "first_seen": "2026-11-04T17:33:28+00:00",
    "last_seen": "2026-11-04T21:00:20+00:00",
    "status": "offen",

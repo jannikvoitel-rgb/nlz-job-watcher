@@ -102,12 +102,16 @@ def test_datum_kommt_von_der_detailseite():
 
 
 def test_einstufung_der_echten_anzeige(classifier):
-    """Kölns Kinderfußball-Trainerstelle muss Priorität A werden."""
+    """Kölns Kinderfußball-Stelle ist Sport, aber kein GLB.
+
+    Die Anzeige nennt U7-U11, die Stelle sitzt aber im Partnerverein und
+    nicht in einer NLZ-Mannschaft.
+    """
     adapter, _ = build(feed="personio_feed_koeln.xml")
     jobs = {j.title: j for j in adapter.list_jobs()}
     job = [j for t, j in jobs.items() if "Kinderfußball-Trainer" in t][0]
     classifier.apply(job)
-    assert job.priority == "A"
+    assert job.priority == "B"
 
 
 # --- HTML-Rueckfall ------------------------------------------------------

@@ -96,13 +96,15 @@ def test_paderborn_abschnittstitel_wird_vertragsart():
     assert job.employment_type == "Teilzeit/Geringfügige Beschäftigung"
 
 
-def test_paderborn_einstufung(classifier):
+def test_paderborn_fussballschule_ist_sport_kein_glb(classifier):
+    """Die Fussballschule ist Breitenfussball, keine NLZ-Mannschaft."""
     adapter, _ = build(PADERBORN_URL, params_from_clubs_yaml("scp-jobs"),
                        "generic_paderborn.html", "SC Paderborn 07", "scp")
     jobs = {j.title: j for j in adapter.list_jobs()}
     job = [j for t, j in jobs.items() if "FUSSBALLSCHULE" in t][0]
     classifier.apply(job)
-    assert job.priority == "A"
+    assert job.priority == "B"
+    assert "fussballschule" in job.priority_reason.lower()
 
 
 def test_leere_seite_ohne_stellen():
