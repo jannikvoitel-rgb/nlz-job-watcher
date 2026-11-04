@@ -100,7 +100,23 @@ clubs:
         label: Stellenangebote
         adapter: js_generic
         url: https://www.tsg-hoffenheim.de/tsg/karriere/stellenangebote
-        enabled: true
+        # Vom eigenen Rechner aus laedt die Seite einwandfrei, aus GitHubs
+        # Rechenzentrum antwortet sie mit "403 Forbidden" - zweimal in Folge
+        # geprueft. Die Stellen sind oeffentlich, nur automatisierte Zugriffe
+        # von dort werden abgewiesen.
+        enabled: false
+        manual: true
+        manual_reason: >-
+          Die Seite antwortet den GitHub-Rechnern mit „403 Forbidden“, auch
+          einem echten Browser. Vom eigenen Rechner aus lädt sie normal. Daran
+          vorbei zu kommen hieße, die Herkunft zu verschleiern – das ist hier
+          bewusst nicht gebaut.
+        manual_hint: >-
+          Zwei Wege: die Seite gelegentlich selbst aufrufen, oder den Abruf
+          vom eigenen Rechner starten mit „python -m nlzwatch --club tsg
+          --include-manual“. Das schreibt die Stellen in jobs.json, ein Commit
+          bringt sie in die App. Die hier gespeicherten Stellen stammen vom
+          letzten erfolgreichen Abruf und können veraltet sein.
         params:
           needs_browser: true
           # Die Liste wird per AngularJS nachgeladen (ng-repeat).

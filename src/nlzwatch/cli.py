@@ -22,6 +22,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--reclassify", action="store_true",
                    help="alle gespeicherten Stellen neu einstufen "
                         "(nach Änderungen an filters.yaml)")
+    p.add_argument("--include-manual", action="store_true",
+                   help="auch Quellen abrufen, die als manuell geführt sind. "
+                        "Hoffenheim antwortet dem eigenen Rechner normal, nur "
+                        "den GitHub-Rechnern nicht: --club tsg --include-manual")
     p.add_argument("--reclassify-only", action="store_true",
                    help="nur die gespeicherten Stellen neu einstufen, ohne "
                         "eine einzige Vereinsseite abzurufen. Zeigt an, was "
@@ -165,7 +169,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0 if ok else 1
 
     runner = Runner(dry_run=args.dry_run, only=args.clubs,
-                    reclassify=args.reclassify, skip_details=args.skip_details)
+                    reclassify=args.reclassify, skip_details=args.skip_details,
+                    include_manual=args.include_manual)
     report = runner.execute()
     print("\n".join(report.summary_lines()))
 

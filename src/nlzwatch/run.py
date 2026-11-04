@@ -74,6 +74,19 @@ class RunReport:
         return lines
 
 
+def should_fetch(enabled: bool, manual: bool, include_manual: bool) -> bool:
+    """Wird diese Quelle in diesem Lauf abgerufen?
+
+    Abgeschaltete Quellen bleiben abgeschaltet. Eine Quelle, die als
+    manuell gefuehrt wird, kann auf ausdruecklichen Wunsch doch abgerufen
+    werden - Hoffenheim etwa antwortet dem eigenen Rechner normal, nur den
+    GitHub-Rechnern nicht.
+    """
+    if enabled:
+        return True
+    return bool(manual and include_manual)
+
+
 def empty_result_is_suspect(found: int, previous: int,
                             legitimately_empty: bool) -> bool:
     """Ist ein leeres Ergebnis verdaechtig statt echt?
@@ -89,11 +102,13 @@ def empty_result_is_suspect(found: int, previous: int,
 
 class Runner:
     def __init__(self, dry_run: bool = False, only: Optional[List[str]] = None,
-                 reclassify: bool = False, skip_details: bool = False):
+                 reclassify: bool = False, skip_details: bool = False,
+                 include_manual: bool = False):
         self.dry_run = dry_run
         self.only = [o.lower() for o in (only or [])]
         self.reclassify = reclassify
         self.skip_details = skip_details
+        self.include_manual = include_manual
 
         self.clubs, self.defaults = load_clubs()
         self.filters = load_filters()
@@ -155,7 +170,8 @@ class Runner:
                                      label=source.label)
                 report.sources.append(entry)
 
-                if not source.enabled:
+                if not should_fetch(source.enabled, source.manual,
+                                    self.include_manual):
                     entry.skipped = True
                     entry.manual = source.manual
                     # Zustand auch fuer nicht abgerufene Quellen pflegen,
@@ -170,6 +186,11 @@ class Runner:
                                  "noch offen)", club.name, source.label,
                                  source.adapter)
                     continue
+
+                if source.manual:
+                    log.info("%s / %s: manuelle Quelle wird auf Wunsch "
+                             "abgerufen", club.name, source.label)
+                    entry.manual = True
 
                 try:
                     adapter_cls = get_adapter(source.adapter)

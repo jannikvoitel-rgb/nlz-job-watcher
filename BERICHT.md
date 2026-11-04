@@ -13,7 +13,12 @@ Stand: 4. November 2026. Alle Angaben selbst geprüft (robots.txt, HTTP-Status, 
   - **generic_html** → VfB, Bayer 04, Paderborn, Wolfsburg, HSV e.V., Eintracht AG, Gladbach-Minijobs
   - **SuccessFactors** → FC Bayern, TSG Hoffenheim
 - **Aktuell 6 Stellen im Grundlagenbereich (Prio A)** über alle Vereine — siehe Abschnitt 4.
-  *Nachtrag 04.11.2026: Diese Zahl galt unter der ersten, weiten Auslegung des Grundlagenbereichs. Seit der Verengung auf NLZ-Mannschaften U9-U11 ist keine dieser Stellen mehr Prio A — siehe Abschnitt 4.*
+  *Nachtrag 04.11.2026: Diese Zahl galt unter der ersten, zu weiten Auslegung
+  des Grundlagenbereichs. Maßgeblich ist jetzt: NLZ-Mannschaften U9 bis U11.
+  Damit ist keine dieser sechs Stellen mehr Prio A — siehe Abschnitt 4.*
+- *Nachtrag 04.11.2026: Die TSG Hoffenheim antwortet den GitHub-Rechnern mit
+  „403 Forbidden“ und wird wie der FC Bayern als manuelle Quelle geführt. Vom
+  eigenen Rechner aus ist sie normal abrufbar — siehe README.*
 - Aktuell insgesamt rund **190 offene Stellen**, davon ca. **40 im Sportbereich**.
 
 ## 2. Haupttabelle

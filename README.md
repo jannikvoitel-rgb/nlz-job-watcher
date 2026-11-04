@@ -19,15 +19,16 @@ Privates Werkzeug für die eigene Stellensuche.
 | Adapter `generic_html` (VfB, Paderborn, Wolfsburg, HSV e.V., Eintracht AG, Gladbach-Minijobs, Schalke-Zusatz) | fertig, gegen die echten Seiten getestet |
 | Adapter `js_generic` (Hoffenheim, RB Leipzig) | fertig, gegen die echten Seiten getestet |
 | FC Bayern | **nicht scrapebar**, als manuelle Quelle geführt (siehe unten) |
+| TSG Hoffenheim | **aus GitHub nicht abrufbar** (403), als manuelle Quelle geführt (siehe unten) |
 | Web-App (`docs/`) | fertig, lokal geprüft |
 | GitHub-Actions-Workflow | fertig |
 
 Noch nicht gebaute Quellen stehen in `clubs.yaml` auf `enabled: false` und werden
-übersprungen, ohne den Lauf zu stören. Stand jetzt: **16 von 17 Vereinen live**,
-25 von 26 Quellen aktiv, 217 Stellen erfasst, davon 70 im Sport und derzeit
-keine im Grundlagenbereich – eine U9-U11-Mannschaftsstelle ist gerade nirgends
-ausgeschrieben. Der FC Bayern lässt sich nicht abrufen, Hoffenheim sperrt die
-GitHub-Rechner aus (beides unten erklärt).
+übersprungen, ohne den Lauf zu stören. Stand jetzt: **15 von 17 Vereinen
+automatisch**, 24 von 26 Quellen aktiv, 217 Stellen erfasst, davon 70 im Sport
+und derzeit keine im Grundlagenbereich – eine U9-U11-Mannschaftsstelle ist
+gerade nirgends ausgeschrieben. Zwei Vereine werden manuell geführt: der FC
+Bayern und die TSG Hoffenheim, beide unten erklärt.
 
 ### FC Bayern: warum manuell
 
@@ -42,6 +43,29 @@ Portal auf „Benachrichtigung erstellen" gehen, E-Mail hinterlegen – dann
 kommen neue Stellen direkt vom Verein. Zusätzlich lässt sich ein
 Bewerberprofil für künftige Stellen anlegen. Die Quelle bleibt in
 `clubs.yaml` dokumentiert und erscheint im Lauf als „manuell beobachten".
+
+### TSG Hoffenheim: warum manuell
+
+Die Stellenseite lädt vom eigenen Rechner aus einwandfrei, antwortet den
+GitHub-Rechnern aber mit **403 Forbidden** – zweimal in Folge geprüft, auch
+mit echtem Browser. Die Stellen sind öffentlich; abgewiesen wird die Herkunft
+aus dem Rechenzentrum. Daran vorbei zu kommen hieße, diese Herkunft zu
+verschleiern; das ist bewusst nicht gebaut.
+
+Die Quelle steht deshalb in `clubs.yaml` auf `manual: true` und erscheint im
+Lauf als „manuell beobachten". Zum Auffrischen vom eigenen Rechner:
+
+```bash
+PYTHONPATH=src ./.venv/bin/python -m nlzwatch --club tsg --include-manual
+```
+
+Danach `data/jobs.json` und `docs/data/jobs.json` committen, dann steht der
+neue Stand auch in der App. Ohne das veralten die 16 gespeicherten
+Hoffenheim-Stellen – der Reiter „Vereine" zeigt zu jedem Verein, wann er
+zuletzt erfolgreich abgerufen wurde.
+
+Dass der Lauf die Stellen bei einer Sperre **nicht** als geschlossen
+markiert, ist kein Zufall: siehe „Wann Stellen als geschlossen gelten".
 
 ## Einrichtung auf GitHub
 

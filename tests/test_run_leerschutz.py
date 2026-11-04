@@ -34,3 +34,26 @@ def test_rueckgang_ohne_null_bleibt_der_quotenregel():
     # Quotenpruefung im Lauf, nicht dieser Schutz.
     assert empty_result_is_suspect(found=1, previous=16,
                                    legitimately_empty=False) is False
+
+
+# --- Manuell gefuehrte Quellen ------------------------------------------
+from nlzwatch.run import should_fetch
+
+
+def test_aktive_quelle_wird_abgerufen():
+    assert should_fetch(enabled=True, manual=False, include_manual=False) is True
+
+
+def test_manuelle_quelle_wird_im_workflow_uebersprungen():
+    # Hoffenheim und der FC Bayern: auf GitHub bewusst nicht abrufen.
+    assert should_fetch(enabled=False, manual=True, include_manual=False) is False
+
+
+def test_manuelle_quelle_auf_wunsch_doch():
+    # Vom eigenen Rechner aus antwortet Hoffenheim normal.
+    assert should_fetch(enabled=False, manual=True, include_manual=True) is True
+
+
+def test_abgeschaltete_quelle_bleibt_abgeschaltet():
+    # enabled: false ohne manual heisst "Adapter noch nicht gebaut".
+    assert should_fetch(enabled=False, manual=False, include_manual=True) is False
