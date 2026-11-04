@@ -119,6 +119,21 @@ GLB-Stellen direkt in der Actions-Oberfläche.
 Ein einzelner Verein, der klemmt, färbt den Lauf **nicht** rot – dafür gibt
 es die Warn-Push. Lokal erzwingt `--fail-on-error` das andere Verhalten.
 
+### Wann Stellen als geschlossen gelten
+
+Nur wenn die Quelle tatsächlich geantwortet hat. Liefert sie 0 Stellen,
+obwohl vorher welche da waren, und sagt die Seite nicht selbst, dass nichts
+offen ist, dann gilt der Abruf als gestört: der Bestand bleibt unverändert
+offen, die Quelle wird als fehlerhaft vermerkt und du bekommst eine
+Warn-Push. Eine Seite, die klemmt oder nicht fertig lädt, ist kein Beleg
+dafür, dass die Stellen weg sind.
+
+Das ist nicht theoretisch: beim ersten Lauf auf GitHub lud die
+JavaScript-Seite der TSG Hoffenheim nicht fertig, und der Lauf schloss
+daraufhin alle 16 bekannten Stellen – darunter drei aus der
+TSG-Fußballschule. Die Regel steckt in `empty_result_is_suspect()` in
+`src/nlzwatch/run.py` und wird in `tests/test_run_leerschutz.py` geprüft.
+
 ### Von Hand starten
 
 Unter **Actions → Stellen prüfen → Run workflow** gibt es drei Schalter:
@@ -346,7 +361,7 @@ Stellentiteln je Priorität geprüft.
 |---------|---------------------|
 | „NTFY_TOPIC ist nicht gesetzt" | `export NTFY_TOPIC='…'` vor dem Aufruf |
 | Push kommt nicht an | Topic in App und Umgebung vergleichen, Groß-/Kleinschreibung beachten |
-| Warnung „Scraper für X prüfen" | Die Quelle liefert plötzlich 0 Stellen oder ist nicht erreichbar. `--club X -v` zeigt den Grund. Höchstens eine Warnung pro Verein und Tag. |
+| Warnung „Scraper für X prüfen" | Die Quelle liefert plötzlich 0 Stellen oder ist nicht erreichbar. `--club X -v` zeigt den Grund. Höchstens eine Warnung pro Verein und Tag. Der bekannte Bestand bleibt dabei **offen** – siehe unten. |
 | Warnung „liefert nur noch N statt M Stellen" | Teilausfall, etwa ein ausgefallener XML-Feed mit unvollständigem HTML-Rückfall. Schwelle in `filters.yaml` unter `monitoring.warn_on_drop_ratio`. |
 | Quelle wird „übersprungen" | `enabled: false` in `clubs.yaml`, der Adapter ist noch nicht gebaut |
 | Eine Stelle ist falsch eingestuft | Schlagwort in `filters.yaml` ergänzen, dann `--reclassify` |

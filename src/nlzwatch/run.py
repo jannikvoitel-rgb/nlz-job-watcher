@@ -74,6 +74,19 @@ class RunReport:
         return lines
 
 
+def empty_result_is_suspect(found: int, previous: int,
+                            legitimately_empty: bool) -> bool:
+    """Ist ein leeres Ergebnis verdaechtig statt echt?
+
+    Eine Quelle, die vorher Stellen hatte und jetzt keine liefert, ohne
+    dass die Seite selbst "nichts offen" meldet, hat keine verwertbare
+    Antwort gegeben. Das kann eine klemmende Seite sein oder eine, die
+    nicht fertig geladen hat. Beides ist kein Beleg dafuer, dass die
+    Stellen weg sind.
+    """
+    return found == 0 and previous > 0 and not legitimately_empty
+
+
 class Runner:
     def __init__(self, dry_run: bool = False, only: Optional[List[str]] = None,
                  reclassify: bool = False, skip_details: bool = False):
@@ -186,6 +199,29 @@ class Runner:
                     })
                     continue
 
+                monitoring = self.filters.get("monitoring", {}) or {}
+                if empty_result_is_suspect(len(result.jobs), previous or 0,
+                                           result.legitimately_empty):
+                    # Hier nicht zusammenfuehren: merge_source wuerde alle
+                    # bekannten Stellen dieser Quelle schliessen. Genau das
+                    # waere falsch, denn geantwortet hat die Quelle nicht.
+                    entry.error = ("0 Stellen, vorher {} - Bestand "
+                                   "unverändert gelassen".format(previous))
+                    self.store.record_error(club, source, entry.error)
+                    if monitoring.get("warn_on_empty", True):
+                        warn_queue.append({
+                            "club": club,
+                            "detail": "Quelle '{}' liefert plötzlich 0 Stellen "
+                                      "(vorher {}). Die bekannten Stellen "
+                                      "bleiben offen.".format(source.label,
+                                                              previous),
+                            "url": source.url,
+                        })
+                    log.warning("  0 Stellen trotz %s im Bestand - nichts "
+                                "geschlossen, Quelle gilt als gestört",
+                                previous)
+                    continue
+
                 if adapter.speculative_entry is not None:
                     # Das Portal fuehrt selbst einen Initiativbewerbungs-Eintrag.
                     state = self.store.club_state(club)
@@ -226,18 +262,10 @@ class Runner:
                         elif job.priority == "B":
                             new_b.append(job)
 
-                # Fehlerueberwachung
-                monitoring = self.filters.get("monitoring", {}) or {}
+                # Fehlerueberwachung. Der Fall "0 trotz Bestand" ist
+                # oben schon abgefangen und kommt hier nicht mehr an.
                 prev = previous or 0
-                if monitoring.get("warn_on_empty", True) and prev > 0 \
-                        and merge.found == 0 and not result.legitimately_empty:
-                    warn_queue.append({
-                        "club": club,
-                        "detail": "Quelle '{}' liefert plötzlich 0 Stellen "
-                                  "(vorher {}).".format(source.label, prev),
-                        "url": source.url,
-                    })
-                elif merge.found == 0 and result.legitimately_empty:
+                if merge.found == 0 and result.legitimately_empty:
                     log.info("  Seite meldet selbst, dass nichts offen ist - kein Fehler")
                 elif prev >= monitoring.get("drop_min_previous", 5) \
                         and merge.found > 0:

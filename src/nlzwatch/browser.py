@@ -128,10 +128,18 @@ class BrowserSession:
                 log.debug("networkidle bei %s nicht erreicht, lese trotzdem", url)
             if wait_for:
                 try:
-                    page.wait_for_selector(wait_for, timeout=8000)
+                    page.wait_for_selector(wait_for, timeout=15000)
                 except Exception:
-                    log.info("  Selektor '%s' erschien nicht - die Seite hat "
-                             "vermutlich keine Stellen", wait_for)
+                    # Bewusst offen formuliert: ob die Seite leer ist oder
+                    # nur nicht fertig geladen hat, entscheidet der Adapter
+                    # anhand des loaded_marker - nicht diese Meldung.
+                    try:
+                        titel = (page.title() or "")[:80]
+                    except Exception:
+                        titel = "?"
+                    log.info("  Selektor '%s' erschien nicht - Seite leer oder "
+                             "nicht fertig geladen (Titel: '%s')",
+                             wait_for, titel)
             if settle_ms:
                 page.wait_for_timeout(settle_ms)
             self.page_count += 1
