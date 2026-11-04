@@ -105,7 +105,16 @@ Die Stellen liegen bei `jobs.smartrecruiters.com/ni/RedBull/...`. Das `/ni/` ste
 - **Hertha und HSV-Aushilfen**: Personio-XML-Feed ist leer, obwohl die HTML-Seite Stellen zeigt. Der Adapter braucht deshalb beide Modi mit automatischem Rückfall auf HTML.
 - **Drittanbieter bewusst ausgeschlossen**: Bayer 04 (SPORTFIVE VIP-Host, Aramark-Gastro), RB Leipzig (Cuisinevent, Löwensicherheit, Velvet), VfB (Aramark, Clubrestaurant), Gladbach (Partner-Jobportal), HSV (jobs-im-stadion.de). Das sind keine Vereinsstellen.
 - **BVB** betreibt zusätzlich thematische Landingpages (`nebenjobs-bvb`, `expertinnen-bvb`, `ausbildung-bvb`, `leben-bvb` auf `career.softgarden.de`). Die zeigen Teilmengen desselben Boards — eine Quelle genügt.
-- **Initiativbewerbung**: 9 Vereine lehnen sie ausdrücklich ab (Mainz, Köln, Gladbach, Wolfsburg, Werder, HSV, Eintracht, Paderborn, dazu Hoffenheim mit Einschränkung). Das wird so in `clubs.yaml` und der Web-App hinterlegt — ersparst dir sinnlose Bewerbungen.
+- **Initiativbewerbung**: **8 Vereine** lehnen sie ausdrücklich ab — Mainz, Köln, Gladbach, Wolfsburg, Werder, HSV, Eintracht, Paderborn. Das steht so in `clubs.yaml` und der Web-App und erspart sinnlose Bewerbungen.
+  *Korrektur 04.11.2026: Hier stand zuerst „9 Vereine … dazu Hoffenheim mit
+  Einschränkung". Das war falsch und in der Sache irreführend. Die TSG
+  Hoffenheim lehnt **nicht** ab: laut FAQ ist eine Initiativbewerbung möglich,
+  nur mit geringer Aussicht, und der Verein nennt dafür sogar Ansprechpartner
+  für Nachwuchsbereich und Fußballschule. Sie steht in `clubs.yaml` korrekt
+  als `limited`. Ebenso war „kein Hinweis" bei Bayer 04 überholt: deren
+  Karriere-Board führt einen eigenen Eintrag „Initiativbewerbung", der Verein
+  steht als `allowed: yes`.*
+- **Stand nach Korrektur**: 8 × abgelehnt, 2 × ausdrücklich möglich (Bayer 04, FC Bayern), 1 × eingeschränkt möglich (Hoffenheim), 6 × ohne Hinweis (BVB, VfB, Freiburg, Schalke, Hertha, RB Leipzig). Maßgeblich ist immer `clubs.yaml`, nicht diese Momentaufnahme.
 
 ## 6. Technischer Hinweis zur Umgebung
 
