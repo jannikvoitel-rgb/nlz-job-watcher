@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NLZ-Stellen</title>
+<meta name="description" content="Offene Stellen in den Nachwuchsleistungszentren der Bundesliga, mit Schwerpunkt Grundlagenbereich.">
+<meta name="theme-color" content="#0d2240" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f6f9" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NLZ-Stellen">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <h1 class="brand"><span aria-hidden="true">⚽</span> NLZ-Stellen</h1>
+    <button id="infoToggle" class="icon-btn" type="button"
+            aria-expanded="false" aria-controls="infoBox"
+            title="Push-Benachrichtigungen einrichten">ⓘ</button>
+  </div>
+  <p class="summary" id="summary">Daten werden geladen …</p>
+</header>
+
+<section id="infoBox" class="info" hidden>
+  <h2>Push aufs Handy einrichten</h2>
+  <ol>
+    <li>App <strong>ntfy</strong> installieren
+      (<a href="https://apps.apple.com/app/ntfy/id1625396347" target="_blank" rel="noopener">iPhone</a> ·
+       <a href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" target="_blank" rel="noopener">Android</a>).</li>
+    <li>In der App auf <strong>+</strong> tippen und dein Topic abonnieren.</li>
+    <li>Dasselbe Topic im Repo als Secret <code>NTFY_TOPIC</code> hinterlegen.</li>
+  </ol>
+  <p class="hint">Wer das Topic kennt, kann mitlesen – nimm etwas Langes und
+  Unratbares. Stellen im Grundlagenbereich kommen mit hoher Priorität, alle
+  übrigen Sportstellen gebündelt. Stellen ohne Sportbezug lösen keine
+  Benachrichtigung aus.</p>
+</section>
+
+<nav class="tabs" id="tabs" role="tablist" aria-label="Bereiche">
+  <button role="tab" data-view="A" aria-selected="true">GLB <span class="count" data-count="A"></span></button>
+  <button role="tab" data-view="B" aria-selected="false">Sport <span class="count" data-count="B"></span></button>
+  <button role="tab" data-view="C" aria-selected="false">Sonstige <span class="count" data-count="C"></span></button>
+  <button role="tab" data-view="closed" aria-selected="false">Geschlossen <span class="count" data-count="closed"></span></button>
+  <button role="tab" data-view="clubs" aria-selected="false">Vereine</button>
+</nav>
+
+<div class="filters" id="filters">
+  <label class="sr-only" for="search">Stellen durchsuchen</label>
+  <input id="search" type="search" inputmode="search" autocomplete="off"
+         placeholder="Titel oder Beschreibung durchsuchen …">
+  <label class="sr-only" for="clubFilter">Nach Verein filtern</label>
+  <select id="clubFilter"><option value="">Alle Vereine</option></select>
+</div>
+
+<main id="main">
+  <p id="status" class="status">Daten werden geladen …</p>
+  <div id="list" class="list"></div>
+  <div id="clubList" class="clubs" hidden></div>
+</main>
+
+<footer class="foot">
+  <p>Zuletzt aktualisiert: <span id="generated">–</span></p>
+  <p class="hint">Privates Werkzeug. Alle Angaben kommen von den
+  Karriereseiten der Vereine; verbindlich ist immer die Originalanzeige.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

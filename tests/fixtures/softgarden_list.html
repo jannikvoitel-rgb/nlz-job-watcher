@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.sourceforge.net/" lang="de" class="no-js no-ie">
+    <head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="author" content="softgarden e-recruiting GmbH"/>
+     	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+		<link rel="icon" href="https://static.softgarden.de/favicon/favicon-32x32.png"><!--[if IE]><link rel="shortcut icon" href="https://static.softgarden.de/favicon/favicon.ico"><![endif]--><style type="text/css" id="jobSearchCss">
+#jobsContainer .matchContainer .date { width: 12% } #jobsContainer .matchContainer .title { width: 29.47% } #jobsContainer .matchContainer .audience { width: 16.84% } #jobsContainer .matchContainer .jobcategory { width: 16.84% } #jobsContainer .matchContainer .ProjectGeoLocationCity { width: 16.84% } </style>
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.core.WebFrontendApplication/core-ver-46480A77CA2574AB851CD35B365719CA.js"></script>
+<script type="text/javascript" id="jobsearchjs">
+/*<![CDATA[*/
+
+var criterions = [
+    {
+        "id": "audience",
+        "name": "Zielgruppe",
+        "options": {
+            "00001": "Auszubildende",
+            "3a3ab7987f000002010ad4925ffa0cf4": "Schüler/in",
+            "3a3af3667f000002010ad49215c3a5f4": "Berufseinsteiger",
+            "3a3b1f6e7f000002010ad492e7837dd6": "Berufserfahrene",
+            "6179d1a00a0b0cce01ed3de8643a0e39": "Student/in"
+        }
+    },
+    {
+        "id": "jobcategory",
+        "name": "Jobkategorie",
+        "options": {
+            "sam42_administration": "Administration und Sekretariat",
+            "sam42_physicians": "Ärzte",
+            "sam42_banking": "Banken, Finanzdienstleister und Versicherungen",
+            "sam42_education": "Bildung und Soziales",
+            "sam42_design": "Design, Gestaltung und Architektur",
+            "sam42_purchase": "Einkauf, Materialwirtschaft und Logistik",
+            "sam42_finance": "Finanzen",
+            "sam42_management": "Führungskräfte",
+            "sam42_manualwork": "Handwerk, Dienstleistung und Fertigung",
+            "sam42_engineering": "Ingenieure und technische Berufe",
+            "sam42_it": "IT",
+            "sam42_marketing": "Marketing und Kommunikation",
+            "sam42_science": "Naturwissenschaften und Forschung",
+            "sam42_publicsector": "Öffentlicher Dienst",
+            "sam42_hr": "Personal",
+            "sam42_therapy": "Pflege, Therapie und Assistenz",
+            "sam42_law": "Recht",
+            "sam42_sales": "Vertrieb und Verkauf",
+            "db57c754-4c8c-4d21-acc8-49ff67c3251a": "Athletik-Trainer",
+            "07d5df50-7a3d-4e48-b5ea-ca1ea74410e6": "Veranstaltungsmanagement",
+            "53af1f80-ee9b-4b4d-8b29-ab342d355b88": "Merchandising",
+            "3820b6f5-a6af-4020-97dc-7259fd32df90": "Content und Kommunikation",
+            "2319660a-200b-4ff5-bc37-b48a153c9374": "Trainer",
+            "37727ff3-e482-4cb0-a964-165ec761282d": "Trainer"
+        }
+    }
+];
+var sg_jobsearch_hide_inactive = true;
+var jobs_selected = Array();
+var current_page = 1;
+var order_by = 0;
+var jobs_per_page = 10;
+var paging_window = -1;
+var JobResultAnimationOff = false;
+var showInfoBoxSeeEndOfPage = true;
+var jobs_selected_per_list = Array();
+var preselected_location = '';
+var preselected_location_radius = '';
+var preselected_values = {};
+var geocodingOverride = {"OSM":{"62782":{"boundingBox":"[\"53.3951118\", \"53.7393983\", \"9.7275419\", \"10.3252805\"]"}},"GOOGLE":{}};
+jQuery(document).ready(function() {
+    jQuery('#selector_0').change(function () {
+    	jQuery('#jobsContainer').show();
+    	updateLists(0, order_by);
+	 	jQuery('.resetForm').show();
+	});
+    jQuery('#selector_1').change(function () {
+    	jQuery('#jobsContainer').show();
+    	updateLists(1, order_by);
+	 	jQuery('.resetForm').show();
+	});
+jQuery('.matchHeadline').show();
+initialize(order_by);
+});jobs_selected_per_list[0] = Array();
+jobs_selected_per_list[1] = Array();
+var job_id_list_ordered = new Array ();
+job_id_list_ordered[0] = [53552316, 64180123, 64514848, 65719231, 67144060, 67206080, 67381840, 67682757, 68237046, 68328598, 68512697, 68530282];
+job_id_list_ordered[1] = [53552316, 64180123, 64514848, 65719231, 67144060, 67206080, 67381840, 67682757, 68237046, 68328598, 68512697, 68530282];
+job_id_list_ordered[2] = [67206080, 64180123, 53552316, 68328598, 67381840, 68237046, 67144060, 68530282, 64514848, 65719231, 68512697, 67682757];
+job_id_list_ordered[3] = [67682757, 53552316, 68512697, 67206080, 65719231, 64180123, 68530282, 68328598, 68237046, 67381840, 67144060, 64514848];
+job_id_list_ordered[4] = [68328598, 68530282, 67206080, 67381840, 67144060, 65719231, 64514848, 64180123, 53552316, 68512697, 67682757, 68237046];
+job_id_list_ordered[5] = [68512697, 68530282, 68328598, 68237046, 67381840, 67206080, 67144060, 65719231, 64514848, 64180123, 53552316, 67682757];
+
+var complete_job_id_list = jobs_selected = [53552316, 64180123, 64514848, 65719231, 67144060, 67206080, 67381840, 67682757, 68237046, 68328598, 68512697, 68530282];
+var jobs_keyword_search = complete_job_id_list;
+var jobs_geoLocation_search = complete_job_id_list;
+var search_criteria = new Array();
+search_criteria[0] = new Object();
+search_criteria[0]["3a3b1f6e7f000002010ad492e7837dd6"] = [64180123, 65719231, 67206080, 68512697];
+search_criteria[0]["6179d1a00a0b0cce01ed3de8643a0e39"] = [64514848, 67144060, 67381840, 68237046, 68328598, 68530282];
+search_criteria[0]["3a3af3667f000002010ad49215c3a5f4"] = [53552316, 67682757];
+
+search_criteria[1] = new Object();
+search_criteria[1]["db57c754-4c8c-4d21-acc8-49ff67c3251a"] = [68328598];
+search_criteria[1]["sam42_finance"] = [67206080];
+search_criteria[1]["37727ff3-e482-4cb0-a964-165ec761282d"] = [67682757, 68512697];
+search_criteria[1]["sam42_education"] = [68530282];
+search_criteria[1]["sam42_marketing"] = [53552316, 64180123, 64514848, 65719231, 67144060, 67381840];
+search_criteria[1]["sam42_sales"] = [68237046];
+
+
+/*]]>*/
+</script>
+<title>Karriere Board | Bayer 04 Leverkusen Fu&szlig;ball GmbH</title><meta name="description" content="career board | © softgarden" />
+<meta name="robots" content="noindex, follow" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Karriere Board | Bayer 04 Leverkusen Fu&szlig;ball GmbH" />
+<meta name="twitter:site" content="@softgarden" />
+<meta name="twitter:description" content="career board | © softgarden" />
+<meta name="twitter:image" content="https://app.softgarden.io/assets/public/media/get/2f0c8468-03e2-428f-83ea-cf7086afd4f1/1742565071414/1100x0/Bayer04-Stellenausschreibungen-Header-1919x762px.jpg" />
+<meta property="og:title" content="Karriere Board | Bayer 04 Leverkusen Fu&szlig;ball GmbH" />
+<meta property="og:description" content="career board | © softgarden" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://app.softgarden.io/assets/public/media/get/2f0c8468-03e2-428f-83ea-cf7086afd4f1/1742565071414/1100x576P/Bayer04-Stellenausschreibungen-Header-1919x762px.jpg" />
+<meta property="og:image:width" content="1100" />
+<meta property="og:image:height" content="576" />
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.js.JavaScriptReference/modernizr-ver-BBD564F40D2D602049100DC76FE17C37.js"></script>
+<script type="text/javascript" id="sg_config">
+/*<![CDATA[*/
+var SG = SG || {};
+/*]]>*/
+</script>
+<link rel="stylesheet" type="text/css" href="//static.softgarden.de/thirdparty/fonts/css/dosis.css" />
+<link rel="stylesheet" type="text/css" href="//static.softgarden.de/thirdparty/fonts/css/dosis-vietnamese_latin-ext_latin.css" />
+<link rel="stylesheet" type="text/css" href="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.css.CssReference/webfrontend-v2-ver-591897EFF2EA75250FF42C429E89BE70.css" />
+<style type="text/css" id="companyCss">
+body { background:  #000000 no-repeat 0% 0%; } 
+.content-wrapper, .narrow-page, header.image-header { background-color: #000000; } 
+.content-box { background: #666666; } 
+a, label i, label em { color: #ff0000; } 
+a:visited { color: #ff0000; } 
+a:hover, .btn-link:hover, .btn-link:focus, .btn-link:active { color: #666666; } 
+body, h1, h2, h3 { color: #ffffff; } 
+.secondary-color, label, .control-group.error .control-label { color: #666666; } 
+textarea:focus, select:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus, .chosen-container-active .chosen-single, .chosen-container-active .chosen-choices, .chosen-container .chosen-drop { border-color: #ff0000; } 
+.btn, .btn:visited, .btn-primary, .btn-primary:visited, .upload-item { background-color: #ff0000; color: #FFFFFF; background-image: none; } 
+.btn-link, .btn-link:visited { color: #ff0000; } 
+.upload-item a, .upload-item a:visited { color: #FFFFFF; } 
+.thirdparty-btn.thirdparty-btn--cv-upload > * { color: #FFFFFF !important; } 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active { background-color: #ffffff; color: #666666; } 
+.thirdparty-btn.thirdparty-btn--cv-upload:hover > *, .thirdparty-btn.thirdparty-btn--cv-upload:active > *, .thirdparty-btn.thirdparty-btn--cv-upload:focus > * { color: #666666 !important; } 
+.navbar .btn-navbar, .navbar .btn-navbar.active, .navbar .btn-navbar:active, .navbar .btn-navbar:focus, .navbar .btn-navbar:hover { background-color: #ffffff; background-image: none; } 
+.navbar .btn-navbar .icon-bar, .navbar .btn-navbar.active .icon-bar, .navbar .btn-navbar:active .icon-bar, .navbar .btn-navbar:focus .icon-bar, .navbar .btn-navbar:hover .icon-bar { background-color: #ff0000; } 
+.sg-rating__star-icn.is-active, .sg-rating__star.is-hover .sg-rating__star-icn { color: #ff0000; } 
+.navbar .navbar-inner, .navbar .dropdown-menu { background-color: #ffffff; } 
+.navbar .nav > li > .dropdown-menu:after { border-bottom-color: #ffffff; } 
+.navbar .nav > li > a, .nav-collapse .dropdown-menu a, .navbar a, .navbar a:visited { color: #ff0000; } 
+.navbar .nav li.dropdown > .dropdown-toggle .caret { border-color: #ff0000; } 
+.navbar .nav > li > a.active, .navbar .nav > li > a:focus, .navbar .nav > li > a:hover, .navbar .nav li.dropdown.open > .dropdown-toggle, .nav-collapse .dropdown-menu a:focus, .nav-collapse .dropdown-menu a:hover, .nav-collapse .nav > li > a:focus, .nav-collapse .nav > li > a:hover { background-color: #ff0000; color: #FFFFFF; } 
+.navbar .nav li.dropdown > a:focus .caret, .navbar .nav li.dropdown > a:hover .caret, .navbar .nav li.dropdown.open > .dropdown-toggle .caret { border-color: #FFFFFF; } 
+body.widget-page {
+    background: #000000;
+}</style>
+<meta name="wicket.header.items"/>
+    </head>
+    <body>
+		<a href="#content" class="visually-hidden">Skip to main content</a>
+		
+		<div id="navbar" class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" aria-label="main menu">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+					<a class="brand" href="./vacancies">
+						
+						<img src="https://app.softgarden.io/assets/public/media/get/d3596d55-f239-4f3f-bb19-be1a9e24c22c/1663659147213/0x45/bayer-logo.png" alt="Bayer 04 Leverkusen Fußball GmbH"/>
+					</a>
+					
+					<div class="nav-public-collapse nav-collapse collapse">
+						<ul class="nav-public nav">
+					    	<li><a href="./vacancies" class="link-jobs external navlink active">Stellenangebote</a></li><li></li><li></li><li></li><li></li>
+						</ul>
+					</div>
+					
+					<div class="nav-personal-collapse nav-collapse collapse">
+						<ul class="nav-personal nav pull-right">
+							<li><a href="../sign-in?l=de" class="link-signin navlink">Login</a></li><li><a href="../sign-up?l=de" class="link-register navlink">Registrierung</a></li><li></li>
+							
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+		<div id="content" class="page-wrapper">
+			<div class="container">
+
+					
+		
+			<header class="image-header">
+				<div class="img-wrap">
+					<img src="https://app.softgarden.io/assets/public/media/get/2f0c8468-03e2-428f-83ea-cf7086afd4f1/1742565071414/1100x0/Bayer04-Stellenausschreibungen-Header-1919x762px.jpg" alt="">
+				</div>
+			</header>
+		
+
+		
+		
+
+		
+		
+	
+					<div class="body-wrapper">
+						
+		
+		<div class="jobs-page narrow-page">
+			<div>
+		<div class="job-search-panel">
+		
+			
+		
+			<div class="job-search">
+		<div class="internal-account-hint span3">
+			<a href="./vacancies?-1.-jobSearch-jobSearchContainer-internalLink" class="btn btn-primary">Bereits Mitarbeiter?</a>
+		</div>
+
+		<div class="searchBoxComplete">
+			<div class="searchBoxTop">
+				<section class="job-search-config searchBoxTopSmall">
+					<form class="search-form">
+						<section class="keyword-search">
+							<div class="keywordSearch">
+								<label for="keyword_search">Stichwortsuche</label>
+								<div class="loading-spinner" id="performing_keyword_search">
+									<img src="../img/jobsearch/taloom_loader_small.gif" alt="searching"/>
+								</div>
+								<input id="keyword_search" type="text" class="input-xlarge" value="" name="jobSearch:jobSearchContainer:keyword_search"/>
+							</div>
+						</section>
+						<section class="location-search" style="display: none;">
+							<div class="locationSearch search_criterion_box search_criterion_box_location">
+								<div class="resetLink selectAllLinkContainer">
+									<a href="#" onclick="resetLocationSearch();jQuery('.locationSearch .resetLink').hide(); return false;">Zurücksetzen</a>
+								</div>
+								<label for="geoLocation_search">Standortsuche</label>
+
+								<div class="loading-spinner" id="performing_location_search">
+									<img src="../img/jobsearch/taloom_loader_small.gif" alt="searching"/>
+								</div>
+								<div>
+									<input id="geoLocation_search" type="text" class="input-xlarge" value="" name="jobSearch:jobSearchContainer:geoLocation_search_wrapper:geoLocation_search"/>
+									<div id="geoLocation_info">
+
+										<small>
+											Arbeit in
+											<a href="#" onclick="centerMapToSearch();" id="geoLocation_result"> </a>
+											<span class="search-result-no-map"></span>
+											im Umkreis von
+										</small>
+										<div id="geoLocation_radius">
+											<select name="jobSearch:jobSearchContainer:geoLocation_search_wrapper:geoLocationRadius" id="id1">
+<option value="1">1 km</option>
+<option value="5">5 km</option>
+<option value="10">10 km</option>
+<option selected="selected" value="25">25 km</option>
+<option value="50">50 km</option>
+<option value="75">75 km</option>
+<option value="100">100 km</option>
+</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						
+	
+	<section class="extended-search">
+		<div class="search-criteria-container">
+			
+				<div class="search_criterion_box" style="display: none">
+	<div class="searchFieldLabel">
+		<div class="selectAllLinkContainer"><a href="javascript:;" id="id2" data-select="#selector_0" class="js-toggle-all-select-options">Zurücksetzen</a></div>
+		<label for="searchFieldId" class="searchCriterionBoxHeader">Zielgruppe</label>
+	</div>
+	<select id="selector_0" multiple="multiple" size="5" class="SearchMultiSelectBox filter-options-select search_criterion_box_audience" aria-label="Zielgruppe oder Jobkategorie auswählen" name="audience[]" data-reset-link="#id2">
+<option  title = "Auszubildende" value="00001">Auszubildende</option>
+<option  title = "Schüler/in" value="3a3ab7987f000002010ad4925ffa0cf4">Schüler/in</option>
+<option  title = "Berufseinsteiger" value="3a3af3667f000002010ad49215c3a5f4">Berufseinsteiger</option>
+<option  title = "Berufserfahrene" value="3a3b1f6e7f000002010ad492e7837dd6">Berufserfahrene</option>
+<option  title = "Student/in" value="6179d1a00a0b0cce01ed3de8643a0e39">Student/in</option>
+</select>
+</div>
+			
+				<div class="search_criterion_box" style="display: none">
+	<div class="searchFieldLabel">
+		<div class="selectAllLinkContainer"><a href="javascript:;" id="id3" data-select="#selector_1" class="js-toggle-all-select-options">Zurücksetzen</a></div>
+		<label for="searchFieldId" class="searchCriterionBoxHeader">Jobkategorie</label>
+	</div>
+	<select id="selector_1" multiple="multiple" size="5" class="SearchMultiSelectBox filter-options-select search_criterion_box_jobcategory" aria-label="Zielgruppe oder Jobkategorie auswählen" name="jobcategory[]" data-reset-link="#id3">
+<option  title = "Administration und Sekretariat" value="sam42_administration">Administration und Sekretariat</option>
+<option  title = "Ärzte" value="sam42_physicians">Ärzte</option>
+<option  title = "Banken, Finanzdienstleister und Versicherungen" value="sam42_banking">Banken, Finanzdienstleister und Versicherungen</option>
+<option  title = "Bildung und Soziales" value="sam42_education">Bildung und Soziales</option>
+<option  title = "Design, Gestaltung und Architektur" value="sam42_design">Design, Gestaltung und Architektur</option>
+<option  title = "Einkauf, Materialwirtschaft und Logistik" value="sam42_purchase">Einkauf, Materialwirtschaft und Logistik</option>
+<option  title = "Finanzen" value="sam42_finance">Finanzen</option>
+<option  title = "Führungskräfte" value="sam42_management">Führungskräfte</option>
+<option  title = "Handwerk, Dienstleistung und Fertigung" value="sam42_manualwork">Handwerk, Dienstleistung und Fertigung</option>
+<option  title = "Ingenieure und technische Berufe" value="sam42_engineering">Ingenieure und technische Berufe</option>
+<option  title = "IT" value="sam42_it">IT</option>
+<option  title = "Marketing und Kommunikation" value="sam42_marketing">Marketing und Kommunikation</option>
+<option  title = "Naturwissenschaften und Forschung" value="sam42_science">Naturwissenschaften und Forschung</option>
+<option  title = "Öffentlicher Dienst" value="sam42_publicsector">Öffentlicher Dienst</option>
+<option  title = "Personal" value="sam42_hr">Personal</option>
+<option  title = "Pflege, Therapie und Assistenz" value="sam42_therapy">Pflege, Therapie und Assistenz</option>
+<option  title = "Recht" value="sam42_law">Recht</option>
+<option  title = "Vertrieb und Verkauf" value="sam42_sales">Vertrieb und Verkauf</option>
+<option  title = "Athletik-Trainer" value="db57c754-4c8c-4d21-acc8-49ff67c3251a">Athletik-Trainer</option>
+<option  title = "Veranstaltungsmanagement" value="07d5df50-7a3d-4e48-b5ea-ca1ea74410e6">Veranstaltungsmanagement</option>
+<option  title = "Merchandising" value="53af1f80-ee9b-4b4d-8b29-ab342d355b88">Merchandising</option>
+<option  title = "Content und Kommunikation" value="3820b6f5-a6af-4020-97dc-7259fd32df90">Content und Kommunikation</option>
+<option  title = "Trainer" value="2319660a-200b-4ff5-bc37-b48a153c9374">Trainer</option>
+<option  title = "Trainer" value="37727ff3-e482-4cb0-a964-165ec761282d">Trainer</option>
+</select>
+</div>
+			
+		</div>
+		<div class="hide" id="mobile_placeholder">Bitte wählen</div>
+	</section>
+	
+
+					</form>
+				</section>
+				<section class="job-abo">
+
+					<a href="./vacancies?-1.-jobSearch-jobSearchContainer-jobAboLink" rel="nofollow" class="btn btn-primary">Stellenangebote abonnieren</a>
+
+				</section>
+
+				
+			</div>
+
+			<div id="jobsContainer" class="job-search-results">
+				<div>
+		<div class="job-search-result-panel">
+			<section id="job-search-map" class="jobMapContainer">
+				<div id="map_canvas"></div>
+			</section>
+
+			<section class="results">
+				<form>
+					<div class="result_count_div" id="job-search-result-count-label">
+						<p id="result_count_one" style="display: none;">Zu deiner Suchanfrage wurde eine Stellenanzeige gefunden:</p>
+						<p id="result_count_more" style="display: none;">Zu deiner Suchanfrage wurden <span id='jobs_result_count'>{0}</span> Stellenanzeigen gefunden:</p>
+						<p id="result_count_none" style="display: none;">Keine Stellenanzeigen gefunden.</p>
+					</div>
+					<div class="matchContainer">
+						<div class="matchElement matchHeadline">
+							<div id="matchValueHeadline1" class="matchValue date" onclick="reorderList(1); return false;">
+								<a href="#" onclick="return false;"><span>Datum</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline2" class="matchValue title" onclick="reorderList(2); return false;">
+								<a href="#" onclick="return false;"><span>Stellenangebot</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline3" class="matchValue audience" onclick="reorderList(3); return false;">
+								<a href="#" onclick="return false;"><span>Zielgruppe</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline4" class="matchValue jobcategory" onclick="reorderList(4); return false;">
+								<a href="#" onclick="return false;"><span>Jobkategorie</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline5" class="matchValue ProjectGeoLocationCity" onclick="reorderList(5); return false;">
+								<a href="#" onclick="return false;"><span>Standort</span><b class="caret"></b></a>
+							</div>
+						</div>
+						<div class="outputContainer">
+							<div class="matchElement" id="job_id_68530282">
+								<div class="matchValue date">03.11.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68530282/Pflichtpraktikant-Soziales-m-w-d-?jobDbPVId=289610962&amp;l=de" target="_blank">Pflichtpraktikant Soziales (m/w/d)</a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Bildung und Soziales</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68512697">
+								<div class="matchValue date">03.11.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68512697/Torwarttrainer-in-China-m-w-d-?jobDbPVId=289548357&amp;l=de" target="_blank">Torwarttrainer in China (m/w/d)</a>
+		</div><div class="matchValue audience">Berufserfahrene</div><div class="matchValue jobcategory">Trainer</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Changchun</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68328598">
+								<div class="matchValue date">26.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68328598/Pflichtpraktikant-Athletik-und-Rehabilitation-im-Leistungszentrum-m-w-d-?jobDbPVId=288770498&amp;l=de" target="_blank">Pflichtpraktikant Athletik und Rehabilitation im Leistungszentrum (m/w/d)</a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Athletik-Trainer</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68237046">
+								<div class="matchValue date">21.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68237046/Pflichtpraktikant-im-Bereich-Mitgliedschaften-m-w-d-?jobDbPVId=288307746&amp;l=de" target="_blank">Pflichtpraktikant im Bereich Mitgliedschaften (m/w/d)</a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Vertrieb und Verkauf</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67682757">
+								<div class="matchValue date">28.09.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67682757/Trainer-Future-Kids-U8-U10-m-w-d-geringf%C3%BCgige-Besch%C3%A4ftigung?jobDbPVId=285918387&amp;l=de" target="_blank">Trainer Future Kids U8-U10 (m/w/d) - geringfügige Beschäftigung</a>
+		</div><div class="matchValue audience">Berufseinsteiger</div><div class="matchValue jobcategory">Trainer</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Meerbusch,</span>
+
+					
+
+					
+				</div>
+
+			</div><div>
+				<div class="location-container">
+					<span class="location-view-item">Wuppertal,</span>
+
+					
+
+					
+				</div>
+
+			</div><div>
+				<div class="location-container">
+					<span class="location-view-item">Köln,</span>
+
+					
+
+					
+				</div>
+
+			</div><div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen,</span>
+
+					
+
+					
+				</div>
+
+			</div><div>
+				<div class="location-container">
+					<span class="location-view-item">Eschweiler</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67381840">
+								<div class="matchValue date">11.09.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67381840/Pflichtpraktikant-Grafikdesign-m-w-d-?jobDbPVId=284580220&amp;l=de" target="_blank">Pflichtpraktikant Grafikdesign (m/w/d)</a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67206080">
+								<div class="matchValue date">04.09.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67206080/Controller-m-w-d-Schwerpunkt-Power-BI,-Data-Analytics-Business-Intelligence?jobDbPVId=283822655&amp;l=de" target="_blank">Controller (m/w/d) - Schwerpunkt Power BI, Data Analytics &amp; Business Intelligence</a>
+		</div><div class="matchValue audience">Berufserfahrene</div><div class="matchValue jobcategory">Finanzen</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67144060">
+								<div class="matchValue date">02.09.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67144060/Pflichtpraktikant-Social-Media-m-w-d-?jobDbPVId=283577030&amp;l=de" target="_blank">Pflichtpraktikant Social Media (m/w/d) </a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_65719231">
+								<div class="matchValue date">01.07.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/65719231/Produktmanager-Digitale-Plattformen-m-w-d-?jobDbPVId=277527191&amp;l=de" target="_blank">Produktmanager Digitale Plattformen (m/w/d)</a>
+		</div><div class="matchValue audience">Berufserfahrene</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_64514848">
+								<div class="matchValue date">30.04.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/64514848/Praktikant-Innovationsmanagement-m-w-d-?jobDbPVId=271825103&amp;l=de" target="_blank">Praktikant Innovationsmanagement (m/w/d)</a>
+		</div><div class="matchValue audience">Student/in</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_64180123">
+								<div class="matchValue date">16.04.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/64180123/Digital-Media-Manager-International-m-f-d-?jobDbPVId=270265208&amp;l=de" target="_blank">Digital Media Manager International (m/f/d)</a>
+		</div><div class="matchValue audience">Berufserfahrene</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_53552316">
+								<div class="matchValue date">18.02.25</div><div target="_blank" class="matchValue title">
+			<a href="../job/53552316/Initiativbewerbung?jobDbPVId=191115906&amp;l=de" target="_blank">Initiativbewerbung</a>
+		</div><div class="matchValue audience">Berufseinsteiger</div><div class="matchValue jobcategory">Marketing und Kommunikation</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Leverkusen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div>
+						</div>
+						<div class="pagination pagination-centered"><ul id="job-search-pagination" class="taloom-pager"></ul></div>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>
+				
+			</div>
+		</div>
+
+		<div id="sg_modal" hidden="" data-wicket-placeholder=""></div>
+	</div>
+
+		</div>
+	</div>
+		</div>
+	
+	
+					</div>
+
+
+				
+		<footer id="footer">
+			<ul class="inline">
+				<li><a href="./imprint" target="_blank" class="sg_imprint_link">Impressum</a></li>
+				<li><a href="./data-security" target="_blank" class="sg_data_privacy_link">Datenschutzhinweise</a></li>
+				<li class="powered-by-taloom">
+	<span>
+		powered by 
+		<a href="https://softgarden.com" target="_blank">softgarden</a>
+		
+	</span>
+</li>
+			</ul>
+		</footer>
+	
+			</div>
+		</div>
+
+		
+
+		<div id="sg_modal" hidden="" data-wicket-placeholder=""></div>
+
+		
+		<script type="text/javascript" id="wicket-ajax-base-url">
+/*<![CDATA[*/
+Wicket.Ajax.baseUrl="de/vacancies";
+/*]]>*/
+</script>
+<script type="text/javascript" src="//static.softgarden.de/thirdparty/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script type="text/javascript" id="id2">
+/*<![CDATA[*/
+$('#id2').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" id="id3">
+/*<![CDATA[*/
+$('#id3').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" id="allJobLocations">
+/*<![CDATA[*/
+SG.allJobLocations = [];SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20Soziales\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 68530282, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Torwarttrainer\x20in\x20China\x20(m\/w\/d)', latitude: 43.8160199, longitude: 125.32357, postingId: 68512697, geoName: 'Changchun,\x20Jilin,\x20China'});SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20Athletik\x20und\x20Rehabilitation\x20im\x20Leistungszentrum\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 68328598, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20im\x20Bereich\x20Mitgliedschaften\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 68237046, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Trainer\x20Future\x20Kids\x20U8\x2dU10\x20(m\/w\/d)\x20\x2d\x20geringfügige\x20Beschäftigung', latitude: 51.2512932, longitude: 6.6893722, postingId: 67682757, geoName: 'Büderich,\x20Meerbusch,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Trainer\x20Future\x20Kids\x20U8\x2dU10\x20(m\/w\/d)\x20\x2d\x20geringfügige\x20Beschäftigung', latitude: 51.2562128, longitude: 7.1507636, postingId: 67682757, geoName: 'Wuppertal'});SG.allJobLocations.push({markerName: 'Trainer\x20Future\x20Kids\x20U8\x2dU10\x20(m\/w\/d)\x20\x2d\x20geringfügige\x20Beschäftigung', latitude: 50.8673879, longitude: 7.0512309, postingId: 67682757, geoName: 'Zündorf'});SG.allJobLocations.push({markerName: 'Trainer\x20Future\x20Kids\x20U8\x2dU10\x20(m\/w\/d)\x20\x2d\x20geringfügige\x20Beschäftigung', latitude: 51.0459248, longitude: 7.0192196, postingId: 67682757, geoName: 'Leverkusen'});SG.allJobLocations.push({markerName: 'Trainer\x20Future\x20Kids\x20U8\x2dU10\x20(m\/w\/d)\x20\x2d\x20geringfügige\x20Beschäftigung', latitude: 50.8107322, longitude: 6.263075, postingId: 67682757, geoName: 'Eschweile\x72'});SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20Grafikdesign\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 67381840, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Controller\x20(m\/w\/d)\x20\x2d\x20Schwerpunkt\x20Power\x20BI,\x20Data\x20Analytics\x20\x26\x20Business\x20Intelligence', latitude: 51.0459248, longitude: 7.0192196, postingId: 67206080, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20Social\x20Media\x20(m\/w\/d)\x20', latitude: 51.0459248, longitude: 7.0192196, postingId: 67144060, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Produktmanager\x20Digitale\x20Plattformen\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 65719231, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Praktikant\x20Innovationsmanagement\x20(m\/w\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 64514848, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Digital\x20Media\x20Manager\x20International\x20(m\/f\/d)', latitude: 51.0459248, longitude: 7.0192196, postingId: 64180123, geoName: 'Leverkusen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Initiativbewerbung', latitude: 51.0459248, longitude: 7.0192196, postingId: 53552316, geoName: 'Leverkusen,\x20Deutschland'});
+/*]]>*/
+</script>
+<script type="text/javascript" id="jobMapInit">
+/*<![CDATA[*/
+window.jQuery('#job-search-map').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" src="https://static.softgarden.de/thirdparty/leaflet/1.9.4/leaflet.js"></script>
+<script type="text/javascript" src="/thirdparty/jquery/query/jquery.query-2.2.3.js"></script>
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.js.JavaScriptReference/jobSearchLive-ver-DF58093895DAE1EA109A34586D3118B6.js"></script>
+<script type="text/javascript" id="frontend-font">
+/*<![CDATA[*/
+WebFont.load({custom:{families:['Open Sans']}});
+/*]]>*/
+</script>
+<script type="text/javascript">
+/*<![CDATA[*/
+Wicket.Event.add(window, "domready", function(event) { 
+Wicket.Ajax.ajax({"u":"./vacancies?-1.0-jobSearch-jobSearchContainer-keyword_search","m":"POST","c":"keyword_search","e":"input change","ch":"keyword_search|d","tr":{"id":"keyword_search","d":10,"p":true}});;
+$('#id1').chosen({width: "100%",disable_search: true,no_results_text: "Kein Eintrag gefunden",placeholder_text_single: "Bitte wählen",placeholder_text_multiple: "Bitte wählen"});requestAnimationFrame(function() {  var $input = $('#id1_chosen .chosen-search input');  if ($input.length && !$input.attr('aria-label')) {    $input.attr('aria-label', 'Search options');  }});;
+Wicket.Event.publish(Wicket.Event.Topic.AJAX_HANDLERS_BOUND);
+;});
+/*]]>*/
+</script>
+
+    </body>
+</html>

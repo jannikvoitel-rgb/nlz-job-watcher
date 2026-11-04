@@ -1,0 +1,448 @@
+# Relevanz-Einstufung fuer alle Vereine.
+#
+# Ablauf der Pruefung (erste Regel, die greift, gewinnt):
+#   1. Prioritaet A: Grundlagenbereich-Schlagwort oder Altersklasse U8-U11
+#   2. Prioritaet B: klares Sport-Schlagwort in Titel oder Abteilung
+#   3. Prioritaet C: klares Nicht-Sport-Schlagwort in Titel oder Abteilung
+#   4. Rest: Prioritaet B (unsichere Faelle bewusst hoeher eingestuft)
+#
+# Umlaute bitte normal schreiben (Förderkader, Übungsleiter).
+# Vergleich ist unabhaengig von Gross-/Kleinschreibung und Umlauten:
+# "Fussballschule" trifft "Fußballschule", "U 10" trifft "U10" und "U-10".
+
+# --- Prioritaet A: Grundlagenbereich (GLB) --------------------------------
+priority_a:
+  label: "GLB"
+  description: "Grundlagenbereich U8-U11"
+
+  # Schlagwoerter, die allein schon A ausloesen
+  keywords:
+    - grundlagenbereich
+    - grundlagentraining
+    - grundlagenbereichstrainer
+    - bambini
+    - f-jugend
+    - e-jugend
+    - f-/e-jugend
+    - e-/f-jugend
+    - f- und e-jugend
+    - f-junioren
+    - e-junioren
+    - fussballschule
+    - fussballcamp
+    - fussballcamps
+    - kinderfussball
+    - kinderfussballtrainer
+    - minikicker
+    - talentförderung
+    - talentförderprogramm
+    - förderkader
+    - future kids
+    - camptrainer
+    - campustraining
+    - campus training
+
+  # Altersklassen, die A ausloesen. Werden als eigenstaendige Tokens geprueft,
+  # "U16" loest also kein "U1" aus.
+  age_groups:
+    - u8
+    - u9
+    - u10
+    - u11
+
+  # A-Treffer nur in der Beschreibung (nicht im Titel) zaehlen ausschliesslich,
+  # wenn der Titel wenigstens einen dieser Sportbezuege hat. Verhindert, dass
+  # eine Marketingstelle A wird, weil im Text ein U10-Turnier erwaehnt wird.
+  description_requires_title_signal:
+    - trainer
+    - trainerin
+    - coach
+    - übungsleiter
+    - übungsleiterin
+    - nachwuchs
+    - nlz
+    - leistungszentrum
+    - akademie
+    - fussball
+    - talent
+    - sport
+
+# --- Prioritaet B: Sport allgemein ---------------------------------------
+priority_b:
+  label: "Sport"
+  description: "Sonstige Stellen im Sportbereich"
+
+  keywords:
+    # Trainer- und Spielbetrieb
+    - trainer
+    - trainerin
+    - cheftrainer
+    - co-trainer
+    - cotrainer
+    - torwarttrainer
+    - torwarttrainerin
+    - athletiktrainer
+    - athletik
+    - individualtrainer
+    - individualtraining
+    - spezialtrainer
+    - honorartrainer
+    - übungsleiter
+    - übungsleiterin
+    - übungsleitung
+    - bewegungsförderung
+    - coach
+    - spielbetrieb
+    - kaderplanung
+    - teammanager
+    - teammanagement
+    - zeugwart
+    - materialwart
+    # Nachwuchs und Struktur
+    - nachwuchs
+    - nachwuchsleistungszentrum
+    - nlz
+    - leistungszentrum
+    - fussballakademie
+    - akademie
+    - fussballinternat
+    - sportinternat
+    - knappenschmiede
+    - junioren
+    - juniorinnen
+    - jugendfussball
+    - fussball
+    # Analyse und Scouting
+    - scouting
+    - scout
+    - spielanalyse
+    - videoanalyse
+    - spiel- & videoanalyse
+    - matchanalyse
+    - datenanalyse sport
+    - performance analyst
+    # Medizin, Athletik, Psychologie, Ernaehrung
+    - physiotherapeut
+    - physiotherapie
+    - sportphysiotherapie
+    - sporttherapeut
+    - sporttherapie
+    - rehabilitation
+    - reha
+    - sportmedizin
+    - mannschaftsarzt
+    - sportpsychologie
+    - sportpsycholog
+    - sportwissenschaft
+    - sportwissenschaftler
+    - ernährungsberatung
+    - sporternährung
+    - nutrition
+    - osteopath
+    - masseur
+    # Sportliche Leitung und Koordination
+    - sportkoordination
+    - sportkoordinator
+    - sportliche leitung
+    - sportlicher leiter
+    - sportdirektor
+    - sportmanagement
+    - sportlicher bereich
+    # Einstiegsstellen: nur zusammen mit Sportbezug (siehe entry_level_terms)
+    - fsj
+    - freiwilliges soziales jahr
+    - bundesfreiwilligendienst
+    - bfd
+
+  # Diese Begriffe sind allein noch kein Sportbezug. Sie werden nur zu B,
+  # wenn zusaetzlich ein Sport-Schlagwort oder eine Sport-Abteilung auftritt.
+  entry_level_terms:
+    - praktikum
+    - praktikant
+    - praktikantin
+    - pflichtpraktikum
+    - pflichtpraktikant
+    - werkstudent
+    - werkstudentin
+    - werkstudium
+    - volunteer
+    - aushilfe
+    - minijob
+    - hospitanz
+    - trainee
+
+# --- Prioritaet C: ohne Sportbezug ---------------------------------------
+priority_c:
+  label: "Sonstige"
+  description: "Verwaltung, Kommerz, Betrieb"
+
+  keywords:
+    # Gastronomie und Catering
+    - gastronomie
+    - catering
+    - koch
+    - köchin
+    - küche
+    - küchenleitung
+    - küchenchef
+    - chef de partie
+    - sous chef
+    - chef tournant
+    - steward
+    - servicekraft
+    - serviceleitung
+    - schichtleitung
+    - service center
+    - barkeeper
+    - kellner
+    - cafeteria
+    - kiosk
+    - sportsbar
+    - back of house
+    - möslegaststätte
+    - hostess
+    - vip-host
+    # Verkauf, Ticketing, Merchandising
+    - fanshop
+    - merchandising
+    - merchandise
+    - verkauf
+    - verkäufer
+    - sales
+    - einzelhandel
+    - ticketing
+    - ticketshop
+    - kasse
+    - store
+    - marketplace
+    # Marketing, Medien, Kommunikation
+    - marketing
+    - sponsoring
+    - partnership
+    - partnershipmanager
+    - unternehmenskommunikation
+    - pressesprecher
+    - öffentlichkeitsarbeit
+    - social media
+    - content creation
+    - content sales
+    - redaktion
+    - grafik
+    - grafikdesign
+    - produktdesign
+    - brand design
+    - mediengestalter
+    - video producer
+    - kameraoperator
+    - film
+    - fotograf
+    - fotografie
+    - podcast
+    - bildbearbeitung
+    - fotograf
+    - digital media
+    - promotion
+    - dolmetscher
+    - gebärdensprache
+    # IT, Daten, Produkt
+    - it-administrator
+    - systemadministrator
+    - software
+    - backend engineer
+    - frontend
+    - data architect
+    - data analytics
+    - data scientist
+    - data engineer
+    - software engineer
+    - solution architect
+    - ai engineer
+    - ai solution
+    - ki-architekt
+    - ki-engineer
+    - künstliche intelligenz
+    - machine learning
+    - devops
+    - ki
+    - business intelligence
+    - power bi
+    - digitalisierung
+    - digitale plattformen
+    - produktmanager
+    - projektleitung digitalisierung
+    - innovationsmanagement
+    # Verwaltung, Recht, Finanzen, Personal
+    - verwaltung
+    - sekretariat
+    - assistenz der geschäftsführung
+    - büromanagement
+    - rechtsreferendar
+    - rechtsreferendariat
+    - justiziar
+    - compliance
+    - datenschutz
+    - finanzen
+    - controller
+    - controlling
+    - accounting
+    - payroll
+    - buchhaltung
+    - steuern
+    - einkauf
+    - personalentwicklung
+    - personalreferent
+    - human relations
+    - hr-generalist
+    - recruiting
+    - mitgliederservice
+    - mitgliederwesen
+    - mitgliedschaften
+    # Stadion, Sicherheit, Technik, Logistik
+    - ordnungsdienst
+    - ordner
+    - sicherheitsmitarbeiter
+    - objektschutz
+    - geländesicherheit
+    - veranstaltungssicherheit
+    - stadionbetrieb
+    - stadionguide
+    - stadiontour
+    - greenkeeper
+    - greenkeeping
+    - hausmeister
+    - hauswirtschaft
+    - reinigung
+    - elektrotechnik
+    - elektrotechniker
+    - energiemanagement
+    - instandhaltung
+    - facility
+    - logistik
+    - logistiker
+    - lager
+    - fahrdienst
+    - maskottchen
+    - volunteers
+    # Soziales ausserhalb des Sports
+    - hospizdienst
+    - kinderhospiz
+    - nachhaltigkeit
+    - csr
+    - fanbetreuung
+    - fan- und zuschauermanagement
+    - fanangelegenheiten
+    - eventmanagement
+    - event-logistik
+    - hospitality
+    - business club
+
+# --- Abteilungen / Bereiche aus dem Portal -------------------------------
+# Viele Portale liefern ein Feld "Abteilung" oder "Jobkategorie".
+# Trifft eines dieser Muster, zaehlt es wie ein Schlagwort im Titel.
+department_signals:
+  priority_a:
+    - kinderfussball
+    - fussballschule
+    - grundlagenbereich
+  priority_b:
+    - sport
+    - sport nlz
+    - administration nlz
+    - nachwuchs
+    - training
+    - sport und gesundheit
+    - bildung und soziales
+    - profispielbetrieb
+    - nachwuchsbereich
+    - leistungszentrum
+    - ernährung
+  priority_c:
+    - gastronomie
+    - gastronomie, hotellerie
+    - hotel und gastronomie
+    - public catering
+    - business catering
+    - sicherheit
+    - logistik
+    - merchandising
+    - ticketing
+    - verkauf
+    - vertrieb und verkauf
+    - marketing
+    - marketing und kommunikation
+    - kommunikation
+    - it
+    - it und software-entwicklung
+    - finanzen
+    - recht
+    - personal
+    - administration
+    - verwaltung
+    - einkauf
+    - design, gestaltung und architektur
+    - grafik und kommunikationsdesign
+    - event
+    - event marketing
+    - stadiontouren
+    - greenkeeping
+    - service
+    - instandhaltung
+    - digital
+
+# --- Push-Verhalten ------------------------------------------------------
+push:
+  priority_a:
+    ntfy_priority: high
+    title_template: "⚽ GLB-Stelle: {club}"
+    tags: ["soccer"]
+    bundle: false          # A-Stellen immer als eigene Nachricht
+  priority_b:
+    ntfy_priority: default
+    title_template: "Neue Sportstelle: {club}"
+    tags: ["briefcase"]
+    bundle: true           # mehrere B-Stellen eines Laufs zusammenfassen
+  priority_c:
+    push: false            # wird nur gespeichert, nicht gepusht
+
+# --- Eintraege, die keine Stelle sind -----------------------------------
+# Portale fuehren Dauer-Eintraege in der Stellenliste. Die werden nicht als
+# Stelle gezaehlt und nicht gepusht.
+ignore_titles:
+  - initiativbewerbung
+  - initiativ-bewerbung
+  - unaufgeforderte bewerbung
+  - talentpool
+  - talent pool
+  - talentnetzwerk
+  - kandidatenpool
+  - newsletter
+  - stellenabo
+  - jobalarm
+  - job alert
+  - speculative application
+  - unsolicited application
+
+# Welche dieser Eintraege belegen eine Initiativbewerbungs-Moeglichkeit?
+# Wird in der Web-App beim Verein als Link angezeigt.
+speculative_titles:
+  - initiativbewerbung
+  - initiativ-bewerbung
+  - unaufgeforderte bewerbung
+  - talentpool
+  - talent pool
+  - kandidatenpool
+
+# --- Fehlerueberwachung -------------------------------------------------
+monitoring:
+  # Warnung, wenn eine Quelle ploetzlich gar keine Stellen mehr liefert
+  # (vorher >0) und die Seite das nicht selbst als "nichts offen" ausweist.
+  warn_on_empty: true
+  # Zusaetzlich warnen, wenn die Zahl um diesen Anteil einbricht. Faengt den
+  # Fall, dass ein Portal nur noch einen Teil ausliefert - etwa wenn ein
+  # XML-Feed ausfaellt und der HTML-Rueckfall weniger Stellen zeigt.
+  warn_on_drop_ratio: 0.6
+  # Unter dieser Stellenzahl ist ein Einbruch nicht aussagekraeftig.
+  drop_min_previous: 5
+
+# "NEU"-Badge in der Web-App
+new_badge_days: 7

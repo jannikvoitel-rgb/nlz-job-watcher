@@ -1,0 +1,471 @@
+# Zu ueberwachende Vereine.
+#
+# Einen neuen Verein ergaenzt man ausschliesslich hier. Nur wenn ein Verein ein
+# Portal nutzt, das noch keinen Adapter hat, kommt ein kleiner neuer Adapter in
+# src/nlzwatch/adapters/ dazu.
+#
+# Felder pro Quelle:
+#   id          eindeutiger Schluessel (stabil lassen, steckt in den Job-IDs)
+#   label       Anzeigename der Quelle in der Web-App
+#   adapter     softgarden | personio | hrworks | generic_html | successfactors | js_generic
+#   url         Startseite der Stellenliste
+#   enabled     false = Quelle wird uebersprungen (Adapter noch nicht gebaut)
+#   params      adapterspezifische Parameter
+#   empty_ok    Textmuster, die eine legitim leere Seite belegen (kein Fehler)
+#
+# speculative: Initiativbewerbung. allowed: yes | no | limited | unknown
+#
+# keywords: optionale vereinsspezifische Schlagwoerter. Werden VOR den globalen
+# Listen aus filters.yaml geprueft, je Stufe priority_a / priority_b / priority_c.
+# Gedacht fuer Eigennamen, die nur dieser Verein benutzt:
+#     keywords:
+#       priority_a:
+#         - knappenkicker      # hiesse: Stelle im Grundlagenbereich
+#       priority_c:
+#         - fanshop-name
+
+defaults:
+  # Hoeflichkeits-Einstellungen, greifen fuer alle Quellen
+  request_delay_seconds: 1.5
+  timeout_seconds: 25
+  retries: 3
+  respect_robots: true
+
+clubs:
+  # ---------------------------------------------------------------- 1
+  - name: Borussia Dortmund
+    short: bvb
+    sources:
+      - id: bvb-softgarden
+        label: Karriere-Board
+        adapter: softgarden
+        url: https://bvb.softgarden.io/de/vacancies
+        enabled: true
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite. Stellen-Abo im Board möglich."
+      url: https://karriere.bvb.de/
+
+  # ---------------------------------------------------------------- 2
+  - name: FSV Mainz 05
+    short: mainz05
+    sources:
+      - id: mainz05-hrworks
+        label: Stellenportal
+        adapter: hrworks
+        url: https://jobapplication.hrworks.de/de?companyId=ba8e529b
+        enabled: true
+    speculative:
+      allowed: no
+      note: "Initiativbewerbungen und Bewerbungen per E-Mail werden ausdrücklich nicht berücksichtigt."
+      url: https://www.mainz05.de/jobs
+
+  # ---------------------------------------------------------------- 3
+  - name: FC Bayern München
+    short: fcbayern
+    sources:
+      - id: fcbayern-successfactors
+        label: Jobportal
+        adapter: successfactors
+        url: https://careers.fcbayern.com/go/Alle-Jobangebote-anzeigen/8774701/
+        enabled: false
+        manual: true
+        manual_reason: >-
+          Die Seite weist automatisierte Zugriffe ab und liefert auch einem
+          echten Browser eine Fehlerseite statt der Stellen. Daran vorbei
+          zu kommen hieße, die Bot-Erkennung zu täuschen – das ist hier
+          bewusst nicht gebaut.
+        manual_hint: >-
+          Das Jobportal des FC Bayern (SAP SuccessFactors) hat eine eigene
+          Benachrichtigungsfunktion: im Portal unter „Benachrichtigung
+          erstellen“ eintragen, dann kommen neue Stellen per E-Mail direkt
+          vom Verein. Zusätzlich lässt sich ein Bewerberprofil für
+          zukünftige Stellen anlegen.
+        params:
+          # Falls der Verein die Sperre je lockert: SuccessFactors blaettert
+          # ueber ?startrow=25 in Schritten von 25 Eintraegen.
+          needs_browser: true
+          pagination_param: startrow
+          page_size: 25
+    speculative:
+      allowed: yes
+      note: "Talent-Pool: Profil für zukünftige Jobs anlegen. Zusätzlich eigener Job-Alert im Portal."
+      url: https://careers.fcbayern.com/
+
+  # ---------------------------------------------------------------- 4
+  - name: TSG Hoffenheim
+    short: tsg
+    sources:
+      - id: tsg-stellenangebote
+        label: Stellenangebote
+        adapter: js_generic
+        url: https://www.tsg-hoffenheim.de/tsg/karriere/stellenangebote
+        enabled: true
+        params:
+          needs_browser: true
+          # Die Liste wird per AngularJS nachgeladen (ng-repeat).
+          item: 'div.g-box:has(a[href*="/stellenangebote/detail/"])'
+          title: "h5.name"
+          link: 'a[href*="/stellenangebote/detail/"]'
+          employment_type: ".labels p.t"
+          location: ".loc p"
+          wait_for: 'a[href*="/stellenangebote/detail/"]'
+          # Angular liefert Links der Form "./tsg/karriere/..." - die sind
+          # gegen die Seitenwurzel aufzuloesen, sonst entsteht ein doppelter
+          # Pfad und die Seite antwortet mit 403.
+          link_relative_to: root
+          detail_root: ".content-box .body"
+          # Die Seite schreibt bei null Stellen KEIN "keine offenen Stellen" hin.
+          # Beleg fuer korrektes Laden ist daher der Ansprechpartner-Block.
+          loaded_marker: "Ansprechpartner"
+    speculative:
+      allowed: limited
+      note: "Laut FAQ nur geringe Aussicht auf Erfolg. Ansprechpartner: Matilde Florentino und Noelle Herbst (Nachwuchsbereich), Robin Wenzel (Fußballschule)."
+      url: https://www.tsg-hoffenheim.de/tsg/karriere/bewerbung
+
+  # ---------------------------------------------------------------- 5
+  - name: VfB Stuttgart
+    short: vfb
+    sources:
+      - id: vfb-jobs
+        label: Stellenangebote
+        adapter: generic_html
+        url: https://www.vfb.de/de/1893/aktuell/jobs/jobs/
+        enabled: true
+        params:
+          # Alle drei VfB-Seiten nutzen dasselbe Muster: Abschnitte
+          # "div.meldung-bild", darin je Stelle ein <p> mit Titel und einem
+          # Download-Link auf die Ausschreibung als PDF.
+          item: 'div.meldung-bild p:has(a[data-icon="download"])'
+          link: 'a[data-icon="download"]'
+          group_title: "h2"
+          detail_is_pdf: true
+      - id: vfb-praktikum
+        label: Praktikum
+        adapter: generic_html
+        url: https://www.vfb.de/de/1893/aktuell/jobs/praktikum/
+        enabled: true
+        params:
+          # Alle drei VfB-Seiten nutzen dasselbe Muster: Abschnitte
+          # "div.meldung-bild", darin je Stelle ein <p> mit Titel und einem
+          # Download-Link auf die Ausschreibung als PDF.
+          item: 'div.meldung-bild p:has(a[data-icon="download"])'
+          link: 'a[data-icon="download"]'
+          group_title: "h2"
+          detail_is_pdf: true
+      - id: vfb-aushilfen
+        label: Aushilfen und Werkstudenten
+        adapter: generic_html
+        url: https://www.vfb.de/de/1893/aktuell/jobs/aushilfen-und-werkstudenten/
+        enabled: true
+        params:
+          # Alle drei VfB-Seiten nutzen dasselbe Muster: Abschnitte
+          # "div.meldung-bild", darin je Stelle ein <p> mit Titel und einem
+          # Download-Link auf die Ausschreibung als PDF.
+          item: 'div.meldung-bild p:has(a[data-icon="download"])'
+          link: 'a[data-icon="download"]'
+          group_title: "h2"
+          detail_is_pdf: true
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite."
+      url: https://www.vfb.de/de/1893/aktuell/jobs/jobs/
+
+  # ---------------------------------------------------------------- 6
+  - name: SC Freiburg
+    short: scf
+    sources:
+      - id: scf-hrworks
+        label: Offene Stellen
+        adapter: hrworks
+        url: https://jobs.scfreiburg.com/de
+        enabled: true
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite."
+      url: https://www.scfreiburg.com/verein/jobs/
+
+  # ---------------------------------------------------------------- 7
+  - name: Bayer 04 Leverkusen
+    short: bayer04
+    sources:
+      - id: bayer04-softgarden
+        label: Karriere-Board
+        adapter: softgarden
+        url: https://bayer04.softgarden.io/de/vacancies
+        enabled: true
+    speculative:
+      allowed: yes
+      note: "Das Karriere-Board führt einen eigenen Eintrag „Initiativbewerbung“."
+      url: https://bayer04.softgarden.io/de/vacancies
+
+  # ---------------------------------------------------------------- 8
+  - name: Borussia Mönchengladbach
+    short: bmg
+    sources:
+      - id: bmg-hrworks
+        label: Borussia-Jobportal
+        adapter: hrworks
+        url: https://job.borussia.de/de
+        enabled: true
+      - id: bmg-minijobs
+        label: Minijob-Portal
+        adapter: generic_html
+        url: https://minijobs.borussia.de/
+        enabled: true
+        params:
+          item: "article.bmg-m4-advertisement"
+          title: "h2"
+          link: "a.bmg-cta"
+          description: ".bmg-wrap"
+    keywords:
+      # Borussia benennt seine Einrichtungen eigen. Ohne diese Begriffe
+      # landet die Betreuungsstelle im NLZ-Internat nur im Sicherheitsnetz.
+      priority_b:
+        # Nur eindeutige Begriffe: "fohlencampus" waere zu weit gefasst,
+        # dort liegt auch die Cafeteria.
+        - fohlenstall      # Internat des Nachwuchsleistungszentrums
+      priority_c:
+        - fohlenshop
+        - fohlensportsbar
+    speculative:
+      allowed: no
+      note: "Borussia bittet ausdrücklich, von Initiativbewerbungen abzusehen."
+      url: https://www.borussia.de/jobs
+
+  # ---------------------------------------------------------------- 9
+  - name: 1. FC Köln
+    short: fck
+    sources:
+      - id: fck-personio
+        label: Stellenboerse
+        adapter: personio
+        url: https://effzeh.jobs.personio.de/
+        enabled: true
+        params:
+          # Personio-XML-Feed enthaelt die vollstaendige Beschreibung.
+          prefer_xml: true
+    speculative:
+      allowed: no
+      note: "Nimmt keine Initiativbewerbungen an, da alle besetzbaren Stellen ausgeschrieben werden."
+      url: https://fc.de/jobs
+
+  # ---------------------------------------------------------------- 10
+  - name: FC Schalke 04
+    short: s04
+    sources:
+      - id: s04-softgarden
+        label: Karriere-Board
+        adapter: softgarden
+        url: https://schalke04.softgarden.io/de/vacancies
+        enabled: true
+      - id: s04-weitere
+        label: Weitere Stellen
+        adapter: generic_html
+        url: https://schalke04.de/verein/karriere/jobangebote/
+        enabled: true
+        params:
+          # Neben dem softgarden-Board stehen hier einzelne Ausschreibungen
+          # als PDF. Der Titel steht im Linktext.
+          item: 'div.module-text p:has(a[href$=".pdf"])'
+          link: 'a[href$=".pdf"]'
+          detail_is_pdf: true
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite. Kontakt: post@schalke04.de"
+      url: https://schalke04.de/verein/karriere/jobangebote/
+
+  # ---------------------------------------------------------------- 11
+  - name: VfL Wolfsburg
+    short: vfl
+    sources:
+      - id: vfl-direkteinstieg
+        label: Direkteinstieg
+        adapter: generic_html
+        url: https://www.vfl-wolfsburg.de/der-vfl/jobs/direkteinstieg
+        enabled: true
+        params:
+          # TYPO3-Inhaltselemente: je Stelle ein <li> mit Titel im ersten <p>
+          # und einem "mehr erfahren"-Link auf die Detailseite.
+          item: "div.frame-type-text li:has(a.btn-primary)"
+          title: "p"
+          link: "a.btn-primary"
+      - id: vfl-aushilfsjobs
+        label: Aushilfsjobs
+        adapter: generic_html
+        url: https://www.vfl-wolfsburg.de/der-vfl/jobs/aushilfsjobs
+        enabled: true
+        params:
+          # TYPO3-Inhaltselemente: je Stelle ein <li> mit Titel im ersten <p>
+          # und einem "mehr erfahren"-Link auf die Detailseite.
+          item: "div.frame-type-text li:has(a.btn-primary)"
+          title: "p"
+          link: "a.btn-primary"
+      - id: vfl-praktikum
+        label: Praktikum
+        adapter: generic_html
+        url: https://www.vfl-wolfsburg.de/der-vfl/jobs/praktikum
+        enabled: true
+        params:
+          # TYPO3-Inhaltselemente: je Stelle ein <li> mit Titel im ersten <p>
+          # und einem "mehr erfahren"-Link auf die Detailseite.
+          item: "div.frame-type-text li:has(a.btn-primary)"
+          title: "p"
+          link: "a.btn-primary"
+    speculative:
+      allowed: no
+      note: "Initiativbewerbungen können nicht berücksichtigt werden."
+      url: https://www.vfl-wolfsburg.de/der-vfl/jobs
+
+  # ---------------------------------------------------------------- 12
+  - name: SV Werder Bremen
+    short: werder
+    sources:
+      - id: werder-softgarden
+        label: Karriere-Board
+        adapter: softgarden
+        url: https://werder.softgarden.io/de/vacancies
+        enabled: true
+    speculative:
+      allowed: no
+      note: "Nimmt keine Initiativbewerbungen an."
+      url: https://karriere.werder.de/
+
+  # ---------------------------------------------------------------- 13
+  - name: Hamburger SV
+    short: hsv
+    sources:
+      # Der HSV betreibt zwei Personio-Boards, die sich die Stellen
+      # aufteilen: Festanstellungen auf hsv-fussball-ag, Aushilfen und
+      # Praktika auf hsv-fussball-ag-ap. Beide zusammen ergeben genau die
+      # 12 Stellen des Mandanten, ohne Ueberschneidung.
+      #
+      # Der XML-Feed von hsv-fussball-ag listet zwar alle 12, aber die
+      # Detailseiten der 9 Aushilfen-Stellen antworten auf diesem Host mit
+      # 404 - sie liegen nur unter dem -ap-Host. Deshalb hier bewusst
+      # prefer_xml: false und zwei Quellen.
+      - id: hsv-ag-personio
+        label: HSV Fußball AG
+        adapter: personio
+        url: https://hsv-fussball-ag.jobs.personio.de/
+        enabled: true
+        params:
+          prefer_xml: false
+      - id: hsv-ap-personio
+        label: Aushilfsjobs und Praktika
+        adapter: personio
+        url: https://hsv-fussball-ag-ap.jobs.personio.de/
+        enabled: true
+        params:
+          prefer_xml: false
+      - id: hsv-ev
+        label: HSV e.V.
+        adapter: generic_html
+        url: https://www.hsv.de/jobs-beim-e-v
+        enabled: true
+        params:
+          # Die Seite hat keine sprechenden Klassen, nur Utility-Klassen.
+          # Die Stellen sind Aufklapp-Elemente; "text-hsv-navy" grenzt sie
+          # vom Navigationsmenue ab, das dieselbe Struktur nutzt.
+          item: "div:has(> button.text-hsv-navy)"
+          title: "button span"
+          description: "button + div"
+    speculative:
+      allowed: no
+      note: "Nimmt keine Initiativbewerbungen entgegen. Kontakt e.V.: personal-ev@hsv.de"
+      url: https://www.hsv.de/karriere
+
+  # ---------------------------------------------------------------- 14
+  - name: Hertha BSC
+    short: hertha
+    sources:
+      - id: hertha-personio
+        label: Offene Stellen
+        adapter: personio
+        url: https://herthabsc.jobs.personio.com/
+        enabled: true
+        params:
+          # XML-Feed ist leer, daher HTML parsen.
+          prefer_xml: false
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite."
+      url: https://www.herthabsc.com/de/club/jobs
+
+  # ---------------------------------------------------------------- 15
+  - name: RB Leipzig
+    short: rbl
+    sources:
+      - id: rbl-karriere
+        label: Karriere und offene Stellen
+        adapter: js_generic
+        url: https://rbleipzig.com/de/club-teamwork-karriere
+        enabled: true
+        params:
+          needs_browser: true
+          # Die Stellen sind direkt verlinkte Anzeigen bei SmartRecruiters.
+          item: 'a[href*="jobs.smartrecruiters.com"]'
+          wait_for: 'a[href*="jobs.smartrecruiters.com"]'
+          loaded_marker: "ALLE STELLENANGEBOTE"
+          # Detailseiten bei SmartRecruiters sind ohne Browser abrufbar
+          # und liefern die Stellendaten als Microdata.
+          detail_needs_browser: false
+          # Neben den Vereinsstellen stehen dort Caterer und
+          # Sicherheitsfirmen - das sind keine Stellen des Vereins.
+          exclude_link_hosts:
+            - kandidatenportal.eu
+            - loewensicherheit.de
+            - velvet-jobs.de
+    speculative:
+      allowed: unknown
+      note: "Kein Hinweis auf der Karriereseite."
+      url: https://rbleipzig.com/de/club-teamwork-karriere
+
+  # ---------------------------------------------------------------- 16
+  - name: Eintracht Frankfurt
+    short: sge
+    sources:
+      - id: sge-ag
+        label: Eintracht Frankfurt AG
+        adapter: generic_html
+        url: https://klub.eintracht.de/jobs/ag/
+        enabled: true
+        params:
+          item: "li.ef-job-list__item"
+          title: ".ef-job-list__item-title"
+          link: "a.ef-job-list__item-link"
+          # Drei Meta-Werte je Stelle: Vertragsart, Arbeitszeit, Ort
+          meta: ".ef-job-list__item-meta-item"
+      - id: sge-ev-hrworks
+        label: Eintracht Frankfurt e.V.
+        adapter: hrworks
+        url: https://jobapplication.hrworks.de/de?companyId=aq915e9c
+        enabled: true
+    speculative:
+      allowed: no
+      note: "Nimmt keine Initiativbewerbungen entgegen."
+      url: https://klub.eintracht.de/jobs/
+
+  # ---------------------------------------------------------------- 17
+  - name: SC Paderborn 07
+    short: scp
+    sources:
+      - id: scp-jobs
+        label: Jobs
+        adapter: generic_html
+        url: https://www.scp07.de/SCP07/Die-KGaA/Jobs/
+        enabled: true
+        params:
+          # Aufklappbare Abschnitte mit dem Volltext direkt auf der Seite.
+          # Es gibt keine eigene URL je Stelle, die ID bildet sich daher
+          # aus Quelle und Titel.
+          item: "article.dp-akkordeon"
+          title: ".dp-akkordeon-title"
+          description: ".dp-akkordeon-text"
+          # Ueberschrift des Abschnitts, z. B. "Teilzeit/Geringfuegige
+          # Beschaeftigung" - wird als Vertragsart uebernommen.
+          group_title: "h1.title"
+    speculative:
+      allowed: no
+      note: "Bittet ausdrücklich, von Initiativbewerbungen abzusehen."
+      url: https://www.scp07.de/SCP07/Die-KGaA/Jobs/

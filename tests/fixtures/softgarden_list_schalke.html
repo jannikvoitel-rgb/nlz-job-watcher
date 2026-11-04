@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.sourceforge.net/" lang="de" class="no-js no-ie">
+    <head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="author" content="softgarden e-recruiting GmbH"/>
+     	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+		<link rel="icon" href="https://static.softgarden.de/favicon/favicon-32x32.png"><!--[if IE]><link rel="shortcut icon" href="https://static.softgarden.de/favicon/favicon.ico"><![endif]--><style type="text/css" id="jobSearchCss">
+#jobsContainer .matchContainer .date { width: 12% } #jobsContainer .matchContainer .title { width: 53.45% } #jobsContainer .matchContainer .ProjectGeoLocationCity { width: 30.54% } </style>
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.core.WebFrontendApplication/core-ver-46480A77CA2574AB851CD35B365719CA.js"></script>
+<script type="text/javascript" id="jobsearchjs">
+/*<![CDATA[*/
+
+var criterions = [
+    {
+        "id": "audience",
+        "name": "Zielgruppe",
+        "options": {
+            "00001": "Auszubildende",
+            "3a3ab7987f000002010ad4925ffa0cf4": "Schüler/in",
+            "3a3af3667f000002010ad49215c3a5f4": "Berufseinsteiger",
+            "3a3b1f6e7f000002010ad492e7837dd6": "Berufserfahrene",
+            "6179d1a00a0b0cce01ed3de8643a0e39": "Student/in",
+            "59c721b5-b8e3-4bdb-85c3-fdb3cf77c57d": "Aushilfen"
+        }
+    },
+    {
+        "id": "jobcategory",
+        "name": "Jobkategorie",
+        "options": {
+            "sam42_administration": "Administration und Sekretariat",
+            "sam42_manualwork": "Handwerk, Dienstleistung und Fertigung",
+            "sam42_it": "IT",
+            "sam42_marketing": "Marketing und Kommunikation",
+            "sam42_hr": "Personal",
+            "sam42_therapy": "Pflege, Therapie und Assistenz",
+            "sam42_sales": "Vertrieb und Verkauf",
+            "cfa26303-31ec-4e7b-a0e5-fbec088b8f64": "Assistenz des Vorstands",
+            "5c484e1e-3ab6-43b6-9b90-b2375f8deb6e": "Marketing",
+            "99315707-3e4b-4ee5-82c3-dcbf5aedca1d": "Merchandising",
+            "293d7a05-9a60-4184-b96f-2cfe971b1dff": "Backoffice Logistik",
+            "526ecbc1-664e-443c-8df2-0b64f3655c9e": "Fanshop Arenaverkauf",
+            "da71b006-6345-4f1b-b22f-d61894b6628c": "Fanshop GS",
+            "d04f2d5a-88b3-4247-8d7b-6772f3187fc7": "Fanshop Gelsenkirchen",
+            "11be546d-5b6d-4a54-b8e5-005c5d0124aa": "Fanshop Oberhausen",
+            "fa040718-8d0c-40f8-8327-38a55fa6cbb6": "Lizenzen & Einkaufsanalysen",
+            "e8df52e0-ea96-422d-b059-227ec57c0543": "E-Commerce",
+            "b2874226-88bf-45fe-ac5a-83085a3a1419": "Produktmanagement & Backoffice",
+            "94574263-6a49-4daf-bd25-a951e9d25e5f": "Fußballschule",
+            "b40fdc01-25bf-45b7-897c-90894cbf07ee": "Hospitality",
+            "8987f5e1-9033-4c93-ac12-d13a90aaba1e": "Partnershipmanagement",
+            "ae5c3fa8-40fe-4323-b0fe-c5bba1f8201a": "Partner Events",
+            "fbac5975-6ed3-45a9-a9c1-655364f7b4ce": "Personal",
+            "7c28dfa2-6b76-4f02-9782-d452db492c38": "Recht",
+            "00530896-d3d6-4d18-986d-7a27632a5edb": "TV Produktion",
+            "0e991381-cf12-42f1-8acd-e02ee11bea76": " Grafik & Design",
+            "1cad2f17-3567-4fdc-93cc-0189e741c16b": "Esports",
+            "5c4f9816-3f86-456f-8ea8-2e617d748366": "Social Media",
+            "6beebe01-128f-4580-b2d5-8358efc80348": "Homepage / App",
+            "40b9d8a3-ba11-433f-88ee-118a66eca10f": "Content Sales",
+            "3e9bae53-18b8-4bfb-b087-2e25f6b66839": "Lizenzkommunikation",
+            "99c04260-b8ca-4023-adde-a51c93682034": "Vereinskommunikation & Public Affairs",
+            "5675b66f-0c9e-40f7-8778-9ddfd6fea43e": "Controlling",
+            "d60166db-b4c2-4bb8-9a81-8c692f54d52e": "Buchhaltung",
+            "b70d1d4b-a086-4bb2-be02-d8f7e4ee0769": "Corporate Finance",
+            "74d8e7d4-ffcc-49c4-85a1-ed9c0e415565": "Steuern",
+            "5df55d07-cf9c-4390-9a7d-cfd8e75b6300": "Compliance",
+            "238ea0f5-d345-4e1d-b414-1cb6832c8db7": "Zentraleinkauf",
+            "b0532b9f-29ba-464a-94e6-7d46f4cc1d1a": "IT-Service",
+            "3ba1f717-b7b2-45d8-8974-7b11c9f7f537": "IT-Infrastruktur & Sicherheit",
+            "56dd93ac-5fc5-4a11-8f58-9a5ce932ea49": "BI & Data",
+            "2cf0bbbc-6606-4628-a2fc-b7bfe94ee864": "IT-Digital",
+            "8af1b2de-fbdf-445b-94fc-a9ad4c99494f": "Software & Development",
+            "a752edd2-5e4b-49e1-8990-62a10a116431": "Sport-Technologie",
+            "7d295666-55db-48bc-a83b-1f7fb682eeee": "Breitensport",
+            "e4d9a7d5-893a-429f-9ff0-56a62ebdf4d1": "Ticketing",
+            "cf40297c-7595-4edd-b3f1-a87d4515bd37": "Service",
+            "b444e473-2a68-44a1-b786-74f2429fa217": "Genossen - und Mitgliederadministration",
+            "20b6dc00-f521-4268-a2bf-49edb4c7b9c1": "Fankultur",
+            "4d1368a7-70f9-4310-9c30-dbec83b152c2": "Nachhaltigkeit",
+            "76be7dfd-371f-40f5-97e2-55fc2ce6d3bd": "Spielbetrieb & Sicherheit",
+            "1b7122a2-2d61-4643-88f8-91f798fcadf8": "Marke & Tradition",
+            "dd40e715-1e0a-4902-ab92-f94a93d3b279": "Küche",
+            "87347baf-745f-483b-be29-20f973524758": "Buchhaltung AMG",
+            "f9b7839c-bce1-422e-b34b-8b86c50105ab": "Kiosk & Logistik",
+            "e1264f9c-0540-4b22-b29d-f7b2746476e7": "Personaldisposition",
+            "68a47b45-2b66-45a6-bad6-9230de75ce53": "Haustechnik",
+            "32044310-57c3-42e2-8627-95185a611d30": "Business Events",
+            "aac8dc3b-0fea-411a-9d01-730dc2fbe400": "Veranstaltungen & Service",
+            "1443e159-c8d0-431d-8549-3fe1f4383b5d": "Arena Events",
+            "c021b9a5-b379-4f80-95a5-31d0093a2f05": "F&B Logistik",
+            "3c132e85-beba-4193-96ea-c5c748447acf": "F&B Systeme",
+            "bfbb887e-ea89-4914-ab70-a479c4507918": "Technische Abteilung - Immo",
+            "bc5a1bd5-e8d1-4cb5-93d2-c845607be13a": "Greenkeeping",
+            "8a734314-7031-4229-84c2-213cc6f73e4c": "Fußball der Frauen",
+            "a187005a-2f46-4a84-93aa-52e3c57e9ebf": "Sportmanagement",
+            "8c14f59a-369e-467e-aea0-a790f867f9ee": "Catering"
+        }
+    }
+];
+var sg_jobsearch_hide_inactive = true;
+var jobs_selected = Array();
+var current_page = 1;
+var order_by = 0;
+var jobs_per_page = 10;
+var paging_window = -1;
+var JobResultAnimationOff = false;
+var showInfoBoxSeeEndOfPage = true;
+var jobs_selected_per_list = Array();
+var preselected_location = '';
+var preselected_location_radius = '';
+var preselected_values = {};
+var geocodingOverride = {"OSM":{"62782":{"boundingBox":"[\"53.3951118\", \"53.7393983\", \"9.7275419\", \"10.3252805\"]"}},"GOOGLE":{}};
+jQuery(document).ready(function() {
+    jQuery('#selector_0').change(function () {
+    	jQuery('#jobsContainer').show();
+    	updateLists(0, order_by);
+	 	jQuery('.resetForm').show();
+	});
+    jQuery('#selector_1').change(function () {
+    	jQuery('#jobsContainer').show();
+    	updateLists(1, order_by);
+	 	jQuery('.resetForm').show();
+	});
+jQuery('.matchHeadline').show();
+initialize(order_by);
+});jobs_selected_per_list[0] = Array();
+jobs_selected_per_list[1] = Array();
+var job_id_list_ordered = new Array ();
+job_id_list_ordered[0] = [67872572, 35427186, 67361410, 68072567, 66022513, 66747168, 68115696, 66762685, 68173911, 66897070, 68307823, 63658274, 68375122, 68377337, 68388622, 68444162, 68468232, 68468502];
+job_id_list_ordered[1] = [67872572, 35427186, 67361410, 68072567, 66022513, 66747168, 68115696, 66762685, 68173911, 66897070, 68307823, 63658274, 68375122, 68377337, 68388622, 68444162, 68468232, 68468502];
+job_id_list_ordered[2] = [68468232, 68468502, 35427186, 66747168, 68388622, 68375122, 66762685, 67361410, 66022513, 68444162, 68115696, 67872572, 68072567, 63658274, 66897070, 68307823, 68173911, 68377337];
+job_id_list_ordered[3] = [68468502, 68468232, 68444162, 68388622, 68377337, 68375122, 63658274, 68307823, 66897070, 68173911, 66762685, 68115696, 66747168, 66022513, 68072567, 67361410, 35427186, 67872572];
+
+var complete_job_id_list = jobs_selected = [35427186, 63658274, 66022513, 66747168, 66762685, 66897070, 67361410, 67872572, 68072567, 68115696, 68173911, 68307823, 68375122, 68377337, 68388622, 68444162, 68468232, 68468502];
+var jobs_keyword_search = complete_job_id_list;
+var jobs_geoLocation_search = complete_job_id_list;
+var search_criteria = new Array();
+search_criteria[0] = new Object();
+search_criteria[0]["3a3b1f6e7f000002010ad492e7837dd6"] = [66022513, 66762685, 66897070, 67361410, 68072567, 68115696, 68307823, 68375122];
+search_criteria[0]["6179d1a00a0b0cce01ed3de8643a0e39"] = [63658274, 67872572, 68377337];
+search_criteria[0]["3a3af3667f000002010ad49215c3a5f4"] = [35427186, 66747168, 68173911, 68388622, 68444162];
+search_criteria[0]["59c721b5-b8e3-4bdb-85c3-fdb3cf77c57d"] = [68468232, 68468502];
+
+search_criteria[1] = new Object();
+search_criteria[1]["8a734314-7031-4229-84c2-213cc6f73e4c"] = [68072567];
+search_criteria[1]["f9b7839c-bce1-422e-b34b-8b86c50105ab"] = [66747168];
+search_criteria[1]["8987f5e1-9033-4c93-ac12-d13a90aaba1e"] = [68115696];
+search_criteria[1]["526ecbc1-664e-443c-8df2-0b64f3655c9e"] = [68468232, 68468502];
+search_criteria[1]["sam42_sales"] = [68307823];
+search_criteria[1]["sam42_it"] = [66762685];
+search_criteria[1]["cf40297c-7595-4edd-b3f1-a87d4515bd37"] = [68444162];
+search_criteria[1]["sam42_marketing"] = [63658274, 68173911, 68377337];
+search_criteria[1]["20b6dc00-f521-4268-a2bf-49edb4c7b9c1"] = [66022513];
+search_criteria[1]["00530896-d3d6-4d18-986d-7a27632a5edb"] = [68375122];
+search_criteria[1]["fbac5975-6ed3-45a9-a9c1-655364f7b4ce"] = [66897070, 67361410];
+search_criteria[1]["sam42_manualwork"] = [35427186];
+search_criteria[1]["b40fdc01-25bf-45b7-897c-90894cbf07ee"] = [67872572];
+search_criteria[1]["aac8dc3b-0fea-411a-9d01-730dc2fbe400"] = [68388622];
+
+
+/*]]>*/
+</script>
+<link rel="alternate" hreflang="en" href="https://schalke04.softgarden.io/en/vacancies" />
+<title>Karriere Board | FC Gelsenkirchen-Schalke 04 e.V.</title><meta name="description" content="career board | © softgarden" />
+<meta name="robots" content="index, follow" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Karriere Board | FC Gelsenkirchen-Schalke 04 e.V." />
+<meta name="twitter:site" content="@softgarden" />
+<meta name="twitter:description" content="career board | © softgarden" />
+<meta name="twitter:image" content="https://app.softgarden.io/assets/public/media/get/dd4369e8-2fac-4d6d-a4a2-d6d1dcdf1023/1701094240630/1100x0/231121_Headerbild_Karriereseite.jpg" />
+<meta property="og:title" content="Karriere Board | FC Gelsenkirchen-Schalke 04 e.V." />
+<meta property="og:description" content="career board | © softgarden" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://app.softgarden.io/assets/public/media/get/dd4369e8-2fac-4d6d-a4a2-d6d1dcdf1023/1701094240630/1100x576P/231121_Headerbild_Karriereseite.jpg" />
+<meta property="og:image:width" content="1100" />
+<meta property="og:image:height" content="576" />
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.js.JavaScriptReference/modernizr-ver-BBD564F40D2D602049100DC76FE17C37.js"></script>
+<script type="text/javascript" id="sg_config">
+/*<![CDATA[*/
+var SG = SG || {};
+/*]]>*/
+</script>
+<link rel="stylesheet" type="text/css" href="//static.softgarden.de/thirdparty/fonts/css/dosis.css" />
+<link rel="stylesheet" type="text/css" href="//static.softgarden.de/thirdparty/fonts/css/dosis-vietnamese_latin-ext_latin.css" />
+<link rel="stylesheet" type="text/css" href="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.css.CssReference/webfrontend-v2-ver-591897EFF2EA75250FF42C429E89BE70.css" />
+<style type="text/css" id="companyCss">
+body { background:  #FFFFFF no-repeat 0% 0%; } 
+.content-wrapper, .narrow-page, header.image-header { background-color: #FFFFFF; } 
+.content-box { background: #EEEEEE; } 
+a, label i, label em { color: #00346E; } 
+a:visited { color: #00346E; } 
+a:hover, .btn-link:hover, .btn-link:focus, .btn-link:active { color: #004B9C; } 
+body, h1, h2, h3 { color: #040404; } 
+.secondary-color, label, .control-group.error .control-label { color: #040404; } 
+textarea:focus, select:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus, .chosen-container-active .chosen-single, .chosen-container-active .chosen-choices, .chosen-container .chosen-drop { border-color: #004B9C; } 
+.btn, .btn:visited, .btn-primary, .btn-primary:visited, .upload-item { background-color: #004B9C; color: #FFFFFF; background-image: none; } 
+.btn-link, .btn-link:visited { color: #00346E; } 
+.upload-item a, .upload-item a:visited { color: #FFFFFF; } 
+.thirdparty-btn.thirdparty-btn--cv-upload > * { color: #FFFFFF !important; } 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active { background-color: #00346E; color: #FFFFFF; } 
+.thirdparty-btn.thirdparty-btn--cv-upload:hover > *, .thirdparty-btn.thirdparty-btn--cv-upload:active > *, .thirdparty-btn.thirdparty-btn--cv-upload:focus > * { color: #FFFFFF !important; } 
+.navbar .btn-navbar, .navbar .btn-navbar.active, .navbar .btn-navbar:active, .navbar .btn-navbar:focus, .navbar .btn-navbar:hover { background-color: #FFFFFF; background-image: none; } 
+.navbar .btn-navbar .icon-bar, .navbar .btn-navbar.active .icon-bar, .navbar .btn-navbar:active .icon-bar, .navbar .btn-navbar:focus .icon-bar, .navbar .btn-navbar:hover .icon-bar { background-color: #040404; } 
+.sg-rating__star-icn.is-active, .sg-rating__star.is-hover .sg-rating__star-icn { color: #004B9C; } 
+.navbar .navbar-inner, .navbar .dropdown-menu { background-color: #FFFFFF; } 
+.navbar .nav > li > .dropdown-menu:after { border-bottom-color: #FFFFFF; } 
+.navbar .nav > li > a, .nav-collapse .dropdown-menu a, .navbar a, .navbar a:visited { color: #040404; } 
+.navbar .nav li.dropdown > .dropdown-toggle .caret { border-color: #040404; } 
+.navbar .nav > li > a.active, .navbar .nav > li > a:focus, .navbar .nav > li > a:hover, .navbar .nav li.dropdown.open > .dropdown-toggle, .nav-collapse .dropdown-menu a:focus, .nav-collapse .dropdown-menu a:hover, .nav-collapse .nav > li > a:focus, .nav-collapse .nav > li > a:hover { background-color: #FFFFFF; color: #040404; } 
+.navbar .nav li.dropdown > a:focus .caret, .navbar .nav li.dropdown > a:hover .caret, .navbar .nav li.dropdown.open > .dropdown-toggle .caret { border-color: #040404; } 
+.container {
+    width: 100%;
+}
+.navbar-fixed-bottom .container, .navbar-fixed-top .container, .navbar-static-top .container, .span12 ,header .img-wrap img {
+    width: 95%;
+}
+
+.body-wrapper{
+    width: 96%;
+    margin: auto;
+}
+.navbar .navbar-inner {
+     height: 59px;
+}
+.navbar .nav li a {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 18px 16px;
+}
+
+.navbar .brand {
+    height: 60px;
+    width: 60px;
+background: url(https://app.softgarden.io/assets/public/media/get/71291a4d-81cd-4d37-8455-e7b64ec76be5/1512655442774/logo_schalke.png) no-repeat;
+    background-size: contain;
+    margin-left: 0;
+}
+
+.navbar .brand img {
+    display:none;
+}
+.page-wrapper {
+    margin-top: 90px;
+}
+ #footer{
+  background: #fff url(https://app.softgarden.io/assets/public/media/get/f26eb692-bd7f-42a6-904c-a08a0aa9c4eb/1512651154547/bg-footer.jpg) no-repeat;
+    background-position: top;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+margin:0;
+    padding: 0;
+}
+
+#footer {
+    color: #fff;
+}
+
+#footer a {
+    color: #fff;
+}
+
+#footer ul.inline{
+       padding-top: 254px;
+  /*  background: url(https://app.softgarden.io/assets/public/media/get/e23eb05a-c174-4329-ad1d-6cda2ea05bed/1512651301998/bottom_bg.png) no-repeat;*/
+    background-position: 66px 190px;
+    padding-left: 63px;
+    background-size: 350px;
+}
+
+#footer ul li.powered-by-taloom {
+    margin: 0;
+    display: inline-block;
+    text-align: left;
+    border-top: none;
+    padding-top: 0;
+}
+
+@media (max-width: 979px){
+
+.navbar .navbar-inner {
+    padding: 0;
+}
+
+#footer ul.inline {
+    background-position: 26px 180px;
+padding-left:20px;
+}
+#footer {
+    border-top: none;
+}
+
+.page-wrapper {
+    margin-top: 0px;
+}
+
+.nav-collapse, .nav-collapse.collapse {
+    background: #fff;
+}
+
+.navbar .nav li a {
+    padding: 7px 16px;
+}
+
+header.image-header {
+    margin-top: 10px;
+}
+}
+
+@media (max-width: 480px){
+#footer ul {
+    text-align: left;
+    margin-left:15px;
+}
+
+#footer ul.inline {
+    background-position: 5px 180px;
+    padding-left: 0px;
+}
+
+}</style>
+<meta name="wicket.header.items"/>
+    </head>
+    <body>
+		<a href="#content" class="visually-hidden">Skip to main content</a>
+		
+		<div id="navbar" class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" aria-label="main menu">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+					<a class="brand" href="./vacancies">
+						
+						<img src="https://app.softgarden.io/assets/public/media/get/728472d8-ae79-470b-b767-d5bf203e8139/1515509762723/0x45/logo_schalke.png" alt="FC Gelsenkirchen-Schalke 04 e.V."/>
+					</a>
+					
+					<div class="nav-public-collapse nav-collapse collapse">
+						<ul class="nav-public nav">
+					    	<li><a href="./vacancies" class="link-jobs external navlink active">Stellenangebote</a></li><li></li><li></li><li></li><li></li>
+						</ul>
+					</div>
+					
+					<div class="nav-personal-collapse nav-collapse collapse">
+						<ul class="nav-personal nav pull-right">
+							<li><a href="../sign-in?l=de" class="link-signin navlink">Login</a></li><li><a href="../sign-up?l=de" class="link-register navlink">Registrierung</a></li><li></li>
+							
+							<li class="dropdown-lang dropdown">
+								<a class="dropdown-toggle current-lang" data-toggle="dropdown" href="#"><i class="icon-flag small de" title="Deutsch"></i> <b class="caret"></b></a>
+								<ul class="dropdown-menu pull-left" data-role="menu">
+									<li class="lang">
+										<a href="./vacancies?-1.-navigationPanel-languageContainer-langNavRepeater-1-langNavLink">
+											<i class="icon-flag small en" title="Englisch"></i>
+											English (Englisch)
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+		<div id="content" class="page-wrapper">
+			<div class="container">
+
+					
+		
+			<header class="image-header">
+				<div class="img-wrap">
+					<img src="https://app.softgarden.io/assets/public/media/get/dd4369e8-2fac-4d6d-a4a2-d6d1dcdf1023/1701094240630/1100x0/231121_Headerbild_Karriereseite.jpg" alt="">
+				</div>
+			</header>
+		
+
+		
+		
+
+		
+		
+	
+					<div class="body-wrapper">
+						
+		
+		<div class="jobs-page narrow-page">
+			<div>
+		<div class="job-search-panel">
+		
+			
+		
+			<div class="job-search">
+		<div class="internal-account-hint span3">
+			<a href="./vacancies?-1.-jobSearch-jobSearchContainer-internalLink" class="btn btn-primary">Bereits Mitarbeiter?</a>
+		</div>
+
+		<div class="searchBoxComplete">
+			<div class="searchBoxTop">
+				<section class="job-search-config searchBoxTopSmall">
+					<form class="search-form">
+						<section class="keyword-search">
+							<div class="keywordSearch">
+								<label for="keyword_search">Stichwortsuche</label>
+								<div class="loading-spinner" id="performing_keyword_search">
+									<img src="../img/jobsearch/taloom_loader_small.gif" alt="searching"/>
+								</div>
+								<input id="keyword_search" type="text" class="input-xlarge" value="" name="jobSearch:jobSearchContainer:keyword_search"/>
+							</div>
+						</section>
+						<section class="location-search" style="display: none;">
+							<div class="locationSearch search_criterion_box search_criterion_box_location">
+								<div class="resetLink selectAllLinkContainer">
+									<a href="#" onclick="resetLocationSearch();jQuery('.locationSearch .resetLink').hide(); return false;">Zurücksetzen</a>
+								</div>
+								<label for="geoLocation_search">Standortsuche</label>
+
+								<div class="loading-spinner" id="performing_location_search">
+									<img src="../img/jobsearch/taloom_loader_small.gif" alt="searching"/>
+								</div>
+								<div>
+									<input id="geoLocation_search" type="text" class="input-xlarge" value="" name="jobSearch:jobSearchContainer:geoLocation_search_wrapper:geoLocation_search"/>
+									<div id="geoLocation_info">
+
+										<small>
+											Arbeit in
+											<a href="#" onclick="centerMapToSearch();" id="geoLocation_result"> </a>
+											<span class="search-result-no-map"></span>
+											im Umkreis von
+										</small>
+										<div id="geoLocation_radius">
+											<select name="jobSearch:jobSearchContainer:geoLocation_search_wrapper:geoLocationRadius" id="id1">
+<option value="1">1 km</option>
+<option value="5">5 km</option>
+<option value="10">10 km</option>
+<option selected="selected" value="25">25 km</option>
+<option value="50">50 km</option>
+<option value="75">75 km</option>
+<option value="100">100 km</option>
+</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						
+	
+	<section class="extended-search">
+		<div class="search-criteria-container">
+			
+				<div class="search_criterion_box" style="display: none">
+	<div class="searchFieldLabel">
+		<div class="selectAllLinkContainer"><a href="javascript:;" id="id2" data-select="#selector_0" class="js-toggle-all-select-options">Zurücksetzen</a></div>
+		<label for="searchFieldId" class="searchCriterionBoxHeader">Zielgruppe</label>
+	</div>
+	<select id="selector_0" multiple="multiple" size="5" class="SearchMultiSelectBox filter-options-select search_criterion_box_audience" aria-label="Zielgruppe oder Jobkategorie auswählen" name="audience[]" data-reset-link="#id2">
+<option  title = "Auszubildende" value="00001">Auszubildende</option>
+<option  title = "Schüler/in" value="3a3ab7987f000002010ad4925ffa0cf4">Schüler/in</option>
+<option  title = "Berufseinsteiger" value="3a3af3667f000002010ad49215c3a5f4">Berufseinsteiger</option>
+<option  title = "Berufserfahrene" value="3a3b1f6e7f000002010ad492e7837dd6">Berufserfahrene</option>
+<option  title = "Student/in" value="6179d1a00a0b0cce01ed3de8643a0e39">Student/in</option>
+<option  title = "Aushilfen" value="59c721b5-b8e3-4bdb-85c3-fdb3cf77c57d">Aushilfen</option>
+</select>
+</div>
+			
+				<div class="search_criterion_box" style="display: none">
+	<div class="searchFieldLabel">
+		<div class="selectAllLinkContainer"><a href="javascript:;" id="id3" data-select="#selector_1" class="js-toggle-all-select-options">Zurücksetzen</a></div>
+		<label for="searchFieldId" class="searchCriterionBoxHeader">Jobkategorie</label>
+	</div>
+	<select id="selector_1" multiple="multiple" size="5" class="SearchMultiSelectBox filter-options-select search_criterion_box_jobcategory" aria-label="Zielgruppe oder Jobkategorie auswählen" name="jobcategory[]" data-reset-link="#id3">
+<option  title = "Administration und Sekretariat" value="sam42_administration">Administration und Sekretariat</option>
+<option  title = "Handwerk, Dienstleistung und Fertigung" value="sam42_manualwork">Handwerk, Dienstleistung und Fertigung</option>
+<option  title = "IT" value="sam42_it">IT</option>
+<option  title = "Marketing und Kommunikation" value="sam42_marketing">Marketing und Kommunikation</option>
+<option  title = "Personal" value="sam42_hr">Personal</option>
+<option  title = "Pflege, Therapie und Assistenz" value="sam42_therapy">Pflege, Therapie und Assistenz</option>
+<option  title = "Vertrieb und Verkauf" value="sam42_sales">Vertrieb und Verkauf</option>
+<option  title = "Assistenz des Vorstands" value="cfa26303-31ec-4e7b-a0e5-fbec088b8f64">Assistenz des Vorstands</option>
+<option  title = "Marketing" value="5c484e1e-3ab6-43b6-9b90-b2375f8deb6e">Marketing</option>
+<option  title = "Merchandising" value="99315707-3e4b-4ee5-82c3-dcbf5aedca1d">Merchandising</option>
+<option  title = "Backoffice Logistik" value="293d7a05-9a60-4184-b96f-2cfe971b1dff">Backoffice Logistik</option>
+<option  title = "Fanshop Arenaverkauf" value="526ecbc1-664e-443c-8df2-0b64f3655c9e">Fanshop Arenaverkauf</option>
+<option  title = "Fanshop GS" value="da71b006-6345-4f1b-b22f-d61894b6628c">Fanshop GS</option>
+<option  title = "Fanshop Gelsenkirchen" value="d04f2d5a-88b3-4247-8d7b-6772f3187fc7">Fanshop Gelsenkirchen</option>
+<option  title = "Fanshop Oberhausen" value="11be546d-5b6d-4a54-b8e5-005c5d0124aa">Fanshop Oberhausen</option>
+<option  title = "Lizenzen &amp; Einkaufsanalysen" value="fa040718-8d0c-40f8-8327-38a55fa6cbb6">Lizenzen &amp; Einkaufsanalysen</option>
+<option  title = "E-Commerce" value="e8df52e0-ea96-422d-b059-227ec57c0543">E-Commerce</option>
+<option  title = "Produktmanagement &amp; Backoffice" value="b2874226-88bf-45fe-ac5a-83085a3a1419">Produktmanagement &amp; Backoffice</option>
+<option  title = "Fußballschule" value="94574263-6a49-4daf-bd25-a951e9d25e5f">Fußballschule</option>
+<option  title = "Hospitality" value="b40fdc01-25bf-45b7-897c-90894cbf07ee">Hospitality</option>
+<option  title = "Partnershipmanagement" value="8987f5e1-9033-4c93-ac12-d13a90aaba1e">Partnershipmanagement</option>
+<option  title = "Partner Events" value="ae5c3fa8-40fe-4323-b0fe-c5bba1f8201a">Partner Events</option>
+<option  title = "Personal" value="fbac5975-6ed3-45a9-a9c1-655364f7b4ce">Personal</option>
+<option  title = "Recht" value="7c28dfa2-6b76-4f02-9782-d452db492c38">Recht</option>
+<option  title = "TV Produktion" value="00530896-d3d6-4d18-986d-7a27632a5edb">TV Produktion</option>
+<option  title = " Grafik &amp; Design" value="0e991381-cf12-42f1-8acd-e02ee11bea76"> Grafik &amp; Design</option>
+<option  title = "Esports" value="1cad2f17-3567-4fdc-93cc-0189e741c16b">Esports</option>
+<option  title = "Social Media" value="5c4f9816-3f86-456f-8ea8-2e617d748366">Social Media</option>
+<option  title = "Homepage / App" value="6beebe01-128f-4580-b2d5-8358efc80348">Homepage / App</option>
+<option  title = "Content Sales" value="40b9d8a3-ba11-433f-88ee-118a66eca10f">Content Sales</option>
+<option  title = "Lizenzkommunikation" value="3e9bae53-18b8-4bfb-b087-2e25f6b66839">Lizenzkommunikation</option>
+<option  title = "Vereinskommunikation &amp; Public Affairs" value="99c04260-b8ca-4023-adde-a51c93682034">Vereinskommunikation &amp; Public Affairs</option>
+<option  title = "Controlling" value="5675b66f-0c9e-40f7-8778-9ddfd6fea43e">Controlling</option>
+<option  title = "Buchhaltung" value="d60166db-b4c2-4bb8-9a81-8c692f54d52e">Buchhaltung</option>
+<option  title = "Corporate Finance" value="b70d1d4b-a086-4bb2-be02-d8f7e4ee0769">Corporate Finance</option>
+<option  title = "Steuern" value="74d8e7d4-ffcc-49c4-85a1-ed9c0e415565">Steuern</option>
+<option  title = "Compliance" value="5df55d07-cf9c-4390-9a7d-cfd8e75b6300">Compliance</option>
+<option  title = "Zentraleinkauf" value="238ea0f5-d345-4e1d-b414-1cb6832c8db7">Zentraleinkauf</option>
+<option  title = "IT-Service" value="b0532b9f-29ba-464a-94e6-7d46f4cc1d1a">IT-Service</option>
+<option  title = "IT-Infrastruktur &amp; Sicherheit" value="3ba1f717-b7b2-45d8-8974-7b11c9f7f537">IT-Infrastruktur &amp; Sicherheit</option>
+<option  title = "BI &amp; Data" value="56dd93ac-5fc5-4a11-8f58-9a5ce932ea49">BI &amp; Data</option>
+<option  title = "IT-Digital" value="2cf0bbbc-6606-4628-a2fc-b7bfe94ee864">IT-Digital</option>
+<option  title = "Software &amp; Development" value="8af1b2de-fbdf-445b-94fc-a9ad4c99494f">Software &amp; Development</option>
+<option  title = "Sport-Technologie" value="a752edd2-5e4b-49e1-8990-62a10a116431">Sport-Technologie</option>
+<option  title = "Breitensport" value="7d295666-55db-48bc-a83b-1f7fb682eeee">Breitensport</option>
+<option  title = "Ticketing" value="e4d9a7d5-893a-429f-9ff0-56a62ebdf4d1">Ticketing</option>
+<option  title = "Service" value="cf40297c-7595-4edd-b3f1-a87d4515bd37">Service</option>
+<option  title = "Genossen - und Mitgliederadministration" value="b444e473-2a68-44a1-b786-74f2429fa217">Genossen - und Mitgliederadministration</option>
+<option  title = "Fankultur" value="20b6dc00-f521-4268-a2bf-49edb4c7b9c1">Fankultur</option>
+<option  title = "Nachhaltigkeit" value="4d1368a7-70f9-4310-9c30-dbec83b152c2">Nachhaltigkeit</option>
+<option  title = "Spielbetrieb &amp; Sicherheit" value="76be7dfd-371f-40f5-97e2-55fc2ce6d3bd">Spielbetrieb &amp; Sicherheit</option>
+<option  title = "Marke &amp; Tradition" value="1b7122a2-2d61-4643-88f8-91f798fcadf8">Marke &amp; Tradition</option>
+<option  title = "Küche" value="dd40e715-1e0a-4902-ab92-f94a93d3b279">Küche</option>
+<option  title = "Buchhaltung AMG" value="87347baf-745f-483b-be29-20f973524758">Buchhaltung AMG</option>
+<option  title = "Kiosk &amp; Logistik" value="f9b7839c-bce1-422e-b34b-8b86c50105ab">Kiosk &amp; Logistik</option>
+<option  title = "Personaldisposition" value="e1264f9c-0540-4b22-b29d-f7b2746476e7">Personaldisposition</option>
+<option  title = "Haustechnik" value="68a47b45-2b66-45a6-bad6-9230de75ce53">Haustechnik</option>
+<option  title = "Business Events" value="32044310-57c3-42e2-8627-95185a611d30">Business Events</option>
+<option  title = "Veranstaltungen &amp; Service" value="aac8dc3b-0fea-411a-9d01-730dc2fbe400">Veranstaltungen &amp; Service</option>
+<option  title = "Arena Events" value="1443e159-c8d0-431d-8549-3fe1f4383b5d">Arena Events</option>
+<option  title = "F&amp;B Logistik" value="c021b9a5-b379-4f80-95a5-31d0093a2f05">F&amp;B Logistik</option>
+<option  title = "F&amp;B Systeme" value="3c132e85-beba-4193-96ea-c5c748447acf">F&amp;B Systeme</option>
+<option  title = "Technische Abteilung - Immo" value="bfbb887e-ea89-4914-ab70-a479c4507918">Technische Abteilung - Immo</option>
+<option  title = "Greenkeeping" value="bc5a1bd5-e8d1-4cb5-93d2-c845607be13a">Greenkeeping</option>
+<option  title = "Fußball der Frauen" value="8a734314-7031-4229-84c2-213cc6f73e4c">Fußball der Frauen</option>
+<option  title = "Sportmanagement" value="a187005a-2f46-4a84-93aa-52e3c57e9ebf">Sportmanagement</option>
+<option  title = "Catering" value="8c14f59a-369e-467e-aea0-a790f867f9ee">Catering</option>
+</select>
+</div>
+			
+		</div>
+		<div class="hide" id="mobile_placeholder">Bitte wählen</div>
+	</section>
+	
+
+					</form>
+				</section>
+				<section class="job-abo">
+
+					<a href="./vacancies?-1.-jobSearch-jobSearchContainer-jobAboLink" rel="nofollow" class="btn btn-primary">Stellenangebote abonnieren</a>
+
+				</section>
+
+				
+			</div>
+
+			<div id="jobsContainer" class="job-search-results">
+				<div>
+		<div class="job-search-result-panel">
+			<section id="job-search-map" class="jobMapContainer">
+				<div id="map_canvas"></div>
+			</section>
+
+			<section class="results">
+				<form>
+					<div class="result_count_div" id="job-search-result-count-label">
+						<p id="result_count_one" style="display: none;">Zu deiner Suchanfrage wurde eine Stellenanzeige gefunden:</p>
+						<p id="result_count_more" style="display: none;">Zu deiner Suchanfrage wurden <span id='jobs_result_count'>{0}</span> Stellenanzeigen gefunden:</p>
+						<p id="result_count_none" style="display: none;">Keine Stellenanzeigen gefunden.</p>
+					</div>
+					<div class="matchContainer">
+						<div class="matchElement matchHeadline">
+							<div id="matchValueHeadline1" class="matchValue date" onclick="reorderList(1); return false;">
+								<a href="#" onclick="return false;"><span>Datum</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline2" class="matchValue title" onclick="reorderList(2); return false;">
+								<a href="#" onclick="return false;"><span>Stellenangebot</span><b class="caret"></b></a>
+							</div><div id="matchValueHeadline3" class="matchValue ProjectGeoLocationCity" onclick="reorderList(3); return false;">
+								<a href="#" onclick="return false;"><span>Standort</span><b class="caret"></b></a>
+							</div>
+						</div>
+						<div class="outputContainer">
+							<div class="matchElement" id="job_id_68468502">
+								<div class="matchValue date">30.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68468502/Aushilfe-m-w-d-Verkauf?jobDbPVId=289330262&amp;l=de" target="_blank">Aushilfe (m/w/d) Verkauf</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68468232">
+								<div class="matchValue date">30.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68468232/Aushilfe-m-w-d-im-Arenaverkauf?jobDbPVId=289329767&amp;l=de" target="_blank">Aushilfe (m/w/d) im Arenaverkauf</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68444162">
+								<div class="matchValue date">29.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68444162/Mitarbeiter-m-w-d-Service-Center?jobDbPVId=289210062&amp;l=de" target="_blank">Mitarbeiter (m/w/d) Service Center</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68388622">
+								<div class="matchValue date">28.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68388622/Back-of-House-Mitarbeiter-m-w-d-?jobDbPVId=289037357&amp;l=de" target="_blank">Back of House Mitarbeiter (m/w/d)</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68377337">
+								<div class="matchValue date">28.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68377337/Werkstudent-m-w-d-Marketing?jobDbPVId=288968322&amp;l=de" target="_blank">Werkstudent (m/w/d) Marketing</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68375122">
+								<div class="matchValue date">28.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68375122/Creative-Video-Producer-m-w-d-Reportage,-Dokumentation-Storytelling-?jobDbPVId=288961677&amp;l=de" target="_blank">Creative Video Producer (m/w/d) Reportage, Dokumentation &amp; Storytelling </a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_63658274">
+								<div class="matchValue date">25.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/63658274/Praktikant-m-w-d-Social-Media?jobDbPVId=288664138&amp;l=de" target="_blank">Praktikant (m/w/d) Social Media</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68307823">
+								<div class="matchValue date">23.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68307823/Verk%C3%A4ufer-m-w-d-im-Fanshop-Schalke-Terrassen-in-Teilzeit?jobDbPVId=288626508&amp;l=de" target="_blank">Verkäufer (m/w/d) im Fanshop Schalke Terrassen  in Teilzeit</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_66897070">
+								<div class="matchValue date">23.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/66897070/Spezialist-m-w-d-Personalentwicklung?jobDbPVId=288606408&amp;l=de" target="_blank">Spezialist (m/w/d) Personalentwicklung</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68173911">
+								<div class="matchValue date">19.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68173911/Werkstudent-m-w-d-Film?jobDbPVId=288038056&amp;l=de" target="_blank">Werkstudent (m/w/d) Film</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_66762685">
+								<div class="matchValue date">16.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/66762685/Data-Architect-m-w-d-?jobDbPVId=287905136&amp;l=de" target="_blank">Data Architect (m/w/d)</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68115696">
+								<div class="matchValue date">15.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68115696/Partnershipmanager-m-w-d-?jobDbPVId=287788301&amp;l=de" target="_blank">Partnershipmanager (m/w/d)  </a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_66747168">
+								<div class="matchValue date">14.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/66747168/Aushilfe-Minijobber-Teamleitung-m-w-d-Kiosk-Public?jobDbPVId=287788256&amp;l=de" target="_blank">Aushilfe/Minijobber - Teamleitung (m/w/d) Kiosk Public</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_66022513">
+								<div class="matchValue date">14.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/66022513/Mitarbeiter-m-w-d-Erlebnisformate-Experience-?jobDbPVId=287788326&amp;l=de" target="_blank">Mitarbeiter (m/w/d) Erlebnisformate &amp; Experience </a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_68072567">
+								<div class="matchValue date">13.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/68072567/Physiotherapeut-m-w-d-Fu%C3%9Fball-der-Frauen?jobDbPVId=287788311&amp;l=de" target="_blank">Physiotherapeut (m/w/d) Fußball der Frauen</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67361410">
+								<div class="matchValue date">11.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67361410/HR-Generalist-m-w-d-?jobDbPVId=287788296&amp;l=de" target="_blank">HR-Generalist (m/w/d)</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_35427186">
+								<div class="matchValue date">08.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/35427186/Aushilfe-Minijobber-m-w-d-Arena-Catering?jobDbPVId=287788266&amp;l=de" target="_blank">Aushilfe/Minijobber (m/w/d) Arena Catering</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div><div class="matchElement" id="job_id_67872572">
+								<div class="matchValue date">05.10.26</div><div target="_blank" class="matchValue title">
+			<a href="../job/67872572/Pflichtpraktikant-m-w-d-Hospitality?jobDbPVId=287788306&amp;l=de" target="_blank">Pflichtpraktikant (m/w/d) Hospitality</a>
+		</div><div class="matchValue ProjectGeoLocationCity">
+			<div>
+				<div class="location-container">
+					<span class="location-view-item">Gelsenkirchen</span>
+
+					
+
+					
+				</div>
+
+			</div>
+
+		</div>
+							</div>
+						</div>
+						<div class="pagination pagination-centered"><ul id="job-search-pagination" class="taloom-pager"></ul></div>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>
+				
+			</div>
+		</div>
+
+		<div id="sg_modal" hidden="" data-wicket-placeholder=""></div>
+	</div>
+
+		</div>
+	</div>
+		</div>
+	
+	
+					</div>
+
+
+				
+		<footer id="footer">
+			<ul class="inline">
+				<li><a href="./imprint" target="_blank" class="sg_imprint_link">Impressum</a></li>
+				<li><a href="./data-security" target="_blank" class="sg_data_privacy_link">Datenschutzhinweise</a></li>
+				<li class="powered-by-taloom">
+	<span>
+		powered by 
+		<a href="https://softgarden.com" target="_blank">softgarden</a>
+		
+	</span>
+</li>
+			</ul>
+		</footer>
+	
+			</div>
+		</div>
+
+		
+
+		<div id="sg_modal" hidden="" data-wicket-placeholder=""></div>
+
+		
+		<script type="text/javascript" id="wicket-ajax-base-url">
+/*<![CDATA[*/
+Wicket.Ajax.baseUrl="de/vacancies";
+/*]]>*/
+</script>
+<script type="text/javascript" src="//static.softgarden.de/thirdparty/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script type="text/javascript" id="id2">
+/*<![CDATA[*/
+$('#id2').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" id="id3">
+/*<![CDATA[*/
+$('#id3').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" id="allJobLocations">
+/*<![CDATA[*/
+SG.allJobLocations = [];SG.allJobLocations.push({markerName: 'Aushilfe\x20(m\/w\/d)\x20Verkauf', latitude: 51.5544314, longitude: 7.0661346, postingId: 68468502, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Aushilfe\x20(m\/w\/d)\x20im\x20Arenaverkauf', latitude: 51.517744, longitude: 7.0857172, postingId: 68468232, geoName: 'Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Mitarbeiter\x20(m\/w\/d)\x20Service\x20Cente\x72', latitude: 51.5544314, longitude: 7.0661346, postingId: 68444162, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Back\x20of\x20House\x20Mitarbeiter\x20(m\/w\/d)', latitude: 51.517744, longitude: 7.0857172, postingId: 68388622, geoName: 'Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Werkstudent\x20(m\/w\/d)\x20Marketing', latitude: 51.5544314, longitude: 7.0661346, postingId: 68377337, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Creative\x20Video\x20Producer\x20(m\/w\/d)\x20Reportage,\x20Dokumentation\x20\x26\x20Storytelling\x20', latitude: 51.5544314, longitude: 7.0661346, postingId: 68375122, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Praktikant\x20(m\/w\/d)\x20Social\x20Media', latitude: 51.5544314, longitude: 7.0661346, postingId: 63658274, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Verkäufer\x20(m\/w\/d)\x20im\x20Fanshop\x20Schalke\x20Terrassen\x20\x20in\x20Teilzei\x74', latitude: 51.5544314, longitude: 7.0661346, postingId: 68307823, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Spezialist\x20(m\/w\/d)\x20Personalentwicklung', latitude: 51.5544314, longitude: 7.0661346, postingId: 66897070, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Werkstudent\x20(m\/w\/d)\x20Film', latitude: 51.5544314, longitude: 7.0661346, postingId: 68173911, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Data\x20Architect\x20(m\/w\/d)', latitude: 51.5544314, longitude: 7.0661346, postingId: 66762685, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Partnershipmanager\x20(m\/w\/d)\x20\x20', latitude: 51.5544314, longitude: 7.0661346, postingId: 68115696, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Aushilfe\/Minijobber\x20\x2d\x20Teamleitung\x20(m\/w\/d)\x20Kiosk\x20Publi\x63', latitude: 51.517744, longitude: 7.0857172, postingId: 66747168, geoName: 'Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Mitarbeiter\x20(m\/w\/d)\x20Erlebnisformate\x20\x26\x20Experience\x20', latitude: 51.5544314, longitude: 7.0661346, postingId: 66022513, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Physiotherapeut\x20(m\/w\/d)\x20Fußball\x20der\x20Frauen', latitude: 51.5544314, longitude: 7.0661346, postingId: 68072567, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'HR\x2dGeneralist\x20(m\/w\/d)', latitude: 51.5544314, longitude: 7.0661346, postingId: 67361410, geoName: 'Ernst\x2dKuzorra\x2dWeg\x201,\x2045891\x20Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Aushilfe\/Minijobber\x20(m\/w\/d)\x20Arena\x20Catering', latitude: 51.517744, longitude: 7.0857172, postingId: 35427186, geoName: 'Gelsenkirchen,\x20Deutschland'});SG.allJobLocations.push({markerName: 'Pflichtpraktikant\x20(m\/w\/d)\x20Hospitality', latitude: 51.517744, longitude: 7.0857172, postingId: 67872572, geoName: 'Gelsenkirchen,\x20Deutschland'});
+/*]]>*/
+</script>
+<script type="text/javascript" id="jobMapInit">
+/*<![CDATA[*/
+window.jQuery('#job-search-map').hide();
+/*]]>*/
+</script>
+<script type="text/javascript" src="https://static.softgarden.de/thirdparty/leaflet/1.9.4/leaflet.js"></script>
+<script type="text/javascript" src="/thirdparty/jquery/query/jquery.query-2.2.3.js"></script>
+<script type="text/javascript" src="../wicket/resource/com.softgarden.staffit.webclient.webfrontend.pages.main.js.JavaScriptReference/jobSearchLive-ver-DF58093895DAE1EA109A34586D3118B6.js"></script>
+<script type="text/javascript" id="frontend-font">
+/*<![CDATA[*/
+WebFont.load({custom:{families:['Open Sans']}});
+/*]]>*/
+</script>
+<script type="text/javascript">
+/*<![CDATA[*/
+Wicket.Event.add(window, "domready", function(event) { 
+Wicket.Ajax.ajax({"u":"./vacancies?-1.0-jobSearch-jobSearchContainer-keyword_search","m":"POST","c":"keyword_search","e":"input change","ch":"keyword_search|d","tr":{"id":"keyword_search","d":10,"p":true}});;
+$('#id1').chosen({width: "100%",disable_search: true,no_results_text: "Kein Eintrag gefunden",placeholder_text_single: "Bitte wählen",placeholder_text_multiple: "Bitte wählen"});requestAnimationFrame(function() {  var $input = $('#id1_chosen .chosen-search input');  if ($input.length && !$input.attr('aria-label')) {    $input.attr('aria-label', 'Search options');  }});;
+Wicket.Event.publish(Wicket.Event.Topic.AJAX_HANDLERS_BOUND);
+;});
+/*]]>*/
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NLZ-Stellen">
+  <rect width="512" height="512" rx="96" fill="#0d2240"/>
+  <circle cx="256" cy="238" r="116" fill="#f4f6f9"/>
+  <path fill="#0d2240" d="M256 150l34 25-13 40h-42l-13-40z"/>
+  <path fill="#0d2240" d="M158 212l33-24 32 23-13 40-39 13z"/>
+  <path fill="#0d2240" d="M354 212l-13 52-39-13-13-40 32-23z"/>
+  <path fill="#0d2240" d="M205 300l34-11 34 11 11 34-28 22h-34l-28-22z"/>
+  <rect x="136" y="392" width="240" height="26" rx="13" fill="#2e9e5b"/>
+  <rect x="176" y="436" width="160" height="22" rx="11" fill="#4a8fe0"/>
+</svg>
